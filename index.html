@@ -1,89 +1,142 @@
 <!doctype html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="./css/api.css" />
-    <style type="text/css">
-        html,
-        body {
-            height: 100%;
-        }
-
-        .wrap {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-flex-flow: column;
-        }
-
-        header {
-            height: 44px;
-            width: 100%;
-            text-align: center;
-            background-color: #81a9c3;
-            color: #fff;
-            line-height: 44px;
-            font-size: 20px;
-        }
-
-        .flex-1 {
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-        }
-
-        footer {
-            height: 30px;
-            width: 100%;
-            background-color: #81a9c3;
-            color: white;
-            line-height: 30px;
-            text-align: center;
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+    <style>
+        header{ background-color: #FEFEFE; color: #515151; position: fixed; top: 25px; width: 100%;}
+        header ul li { height: 50px; line-height: 50px; text-align: left; padding-left: 20px; display: none; color: #515151; position: relative;font-size: 28px;  }
+        header ul li.active{ display: block; }
+        #footer{  background-color: #FEFEFE; }
+        #footer ul li{color: #bbb; padding-top: 34px; margin-top: 2px; padding-bottom: 4px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center; }
+        #footer ul li.active{ color: #524F0A; }
+        #footer ul li:nth-child(1){ background-image: url(./image/frame0_0.png); }
+        #footer ul li:nth-child(2){ background-image: url(./image/frame1_0.png); }
+        #footer ul li:nth-child(3){ background-image: url(./image/frame2_0.png); }
+        #footer ul li:nth-child(4){ background-image: url(./image/frame3_0.png); }
+        #footer ul li:nth-child(1).active{ background-image: url(./image/frame0_1.png); }
+        #footer ul li:nth-child(2).active{ background-image: url(./image/frame1_1.png); }
+        #footer ul li:nth-child(3).active{ background-image: url(./image/frame2_1.png); }
+        #footer ul li:nth-child(4).active{ background-image: url(./image/frame3_1.png); }
+        .flex-con{
+          overflow: auto
         }
     </style>
 </head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+    <!-- 我是占位状态栏高度的 -->
+    <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
+    <header>
+        <ul>
+            <li class="border-b active" >推荐</li>
+            <li class="border-b" >补档反馈</li>
+            <li class="border-b" >说点什么</li>
+            <li id="mine" class="border-b" >个人中心</li>
+        </ul>
+    </header>
+    <div id="main" class="flex-con">
 
-<body class="wrap">
-    <header>APICloud</header>
-    <section class="flex-1">
-
-    </section>
-    <footer>Copyright &copy;<span id="year"></span></footer>
+    </div>
+    <div id="footer" class="border-t">
+        <ul class="flex-wrap" >
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con active" >主站</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >留言</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >动态</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >我的</li>
+        </ul>
+    </div>
+</div>
 </body>
-<script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript">
-    apiready = function() {
-        //输出Log，Log将显示在APICloud Studio控制台
-        console.log("Hello World! Hello APICloud!");
-
-        var header = $api.dom('header'); // 获取 header 标签元素
-        var footer = $api.dom('footer'); // 获取 footer 标签元素
-
-        // 1.修复开启沉浸式效果带来的顶部Header与手机状态栏重合的问题，最新api.js方法已支持适配iPhoneX；
-        // 2.默认已开启了沉浸式效果 config.xml中 <preference name="statusBarAppearance" value="true"/>
-        // 3.沉浸式效果适配支持iOS7+，Android4.4+以上版本
-        var headerH = $api.fixStatusBar(header);
-        // 最新api.js为了适配iPhoneX增加的方法，修复底部Footer部分与iPhoneX的底部虚拟横条键重叠的问题；
-        var footerH = $api.fixTabBar(footer);
-
-        api.openFrame({
-            name: 'main',
-            url: 'html/main.html',
-            bounces: true,
-            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-                marginTop: headerH, // main页面距离win顶部的高度
-                marginBottom: footerH, // main页面距离win底部的高度
-                w: 'auto' // main页面的宽度 自适应屏幕宽度
-            }
-        });
-
-        // 获取当前年份时间，并加载显示到页面
-        var year = $api.byId('year');
-        year.innerHTML = new Date().getFullYear();
-    };
-
-</script>
-
 </html>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        api.setStatusBarStyle({
+            style: 'dark',
+            color: 'rgba(255,255,255,0.00001)'
+        });
+        api.parseTapmode();
+        funIniGroup();
+
+        // var markLoginStatus = localStorage.getItem("markLoginStatus")
+        // if(markLoginStatus == "0" || markLoginStatus == null){
+        //     api.openWin({
+        //         name: 'login',
+        //         url: './html/login/login.html',
+        //         pageParam: {
+        //             name: 'test'
+        //         }
+        //     });
+        // }
+
+        // api.addEventListener({
+        //     name: 'viewappear'
+        // }, function(ret, err){
+        //     api.closeWin({
+        //         name: 'login'
+        //     });
+        //     console.log("关闭登录页")
+        // });
+
+    }
+
+    function funIniGroup(){
+        var eHeaderLis = $api.domAll('header li'),
+            frames = [];
+        var frame = ["frame0.html","frame1.html","frame2.html","frame3.html"];
+        for (var i = 0,len = eHeaderLis.length; i < len; i++) {
+                frames.push( {
+                    url: './html/'+frame[i],
+                    bgColor : '#FEFEFE',
+                    bounces: false,
+                    // scaleEnabled: true,
+                    overScrollMode: 'always'
+                } )
+        }
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight+25,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight-75
+            },
+            overScrollMode: 'always',
+            index: 0,
+            frames: frames,
+            background: '#FEFEFE',
+            preload: 3
+        }, function (ret, err) {
+
+        });
+    }
+
+    // 随意切换按钮
+    function randomSwitchBtn( tag ) {
+        if( tag == $api.dom('#footer li.active') )return;
+        var eFootLis = $api.domAll('#footer li'),
+            eHeaderLis = $api.domAll('header li'),
+            index = 0;
+        for (var i = 0,len = eFootLis.length; i < len; i++) {
+            if( tag == eFootLis[i] ){
+                index = i;
+            }else{
+                $api.removeCls(eFootLis[i], 'active');
+                $api.removeCls(eHeaderLis[i], 'active');
+            }
+        }
+        $api.addCls( eFootLis[index], 'active');
+        $api.addCls( eHeaderLis[index], 'active');
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index,
+            scroll: true
+        });
+    }
+</script>

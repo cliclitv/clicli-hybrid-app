@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="Zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="../css/api.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+        html,body{
+            background-color: #FEFEFE;
+        }
+        header{
+            display: flex;
+            flex-direction: row;
+            align-items: top;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        header:active{
+            background-color: #EEE;
+        }
+        header:active .student-intro{
+            background-color: #EEE;
+        }
+        .student-intro{
+            background-color: #FEFEFE;
+            padding-right: 10px;
+        }
+        .student-name{
+            font-size: 32px;
+            color: #171717;
+            padding-bottom: 10px;
+        }
+        .student-signature{
+            word-break: break-all;
+            color: #313131;
+            font-size: 14px;
+            /*超出两行文字省略*/
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+        .student-avatar{
+            height: 80px;
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .content-container{
+            background-color: #FEFEFE;
+            font-size: 18px;
+            color: #515151;
+        }
+
+        .wrong-test {
+            padding: 15px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: auto;
+            border: 1px solid #F1F1F1;
+        }
+        .wrong-test img{
+            height: 24px;
+            width: 24px;
+            margin-right: 5px;
+        }
+        .wrong-test:active{
+            background-color: #EEE;
+        }
+        .test-collect{
+            padding: 15px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: auto;
+        }
+        .test-collect img{
+            height: 24px;
+            width: 24px;
+            margin-right: 5px;
+        }
+        .test-collect:active{
+            background-color: #EEE;
+        }
+        .file-download{
+            padding: 15px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center
+            width: auto;
+            border: 1px solid #F1F1F1;
+        }
+        .file-download img{
+            height: 24px;
+            width: 24px;
+            margin-right: 5px;
+        }
+        .file-download:active{
+            background-color: #EEE;
+        }
+        .more{
+            padding: 15px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: auto;
+            border-bottom: 1px solid #F1F1F1;
+        }
+        .more img{
+            height: 18px;
+            width: 18px;
+            padding: 4px;
+            margin-right: 5px;
+        }
+        .more:active{
+            background-color: #EEE;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header @click="goMyInfo">
+            <div class="student-intro">
+                <p class="student-name">飘香豆腐</p>
+                <p class="student-signature">Talk is cheap , show me you code</p>
+            </div>
+            <img class="student-avatar" src="../image/avatar.png" alt="">
+        </header>
+        <div class="content-container">
+            <!-- <div class="wrong-test">
+                <img src="../image/wrong_test.png" alt="">
+                <span>错题集</span>
+            </div>
+            <div class="test-collect">
+                <img src="../image/test_collect.png" alt="">
+                <span>题库收藏</span>
+            </div>
+            <div class="file-download">
+                <img src="../image/file_download.png" alt="">
+                <span>文件下载</span>
+            </div>
+            <div class="more" @click="goMoreInfo">
+                <img src="../image/more.png" alt="">
+                <span>更多</span>
+            </div> -->
+        </div>
+    </div>
+<script src="../script/api.js"></script>
+<script src="../script/vue.min.js"></script>
+<script type="text/javascript">
+    apiready = () => {
+        const app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            mounted(){
+
+            },
+            methods: {
+                goMyInfo(){
+                    api.openWin({
+                        name: 'myInfo',
+                        url: './mine/myInfo.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    });
+
+                },
+                goMoreInfo(){
+                    api.openWin({
+                        name: 'moreInfo',
+                        url: './mine/moreInfo.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    });
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
