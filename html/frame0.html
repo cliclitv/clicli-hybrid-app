@@ -73,7 +73,7 @@
 
         <div class="content-container">
 
-            <div class="post-item">
+            <div class="post-item" @click="goAvDetail">
                 <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/02/5bb3393eec0d3.jpg')"></div>
                 <div class="post-intro">
                     <div class="post-name">关于我转生变成史莱姆这档事 [史傲天]</div>
@@ -125,10 +125,31 @@
 
     </div>
 
-    <script src="../../script/api.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/vue.min.js"></script>
     <script type="text/javascript">
         apiready = () => {
-            
+            const app = new Vue({
+                el: '#app',
+                data: {
+
+                },
+                mounted(){
+
+                },
+                methods:{
+                    goAvDetail(){
+                        api.openWin({
+                            name: 'avDetail',
+                            url: './play/avDetail.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+
+                    }
+                }
+            })
         }
     </script>
 </body>
