@@ -1,136 +1,157 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title></title>
-  <link rel="stylesheet" type="text/css" href="../css/api.css" />
-  <style>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        html,
+        body {
+            background-color: #FEFEFE;
+            padding: 0;
+            margin: 0；
+        }
 
-    html,body{
-      background-color: #FEFEFE;
-      padding: 0;
-      margin: 0；
-    }
-    .content-container{
-      padding: 10px 2vw;
-      background-color: #FEFEFE;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+        .content-container {
+            padding: 10px 2vw;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-    .post-item{
-      width: 44vw;
-      height: auto;
-      background-color: #009688;
-      margin: 10px 2vw;
-      border-radius: 5px;
-      box-shadow: 0px 0px 8px #999;
-    }
-    .post-item .post-img{
-      width: 100%;
-      height: 120px;
-      background-repeat: no-repeat;
-      background-position: center 0;
-      background-size: cover;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-    }
-    .post-item .post-intro{
-      /*width: 100%;*/
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-      border-left: 3px solid red;
-      background-color: #fff;
-    }
-    .post-item .post-intro .post-time{
-      padding: 5px 10px 10px;
-      color: #808080;
-      font-size: 12px;
-    }
-    .post-item .post-intro .post-name{
-      height: 40px;
-      padding: 10px 10px 4px;
-      color: #515151;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-  </style>
+        .post-item {
+            width: 44vw;
+            height: auto;
+            background-color: #009688;
+            margin: 10px 2vw;
+            border-radius: 5px;
+            box-shadow: 0px 0px 8px #999;
+        }
+
+        .post-item .post-img {
+            width: 100%;
+            height: 120px;
+            background-repeat: no-repeat;
+            background-position: center 0;
+            background-size: cover;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .post-item .post-intro {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-left: 3px solid #F52525;
+            background-color: #fff;
+        }
+
+        .post-item .post-intro .post-time {
+            padding: 5px 10px 10px;
+            color: #808080;
+            font-size: 12px;
+        }
+
+        .post-item .post-intro .post-name {
+            height: 40px;
+            padding: 10px 10px 4px;
+            color: #515151;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
 </head>
+
 <body>
 
-  <div id="app">
+    <div id="app">
 
-    <div class="content-container">
+        <div class="content-container">
 
-      <div class="post-item">
-        <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/02/5bb3393eec0d3.jpg')"></div>
-        <div class="post-intro">
-          <div class="post-name">关于我转生变成史莱姆这档事 [史傲天]</div>
-          <div class="post-time">2019-1-31 18:30</div>
+            <div class="post-item" @click="goAvDetail">
+                <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/02/5bb3393eec0d3.jpg')"></div>
+                <div class="post-intro">
+                    <div class="post-name">关于我转生变成史莱姆这档事 [史傲天]</div>
+                    <div class="post-time">2019-1-31 18:30</div>
+                </div>
+            </div>
+
+            <div class="post-item">
+                <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/06/5bb805ac8c7e2.jpg')"></div>
+                <div class="post-intro">
+                    <div class="post-name">JOJO的奇妙冒险</div>
+                    <div class="post-time">2019-1-31 18:30</div>
+                </div>
+            </div>
+
+            <div class="post-item">
+                <div class="post-img" style="background-image:url('https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike150%2C5%2C5%2C150%2C50/sign=1fd3d1546fd9f2d3341c2cbdc885e176/0d338744ebf81a4c3528027cda2a6059252da669.jpg')"></div>
+                <div class="post-intro">
+                    <div class="post-name">盾之勇者成名录</div>
+                    <div class="post-time">2019-1-31 18:30</div>
+                </div>
+            </div>
+
+            <div class="post-item">
+                <div class="post-img" style="background-image:url('https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=cbb11d8401d79123f4ed9c26cc5d32e7/b8389b504fc2d56284049d61ea1190ef76c66c29.jpg')"></div>
+                <div class="post-intro">
+                    <div class="post-name">五等分的花嫁</div>
+                    <div class="post-time">2019-1-31 18:30</div>
+                </div>
+            </div>
+
+            <div class="post-item">
+                <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/07/5bb8f60026cea.jpg')"></div>
+                <div class="post-intro">
+                    <div class="post-name">刀剑神域 Alici</div>
+                    <div class="post-time">2019-1-31 18:30</div>
+                </div>
+            </div>
+
+            <div class="post-item">
+                <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/07/5bb8f35ec4744.jpg')"></div>
+                <div class="post-intro">
+                    <div class="post-name">哥布林杀手</div>
+                    <div class="post-time">2019-1-31 18:30</div>
+                </div>
+            </div>
+
         </div>
-      </div>
-
-      <div class="post-item">
-        <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/06/5bb805ac8c7e2.jpg')"></div>
-        <div class="post-intro">
-          <div class="post-name">JOJO的奇妙冒险</div>
-          <div class="post-time">2019-1-31 18:30</div>
-        </div>
-      </div>
-
-      <div class="post-item">
-        <div class="post-img" style="background-image:url('https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike150%2C5%2C5%2C150%2C50/sign=1fd3d1546fd9f2d3341c2cbdc885e176/0d338744ebf81a4c3528027cda2a6059252da669.jpg')"></div>
-        <div class="post-intro">
-          <div class="post-name">盾之勇者成名录</div>
-          <div class="post-time">2019-1-31 18:30</div>
-        </div>
-      </div>
-
-      <div class="post-item">
-        <div class="post-img" style="background-image:url('https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=cbb11d8401d79123f4ed9c26cc5d32e7/b8389b504fc2d56284049d61ea1190ef76c66c29.jpg')"></div>
-        <div class="post-intro">
-          <div class="post-name">五等分的花嫁</div>
-          <div class="post-time">2019-1-31 18:30</div>
-        </div>
-      </div>
-
-      <div class="post-item">
-        <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/07/5bb8f60026cea.jpg')"></div>
-        <div class="post-intro">
-          <div class="post-name">刀剑神域 Alici</div>
-          <div class="post-time">2019-1-31 18:30</div>
-        </div>
-      </div>
-
-      <div class="post-item">
-        <div class="post-img" style="background-image:url('https://i.loli.net/2018/10/07/5bb8f35ec4744.jpg')"></div>
-        <div class="post-intro">
-          <div class="post-name">哥布林杀手</div>
-          <div class="post-time">2019-1-31 18:30</div>
-        </div>
-      </div>
-
-      <!-- <div class="ppt-item">
-        <div class="file-type">PPT</div>
-        <div class="item-content">
-          <p class="ppt-name">海课堂简介.ppt</p>
-          <p class="create-time">2018.10.25</p>
-        </div>
-      </div> -->
 
     </div>
 
-  </div>
+    <script src="../script/api.js"></script>
+    <script src="../script/vue.min.js"></script>
+    <script type="text/javascript">
+        apiready = () => {
+            const app = new Vue({
+                el: '#app',
+                data: {
 
-  <script src="../../script/api.js"></script>
-  <script type="text/javascript">
+                },
+                mounted() {
 
+                },
+                methods: {
+                    goAvDetail() {
+                        api.openWin({
+                            name: 'avDetail',
+                            url: './play/avDetail.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
 
-  </script>
+                    }
+                }
+            })
+        }
+    </script>
 </body>
+
 </html>

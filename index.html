@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>底部导航</title>
+    <title>入口主页面</title>
     <link rel="stylesheet" type="text/css" href="./css/api.css"/>
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
     <style>
@@ -55,46 +55,24 @@
 </html>
 <script type="text/javascript" src="script/api.js"></script>
 <script type="text/javascript">
-    apiready = function () {
+    apiready = () => {
         api.setStatusBarStyle({
             style: 'dark',
             color: 'rgba(255,255,255,0.00001)'
         });
-        api.parseTapmode();
-        funIniGroup();
-
-        // var markLoginStatus = localStorage.getItem("markLoginStatus")
-        // if(markLoginStatus == "0" || markLoginStatus == null){
-        //     api.openWin({
-        //         name: 'login',
-        //         url: './html/login/login.html',
-        //         pageParam: {
-        //             name: 'test'
-        //         }
-        //     });
-        // }
-
-        // api.addEventListener({
-        //     name: 'viewappear'
-        // }, function(ret, err){
-        //     api.closeWin({
-        //         name: 'login'
-        //     });
-        //     console.log("关闭登录页")
-        // });
-
+        api.parseTapmode()
+        funIniGroup()
     }
 
     function funIniGroup(){
-        var eHeaderLis = $api.domAll('header li'),
-            frames = [];
-        var frame = ["frame0.html","frame1.html","frame2.html","frame3.html"];
-        for (var i = 0,len = eHeaderLis.length; i < len; i++) {
+        let eHeaderLis = $api.domAll('header li')
+            frames = []
+        let frame = ['frame0.html','frame1.html','frame2.html','frame3.html']
+        for (let i = 0,len = eHeaderLis.length; i < len; i++) {
                 frames.push( {
                     url: './html/'+frame[i],
                     bgColor : '#FEFEFE',
                     bounces: false,
-                    // scaleEnabled: true,
                     overScrollMode: 'always'
                 } )
         }
@@ -112,27 +90,27 @@
             frames: frames,
             background: '#FEFEFE',
             preload: 3
-        }, function (ret, err) {
+        }, (ret, err) => {
 
-        });
+        })
     }
 
     // 随意切换按钮
     function randomSwitchBtn( tag ) {
-        if( tag == $api.dom('#footer li.active') )return;
-        var eFootLis = $api.domAll('#footer li'),
-            eHeaderLis = $api.domAll('header li'),
-            index = 0;
-        for (var i = 0,len = eFootLis.length; i < len; i++) {
+        if( tag == $api.dom('#footer li.active') ) return
+        let eFootLis = $api.domAll('#footer li')
+        let eHeaderLis = $api.domAll('header li')
+        let index = 0
+        for (let i = 0,len = eFootLis.length; i < len; i++) {
             if( tag == eFootLis[i] ){
-                index = i;
+                index = i
             }else{
-                $api.removeCls(eFootLis[i], 'active');
-                $api.removeCls(eHeaderLis[i], 'active');
+                $api.removeCls(eFootLis[i], 'active')
+                $api.removeCls(eHeaderLis[i], 'active')
             }
         }
-        $api.addCls( eFootLis[index], 'active');
-        $api.addCls( eHeaderLis[index], 'active');
+        $api.addCls( eFootLis[index], 'active')
+        $api.addCls( eHeaderLis[index], 'active')
         api.setFrameGroupIndex({
             name: 'group',
             index: index,
