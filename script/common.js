@@ -3,9 +3,9 @@
  **  可复用的函数功能抽离于此
  */
 
-const utils = (function () {
+const utils = ( () => {
     //检测输入文本是否为空，空则true，非空则false
-    let checkNullText = function(test) {
+    let checkNullText = (test) => {
         let input = /^[\s]*$/;
         if (input.test(test)) {
             return true;
@@ -14,7 +14,7 @@ const utils = (function () {
     }
 
     //时间转换，天数，小时，分钟
-    let formatMsgTime = function(timespan) {
+    let formatMsgTime = (timespan) => {
         //获取GMT时间
         let timeStamp = new Date(timespan);
         let year = timeStamp.getFullYear();
