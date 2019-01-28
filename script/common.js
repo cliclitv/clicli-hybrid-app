@@ -3,10 +3,10 @@
  **  可复用的函数功能抽离于此
  */
 
-var util = (function () {
+const utils = (function () {
     //检测输入文本是否为空，空则true，非空则false
-    function checkNullText(test) {
-        var input = /^[\s]*$/;
+    let checkNullText = function(test) {
+        let input = /^[\s]*$/;
         if (input.test(test)) {
             return true;
         }
@@ -14,19 +14,19 @@ var util = (function () {
     }
 
     //时间转换，天数，小时，分钟
-    function formatMsgTime(timespan) {
+    let formatMsgTime = function(timespan) {
         //获取GMT时间
-        var timeStamp = new Date(timespan);
-        var year = timeStamp.getFullYear();
-        var month = timeStamp.getMonth() + 1;
-        var day = timeStamp.getDate();
-        var hour = timeStamp.getHours();
-        var minute = timeStamp.getMinutes();
-        var second = timeStamp.getSeconds();
+        let timeStamp = new Date(timespan);
+        let year = timeStamp.getFullYear();
+        let month = timeStamp.getMonth() + 1;
+        let day = timeStamp.getDate();
+        let hour = timeStamp.getHours();
+        let minute = timeStamp.getMinutes();
+        let second = timeStamp.getSeconds();
         //获取当前GMT时间
-        var now = new Date();
-        var milliseconds = 0;
-        var timeSpanStr;
+        let now = new Date();
+        let milliseconds = 0;
+        let timeSpanStr;
         //计算时间差（时间戳格式）
         milliseconds = now - timeStamp;
 
@@ -44,5 +44,10 @@ var util = (function () {
             timeSpanStr = year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
         }
         return timeSpanStr;
+    }
+
+    return {
+        checkNullText,
+        formatMsgTime
     }
 })()
