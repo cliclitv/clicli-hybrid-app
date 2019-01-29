@@ -21,12 +21,92 @@
 
         .content-container{
             margin-top: 56.25vw;
+            /*padding: 10px 2vw;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;*/
+        }
+
+        /*番剧简介*/
+        .post-intro{
+            padding: 20px 0;
+            height: 120px;
+            background-color: #FEFEFE;
+            position: relative;
+            box-shadow: 1px 1px 5px #ddd;
+        }
+        .post-intro .intro-img{
+            height: 120px;
+            width: 90px;
+            float: left;
+            margin: 0 15px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+            background-color: #009688;
+            border: 1px solid #ddd;
+        }
+        .post-intro .intro-content{
+            color: #515151;
+            padding-right: 15px;
+        }
+        .intro-content .intro-title{
+            color: #515151;
+            font-size: 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .intro-content .statistic{
+            padding: 10px 0;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .statistic .pv-icon{
+            height: 20px;
+            width: 20px;
+            margin-right: 5px;
+        }
+        .statistic .pv{
+            color: #999;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .statistic .comments-icon{
+            height: 18px;
+            width: 18px;
+            margin-right: 5px;
+        }
+        .statistic .comments-num{
+            color: #999;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .post-label span{
+            padding: 5px 10px;
+            background-color: #F2AA24;
+            border-radius: 5px;
+            color: #FFF;
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        /*番剧集数列表*/
+        .video-list{
             padding: 10px 2vw;
             background-color: #FEFEFE;
             display: flex;
             flex-direction: row;
             align-items: center;
             flex-wrap: wrap;
+            clear: both;
         }
 
         .video-item{
@@ -78,6 +158,22 @@
 
         <div class="content-container">
 
+            <div class="post-intro">
+                <div :style="getImgUrl(postIntro.content)" alt="" class="intro-img"></div>
+                <div class="intro-content">
+                    <div class="intro-title">关于我转生变成史莱姆这档事 [史傲天]</div>
+                    <div class="statistic">
+                        <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">2000</span>
+                        <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">100</span>
+                    </div>
+                    <div class="post-label">
+                        <span>新番</span>
+                        <span>推荐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-list">
                 <div class="video-item" v-for="item in videosList" @click="playVideo(item.content,item.title,$event)">
                     <img :src="getUqq(item.uqq)" alt="" class="avatar">
                     <div class="intro">
@@ -85,6 +181,7 @@
                         <p class="title">{{item.title}}</p>
                     </div>
                 </div>
+            </div>
 
         </div>
 
@@ -113,7 +210,6 @@
                     commentsList: []
                 },
                 mounted() {
-                    _initVideoClient()
                     this.getPostIntro()
                     this.getVideosList()
                     this.getPostCount()
@@ -139,9 +235,12 @@
                             url: 'https://api.clicli.top/videos?pid=' + pid + '&page=1&pageSize=100'
                         }).then(response => {
                             if(response.data.code === 201){
+                                console.log(response.data.videos)
                                 this.videosList = response.data.videos
-                                videoPlayer.close()
                                 _initVideoClient(response.data.videos[0].content,response.data.videos[0].title)
+                                setTimeout(()=>{
+                                    document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
+                                },100)
                             }
                         })
                     },
@@ -166,13 +265,16 @@
                         })
                     },
                     getUqq(email){
-                        console.log(email.split('@qq')[0])
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
+                    },
+                    getImgUrl(content){
+                        console.log(content)
+                        return 'background-image:url('+ (content || "").split(')')[0].split('[suo](')[1] +')'
                     },
                     playVideo(url,title,e){
                         videoPlayer.close()
                         _initVideoClient(url,title)
-                        e.currentTarget.style.background = '#dedede'
+                        e.currentTarget.style.background = 'rgba(0,156,255,0.4)'
                     }
                 }
             })
@@ -212,7 +314,7 @@
                             timeSize: 14,
                             timeColor: '#fff',
                             sliderImg: 'fs://img/slder.png',
-                            progressColor: '#696969',
+                            progressColor: '#BEBEBE',
                             progressSelected: '#1296db',
                             rotationSize: 22,
                             verticalImg: 'widget://image/fullscreen.png',
@@ -221,26 +323,15 @@
                     },
                     path: url,
                     coverImg: 'widget://image/coverImg.png',
-                    autoPlay: false,
+                    autoPlay: true,
                     fixed: true
                 }, function(ret, err) {
-
-                    // console.log(JSON.stringify(ret));
-
                     if (ret.eventType === 'back') {
                         if (ret.value === false) {
                             api.closeWin();
                         }
                     }
                 });
-
-                // videoPlayer.setPath({
-                //     path: 'http://7o50kb.com2.z0.glb.qiniucdn.com/c1.1.mp4',
-                //     coverImg: '',
-                //     bg: '#fff',
-                //     title: ''
-                // });
-                // videoPlayer.close()
 
                 api.addEventListener({
                     name: 'keyback'
