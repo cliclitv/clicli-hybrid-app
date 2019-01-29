@@ -45,8 +45,11 @@
         .video-item .avatar{
             height: 40px;
             width: 40px;
-            padding: 10px;
+            margin: 10px;
             border-radius: 50%;
+            background-image: url('../../image/avatar2.png');
+            background-position: center;
+            background-size: contain;
         }
         .video-item .intro{
             width: 70px;
@@ -75,26 +78,11 @@
 
         <div class="content-container">
 
-                <div class="video-item" v-for="item in videosList">
+                <div class="video-item" v-for="item in videosList" @click="playVideo(item.content,item.title)">
                     <img :src="getUqq(item.uqq)" alt="" class="avatar">
                     <div class="intro">
                         <p class="oid">第{{item.oid}}话</p>
                         <p class="title">{{item.title}}</p>
-                    </div>
-                </div>
-
-                <div class="video-item">
-                    <img src="http://q1.qlogo.cn/g?b=qq&nk=741755613&s=5" alt="" class="avatar">
-                    <div class="intro">
-                        <p class="oid">第1话</p>
-                        <p class="title">猪头帝来袭</p>
-                    </div>
-                </div>
-                <div class="video-item">
-                    <img src="http://q1.qlogo.cn/g?b=qq&nk=741755613&s=5" alt="" class="avatar">
-                    <div class="intro">
-                        <p class="oid">第1话</p>
-                        <p class="title">猪头帝来袭</p>
                     </div>
                 </div>
 
@@ -112,83 +100,8 @@
             let pid = api.pageParam.pid
             let title = api.pageParam.title
 
+            let videoPlayer = api.require('videoPlayer')
             let _isFullScreen = false
-
-            let videoPlayer = api.require('videoPlayer');
-            videoPlayer.openPlay({
-                rect: {
-                    x: 0,
-                    y: 0,
-                    w: api.winWidth,
-                    h: 9 / 16 * api.winWidth
-                },
-                texts: {
-                    head: {
-                        title
-                    }
-                },
-                styles: {
-                    head: {
-                        bg: 'rgba(0.5,0.5,0.5,0.7)',
-                        height: 44,
-                        y: 20,
-                        titleSize: 20,
-                        titleColor: '#fff',
-                        backSize: 22,
-                        backImg: 'fs://image/back.png',
-                        customButtons: [],
-                    },
-                    foot: {
-                        bg: 'rgba(0,0,0,0)',
-                        height: 44,
-                        playSize: 22,
-                        playImg: 'fs://img/paly.png',
-                        pauseImg: 'fs://img/pause.png',
-                        timeSize: 14,
-                        timeColor: '#fff',
-                        sliderImg: 'fs://img/slder.png',
-                        progressColor: '#696969',
-                        progressSelected: '#1296db',
-                        rotationSize: 22,
-                        verticalImg: 'widget://image/fullscreen.png',
-                        horizontalImg: 'widget://image/fullscreen.png',
-                    }
-                },
-                path: 'https://dl104.yunpan.360.cn/intf.php?method=Download.downloadFile&qid=1324323432&fname=%2F%E8%BF%9E%E8%BD%BD%E7%95%AA%2F2018%E7%A7%8B%E5%AD%A3%2F%E5%88%80%E5%89%91%E7%A5%9E%E5%9F%9F3%2F16.mp4&fhash=fb02c98b83cb1d4e627a1d1881c28a1981e879ec&dt=104_104.cb3cc40c91cb8f55bb6e5b9702b75ce8&v=1.0.1&rtick=15486897928689&open_app_id=0&host=dl104.yunpan.360.cn&devtype=ecs_web&sign=0b927c67004ddb0c1d92ebd033cc8fdf&&token=2177665571.8.469189c8.1324323432.15247416692400137.1548604862',
-                coverImg: 'widget://image/coverImg.png',
-                autoPlay: false,
-                fixed: true
-            }, function(ret, err) {
-
-                // console.log(JSON.stringify(ret));
-
-                if (ret.eventType === 'back') {
-                    if (ret.value === false) {
-                        api.closeWin();
-                    }
-                }
-            });
-
-            // videoPlayer.setPath({
-            //     path: 'http://7o50kb.com2.z0.glb.qiniucdn.com/c1.1.mp4',
-            //     coverImg: '',
-            //     bg: '#fff',
-            //     title: ''
-            // });
-            videoPlayer.close()
-
-            api.addEventListener({
-                name: 'keyback'
-            }, function(ret, err) {
-                //判断当前是否处于全屏播放
-                videoPlayer.isFullscreen(function(ret) {
-                    if (ret.isFullscreen === false) {
-                        api.closeWin()
-                    } else {
-                        videoPlayer.onBack()
-                    }
-                })
-            });
 
             const app = new Vue({
                 el: '#app',
@@ -200,6 +113,7 @@
                     commentsList: []
                 },
                 mounted() {
+                    _initVideoClient()
                     this.getPostIntro()
                     this.getVideosList()
                     this.getPostCount()
@@ -226,6 +140,8 @@
                         }).then(response => {
                             if(response.data.code === 201){
                                 this.videosList = response.data.videos
+                                videoPlayer.close()
+                                _initVideoClient(response.data.videos[0].content,response.data.videos[0].title)
                             }
                         })
                     },
@@ -252,9 +168,99 @@
                     getUqq(email){
                         console.log(email.split('@qq')[0])
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
+                    },
+                    playVideo(url,title){
+                        videoPlayer.close()
+                        _initVideoClient(url,title)
+                        // videoPlayer.setPath({
+                        //     path: url,
+                        //     coverImg: '',
+                        //     bg: '#fff',
+                        //     title
+                        // })
+
                     }
                 }
             })
+
+
+            //初始化播放器
+            function _initVideoClient(url,title){
+                videoPlayer.openPlay({
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: api.winWidth,
+                        h: 9 / 16 * api.winWidth
+                    },
+                    texts: {
+                        head: {
+                            title
+                        }
+                    },
+                    styles: {
+                        head: {
+                            bg: 'rgba(0.5,0.5,0.5,0.7)',
+                            height: 44,
+                            y: 20,
+                            titleSize: 20,
+                            titleColor: '#fff',
+                            backSize: 22,
+                            backImg: 'fs://image/back.png',
+                            customButtons: [],
+                        },
+                        foot: {
+                            bg: 'rgba(0,0,0,0)',
+                            height: 44,
+                            playSize: 22,
+                            playImg: 'fs://img/paly.png',
+                            pauseImg: 'fs://img/pause.png',
+                            timeSize: 14,
+                            timeColor: '#fff',
+                            sliderImg: 'fs://img/slder.png',
+                            progressColor: '#696969',
+                            progressSelected: '#1296db',
+                            rotationSize: 22,
+                            verticalImg: 'widget://image/fullscreen.png',
+                            horizontalImg: 'widget://image/fullscreen.png',
+                        }
+                    },
+                    path: url,
+                    coverImg: 'widget://image/coverImg.png',
+                    autoPlay: false,
+                    fixed: true
+                }, function(ret, err) {
+
+                    // console.log(JSON.stringify(ret));
+
+                    if (ret.eventType === 'back') {
+                        if (ret.value === false) {
+                            api.closeWin();
+                        }
+                    }
+                });
+
+                // videoPlayer.setPath({
+                //     path: 'http://7o50kb.com2.z0.glb.qiniucdn.com/c1.1.mp4',
+                //     coverImg: '',
+                //     bg: '#fff',
+                //     title: ''
+                // });
+                // videoPlayer.close()
+
+                api.addEventListener({
+                    name: 'keyback'
+                }, function(ret, err) {
+                    //判断当前是否处于全屏播放
+                    videoPlayer.isFullscreen(function(ret) {
+                        if (ret.isFullscreen === false) {
+                            api.closeWin()
+                        } else {
+                            videoPlayer.onBack()
+                        }
+                    })
+                });
+            }
 
         }
     </script>
