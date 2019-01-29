@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/api.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.25.0/DPlayer.min.css" />
     <style>
         /*[v-cloak] {
             display: none;
@@ -13,175 +14,116 @@
 
         html,
         body {
-            background-color: #ECECEC;
+            background-color: #fff;
             padding: 0;
             margin: 0;
-            padding-top: 30px;
         }
-        /*导航栏样式*/
 
-        #header {
-            position: fixed;
-            height: 50px;
-            z-index: 10;
-            top: 25px;
-            left: 0;
-            right: 0;
-            padding-left: 10px;
-            padding-right: 10px;
+        .content-container{
+            margin-top: 56.25vw;
+            padding: 10px 2vw;
             background-color: #FEFEFE;
-        }
-
-        .close-animation {
-            animation: close 0.3s linear forwards;
-        }
-
-        .open-animation {
-            animation: open 0.3s linear forwards;
-        }
-
-        @keyframes close {
-            from {
-                top: 25px;
-            }
-            to {
-                top: -50px;
-            }
-        }
-
-        @keyframes open {
-            from {
-                top: -50px;
-            }
-            to {
-                top: 25px;
-            }
-        }
-
-        #header img {
-            height: 20px;
-            width: 20px;
-            padding: 15px;
-            float: left;
-        }
-
-        #header img:active {
-            background-color: #ddd;
-        }
-
-        #header p {
-            right: 56px;
-            left: 56px;
-            display: inline-block;
-            overflow: hidden;
-            width: auto;
-            margin: 0;
-            padding: 0;
-            text-overflow: ellipsis;
-            line-height: 50px;
-            position: absolute;
-            text-align: center;
-            white-space: nowrap;
-            color: #515151;
-            font-size: 20px;
-        }
-
-        .onclass-flag {
-            background-color: #7057FF;
-            color: #fff;
-            font-size: 16px;
-            line-height: 24px;
-            height: 24px;
-            border-radius: 5px;
-            padding: 0 10px;
-        }
-
-        .content-container {
-            padding: 20px 20px;
-            background-color: #ECECEC;
             display: flex;
             flex-direction: row;
             align-items: center;
             flex-wrap: wrap;
         }
 
-        .img-item {
-            position: relative;
-            margin-bottom: 20px;
-            background-color: #ddd;
+        .video-item{
+            width: 44vw;
+            height: 80px;
+            background-color: #009688;
+            margin: 10px 2vw;
+            border-radius: 5px;
+            box-shadow: 0px 0px 8px #999;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .video-item .avatar{
+            height: 60px;
+            width: 60px;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        .video-item .intro{
+            width: auto;
+            display: inline;
+        }
+        .intro .oid{
             width: 100%;
-            background-image: url('../../image/commentsbg.gif');
-            /*box-shadow: 4px 4px 8px #ddd;*/
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
-
-        .img-index {
-            position: absolute;
-            top: 20;
-            left: 10;
-            background-color: rgba(0, 0, 0, 0.2);
-            color: #fff;
-            padding: 2px 4px;
-        }
-
-        .img-content {
+        .intro .title{
             width: 100%;
-            height: 100%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
-        video {
-            padding-top: 20px;
-            width: 100vw;
-            height: 56.25vw;
-        }
     </style>
 </head>
 
 <body>
 
     <div id="app" v-cloak>
-        <!-- 我是占位状态栏高度的 -->
-        <!-- <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;z-index:99999"></div> -->
-        <!-- 我是导航栏 -->
-        <!-- <header id="header">
-            <img class="close" src="../../image/close.png" @click="goBack">
-            <p class="title">{{pptName}}&nbsp;&nbsp;&nbsp;&nbsp;<span class="onclass-flag" v-show="pptOnclassFlag">上课中<span></p>
-        </header> -->
-
-        <!-- <video src="https://gss3.baidu.com/6LZ0ej3k1Qd3ote6lo7D0j9wehsv/tieba-smallvideo/3_8a43e5e4436b875a233c426f22bab4c4.mp4"
-         controls="controls" poster="https://raw.githubusercontent.com/mqttjs/MQTT.js/137ee0e3940c1f01049a30248c70f24dc6e6f829/MQTT.js.png"></video> -->
 
         <div class="content-container">
 
-            <div class="img-item" v-for="item in pageList">
-                <span class="img-index">{{item.page_num}}</span>
-                <img :src="item.page_url" alt="" class="img-content">
-    </div>
+                <div class="video-item">
+                    <img src="http://q1.qlogo.cn/g?b=qq&nk=741755613&s=5" alt="" class="avatar">
+                    <div class="intro">
+                        <p class="oid">第1话555</p>
+                        <p class="title">猪头帝来袭45646456</p>
+                    </div>
+                </div>
 
-    </div>
+                <div class="video-item">
+                    <img src="http://q1.qlogo.cn/g?b=qq&nk=741755613&s=5" alt="" class="avatar">
+                    <div class="intro">
+                        <p class="oid">第1话</p>
+                        <p class="title">猪头帝来袭</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <img src="http://q1.qlogo.cn/g?b=qq&nk=741755613&s=5" alt="" class="avatar">
+                    <div class="intro">
+                        <p class="oid">第1话</p>
+                        <p class="title">猪头帝来袭</p>
+                    </div>
+                </div>
+
+        </div>
+
     </div>
 
     <script src="../../script/api.js"></script>
     <script src="../../script/vue.min.js"></script>
-    <script src="../../script/xgplayer.js" charset="utf-8"></script>
+    <script src="../../script/axios.min.js"></script>
+    <script src="../../script/hyperdown.js"></script>
     <script type="text/javascript">
         apiready = () => {
 
+            let pid = api.pageParam.pid
+            let title = api.pageParam.title
+
             let _isFullScreen = false
-            console.log(_isFullScreen)
-            // api.setFullScreen({
-            //     fullScreen: true
-            // });
-            var videoPlayer = api.require('videoPlayer');
+
+            let videoPlayer = api.require('videoPlayer');
             videoPlayer.openPlay({
                 rect: {
                     x: 0,
                     y: 0,
                     w: api.winWidth,
-                    h: 9/16*api.winWidth
+                    h: 9 / 16 * api.winWidth
                 },
                 texts: {
                     head: {
-                        title: '顶部文字'
+                        title
                     }
                 },
                 styles: {
@@ -211,66 +153,98 @@
                         horizontalImg: 'widget://image/fullscreen.png',
                     }
                 },
-                path: 'https://dl104.yunpan.360.cn/intf.php?method=Download.downloadFile&qid=1324323432&fname=%2F%E8%BF%9E%E8%BD%BD%E7%95%AA%2F2018%E7%A7%8B%E5%AD%A3%2F%E5%88%80%E5%89%91%E7%A5%9E%E5%9F%9F3%2F16.mp4&fhash=fb02c98b83cb1d4e627a1d1881c28a1981e879ec&dt=104_104.cb3cc40c91cb8f55bb6e5b9702b75ce8&v=1.0.1&rtick=15486897928689&open_app_id=0&host=dl104.yunpan.360.cn&devtype=ecs_web&sign=0b927c67004ddb0c1d92ebd033cc8fdf&&token=2177665571.8.469189c8.1324323432.15247416692400137.1548604862', //（可选项）字符串类型；文档的路径，支持网络和本地（fs://）路径；默认：未传值时不播放
-                //在 android 平台上不支持 widget://
+                path: 'https://dl104.yunpan.360.cn/intf.php?method=Download.downloadFile&qid=1324323432&fname=%2F%E8%BF%9E%E8%BD%BD%E7%95%AA%2F2018%E7%A7%8B%E5%AD%A3%2F%E5%88%80%E5%89%91%E7%A5%9E%E5%9F%9F3%2F16.mp4&fhash=fb02c98b83cb1d4e627a1d1881c28a1981e879ec&dt=104_104.cb3cc40c91cb8f55bb6e5b9702b75ce8&v=1.0.1&rtick=15486897928689&open_app_id=0&host=dl104.yunpan.360.cn&devtype=ecs_web&sign=0b927c67004ddb0c1d92ebd033cc8fdf&&token=2177665571.8.469189c8.1324323432.15247416692400137.1548604862',
                 coverImg: 'widget://image/coverImg.png',
-                autoPlay: true, //（可选项）布尔类型；打开时是否自动播放；默认：true（自动播放）
+                autoPlay: false,
                 fixed: true
             }, function(ret, err) {
 
-                console.log(JSON.stringify(ret));
+                // console.log(JSON.stringify(ret));
 
-                if(ret.eventType === 'back'){
-                  if(ret.value === false){
-                    api.closeWin();
-                  }
+                if (ret.eventType === 'back') {
+                    if (ret.value === false) {
+                        api.closeWin();
+                    }
                 }
             });
 
-            //测试切换播放，以后改为点击番剧执行 关闭 再 打开新的窗口
-            setTimeout(()=>{
-              videoPlayer.close();
-            },8000)
+            // videoPlayer.setPath({
+            //     path: 'http://7o50kb.com2.z0.glb.qiniucdn.com/c1.1.mp4',
+            //     coverImg: '',
+            //     bg: '#fff',
+            //     title: ''
+            // });
+            videoPlayer.close()
 
             api.addEventListener({
                 name: 'keyback'
-            }, function(ret, err){
+            }, function(ret, err) {
                 //判断当前是否处于全屏播放
-                videoPlayer.isFullscreen(function(ret){
-                    if(ret.isFullscreen === false){
-                      api.closeWin()
-                    }else{
-                      videoPlayer.onBack()
+                videoPlayer.isFullscreen(function(ret) {
+                    if (ret.isFullscreen === false) {
+                        api.closeWin()
+                    } else {
+                        videoPlayer.onBack()
                     }
                 })
             });
 
             const app = new Vue({
-                el: "#app",
+                el: '#app',
                 data: {
-                    pageList: [{
-                        "page_id": 1,
-                        "page_num": 1,
-                        "page_url": "https://i.loli.net/2018/10/07/5bb8f35ec4744.jpg"
-                    }, {
-                        "page_id": 2,
-                        "page_num": 2,
-                        "page_url": "https://i.loli.net/2018/10/07/5bb8f60026cea.jpg"
-                    }, {
-                        "page_id": 3,
-                        "page_num": 3,
-                        "page_url": "https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=cbb11d8401d79123f4ed9c26cc5d32e7/b8389b504fc2d56284049d61ea1190ef76c66c29.jpg"
-                    }, {
-                        "page_id": 4,
-                        "page_num": 4,
-                        "page_url": "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike150%2C5%2C5%2C150%2C50/sign=1fd3d1546fd9f2d3341c2cbdc885e176/0d338744ebf81a4c3528027cda2a6059252da669.jpg"
-                    }, ]
+                    postIntro: [],
+                    postContent: '',
+                    videosList: [],
+                    postCount: {},
+                    commentsList: []
                 },
                 mounted() {
 
                 },
                 methods: {
-
+                    getPostIntro(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/post/' + pid
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.postIntro = response.data.result
+                                let parser = new HyperDown
+                                let html = parser.makeHtml(response.data.result.content)
+                                this.postContent = html
+                            }
+                        })
+                    },
+                    getVideosList(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/videos?pid=' + pid + '&page=1&pageSize=100'
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.videosList = response.data.videos
+                            }
+                        })
+                    },
+                    getPostCount(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/count/' + pid
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.postCount = response.data.count
+                            }
+                        })
+                    },
+                    getCommentsList(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/comments?pid=' + pid + '&page=1&pageSize=100'
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.commentsList = response.data.comments
+                            }
+                        })
+                    }
                 }
             })
 
