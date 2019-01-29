@@ -31,11 +31,11 @@
 
         .video-item{
             width: 44vw;
-            height: 80px;
-            background-color: #009688;
+            height: 60px;
+            background-color: #FEFEFE;
             margin: 10px 2vw;
             border-radius: 5px;
-            box-shadow: 0px 0px 8px #999;
+            box-shadow: 3px 3px 8px #999;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -43,23 +43,24 @@
         }
 
         .video-item .avatar{
-            height: 60px;
-            width: 60px;
+            height: 40px;
+            width: 40px;
             padding: 10px;
             border-radius: 50%;
         }
         .video-item .intro{
-            width: auto;
-            display: inline;
+            width: 70px;
         }
         .intro .oid{
-            width: 100%;
+            color: #515151;
+            font-size: 16px;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
         }
         .intro .title{
-            width: 100%;
+            color: #515151;
+            font-size: 14px;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
@@ -74,11 +75,11 @@
 
         <div class="content-container">
 
-                <div class="video-item">
-                    <img src="http://q1.qlogo.cn/g?b=qq&nk=741755613&s=5" alt="" class="avatar">
+                <div class="video-item" v-for="item in videosList">
+                    <img :src="getUqq(item.uqq)" alt="" class="avatar">
                     <div class="intro">
-                        <p class="oid">第1话555</p>
-                        <p class="title">猪头帝来袭45646456</p>
+                        <p class="oid">第{{item.oid}}话</p>
+                        <p class="title">{{item.title}}</p>
                     </div>
                 </div>
 
@@ -199,7 +200,10 @@
                     commentsList: []
                 },
                 mounted() {
-
+                    this.getPostIntro()
+                    this.getVideosList()
+                    this.getPostCount()
+                    this.getCommentsList()
                 },
                 methods: {
                     getPostIntro(){
@@ -244,6 +248,10 @@
                                 this.commentsList = response.data.comments
                             }
                         })
+                    },
+                    getUqq(email){
+                        console.log(email.split('@qq')[0])
+                        return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
                     }
                 }
             })
