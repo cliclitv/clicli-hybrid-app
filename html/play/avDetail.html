@@ -78,7 +78,7 @@
 
         <div class="content-container">
 
-                <div class="video-item" v-for="item in videosList" @click="playVideo(item.content,item.title)">
+                <div class="video-item" v-for="item in videosList" @click="playVideo(item.content,item.title,$event)">
                     <img :src="getUqq(item.uqq)" alt="" class="avatar">
                     <div class="intro">
                         <p class="oid">第{{item.oid}}话</p>
@@ -169,16 +169,10 @@
                         console.log(email.split('@qq')[0])
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
                     },
-                    playVideo(url,title){
+                    playVideo(url,title,e){
                         videoPlayer.close()
                         _initVideoClient(url,title)
-                        // videoPlayer.setPath({
-                        //     path: url,
-                        //     coverImg: '',
-                        //     bg: '#fff',
-                        //     title
-                        // })
-
+                        e.currentTarget.style.background = '#dedede'
                     }
                 }
             })
