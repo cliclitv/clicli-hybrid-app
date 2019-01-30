@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <style>
+        /*[v-cloak] {
+            display: none;
+        }*/
+
+        html,
+        body {
+            background-color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-container{
+            margin-top: 56.25vw;
+            /*padding: 10px 2vw;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;*/
+        }
+
+        /*番剧简介*/
+        .post-intro{
+            padding: 20px 0;
+            height: 120px;
+            background-color: #FEFEFE;
+            position: relative;
+            box-shadow: 1px 1px 5px #ddd;
+        }
+        .post-intro .intro-img{
+            height: 120px;
+            width: 90px;
+            float: left;
+            margin: 0 15px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+            background-color: #009688;
+            border: 1px solid #ddd;
+        }
+        .post-intro .intro-content{
+            color: #515151;
+            padding-right: 15px;
+        }
+        .intro-content .intro-title{
+            color: #515151;
+            font-size: 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .intro-content .statistic{
+            padding: 10px 0;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .statistic .pv-icon{
+            height: 20px;
+            width: 20px;
+            margin-right: 5px;
+        }
+        .statistic .pv{
+            color: #999;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .statistic .comments-icon{
+            height: 18px;
+            width: 18px;
+            margin-right: 5px;
+        }
+        .statistic .comments-num{
+            color: #999;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .post-label span{
+            padding: 5px 10px;
+            background-color: #F2AA24;
+            border-radius: 5px;
+            color: #FFF;
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        /*番剧集数列表*/
+        .video-list{
+            padding: 10px 2vw;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+            clear: both;
+        }
+
+        .video-item{
+            width: 44vw;
+            height: 60px;
+            background-color: #FEFEFE;
+            margin: 10px 2vw;
+            border-radius: 5px;
+            box-shadow: 3px 3px 8px #999;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .video-item .avatar{
+            height: 40px;
+            width: 40px;
+            margin: 10px;
+            border-radius: 50%;
+            background-image: url('../../image/avatar2.png');
+            background-position: center;
+            background-size: contain;
+        }
+        .video-item .intro{
+            width: 70px;
+        }
+        .intro .oid{
+            color: #515151;
+            font-size: 16px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .intro .title{
+            color: #515151;
+            font-size: 14px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+
+        <div class="content-container">
+
+            <div class="post-intro">
+                <div :style="getImgUrl(postIntro.content)" alt="" class="intro-img" @click="goAvDetail" tapmode></div>
+                <div class="intro-content">
+                    <div class="intro-title">{{postIntro.title}}</div>
+                    <div class="statistic" @click="goAvComments" tapmode>
+                        <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postCount.pid}}</span>
+                        <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCount.cv}}</span>
+                    </div>
+                    <div class="post-label">
+                        <span v-show="postIntro.sort == 'xinfan'">新番</span>
+                        <span v-show="postIntro.type == 'tuijian'">推荐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-list">
+                <div class="video-item" v-for="item in videosList" @click="playVideo(item.content,item.title,$event)">
+                    <img :src="getUqq(item.uqq)" alt="" class="avatar">
+                    <div class="intro">
+                        <p class="oid">第{{item.oid}}话</p>
+                        <p class="title">{{item.title}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../../script/api.js"></script>
+    <script src="../../script/vue.min.js"></script>
+    <script src="../../script/axios.min.js"></script>
+    <script src="../../script/hyperdown.js"></script>
+    <script type="text/javascript">
+        apiready = () => {
+
+            let pid = api.pageParam.pid,
+                title = api.pageParam.title
+
+            let videoPlayer = api.require('videoPlayer'),
+                _isFullScreen = false
+
+            let _avDetailIsShow = false,
+                _avCommentsIsShow = false
+
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    postIntro: [],
+                    postContent: '',
+                    videosList: [],
+                    postCount: {},
+                    commentsList: [],
+                },
+                mounted() {
+                    this.getPostIntro()
+                    this.getVideosList()
+                    this.getPostCount()
+                    this.getCommentsList()
+                    api.parseTapmode()
+                },
+                methods: {
+                    getPostIntro(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/post/' + pid
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.postIntro = response.data.result
+                                let parser = new HyperDown
+                                let html = parser.makeHtml(response.data.result.content)
+                                this.postContent = html
+                                console.log(html);
+                            }
+                        })
+                    },
+                    getVideosList(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/videos?pid=' + pid + '&page=1&pageSize=100'
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.videosList = response.data.videos
+                                this.loadVideoPlayer(response.data.videos[0].content,response.data.videos[0].title)
+                                setTimeout(()=>{
+                                    document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
+                                },100)
+                            }
+                        })
+                    },
+                    getPostCount(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/count/' + pid
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.postCount = response.data.count
+                            }
+                        })
+                    },
+                    getCommentsList(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/comments?pid=' + pid + '&page=1&pageSize=100'
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.commentsList = response.data.comments
+                            }
+                        })
+                    },
+                    getUqq(email){
+                        return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
+                    },
+                    getImgUrl(content){
+                        return 'background-image:url('+ (content || "").split(')')[0].split('[suo](')[1] +')'
+                    },
+                    playVideo(url,title,e){
+                        videoPlayer.close()
+                        this.loadVideoPlayer(url,title)
+                        e.currentTarget.style.background = 'rgba(0,156,255,0.4)'
+                    },
+                    loadVideoPlayer(url,title){
+                        axios({
+                            method: 'get',
+                            url: 'https://www.clicli.top/jx?url=' + url
+                        }).then(response => {
+                            if(response.data.code === 0){
+                                console.log(response.data.url)
+                                _initVideoClient(response.data.url,title)
+                            }
+                        })
+                    },
+                    goAvDetail(){
+                        console.log("111");
+                        _avDetailIsShow = true
+                        api.openFrame({
+                            name: 'avDetail',
+                            url: './avDetail.html',
+                            rect: {
+                                x: 0,
+                                y: 9/16*api.winWidth+10,
+                                w: api.winWidth,
+                                h: api.winHeight-9/16*api.winWidth
+                            },
+                            pageParam: {
+                                postContent: this.postContent
+                            },
+                            animation: {
+                                type: 'movein',
+                                subType: 'from_bottom',
+                                duration: 300
+                            },
+                            bounces: false,
+                            bgColor: 'rgba(0,0,0,0)',
+                            vScrollBarEnabled: true,
+                            hScrollBarEnabled: true
+                        });
+
+                    },
+                    goAvComments(){
+                        console.log("222");
+                        _avCommentsIsShow = true
+                        api.openFrame({
+                            name: 'avComments',
+                            url: './avComments.html',
+                            rect: {
+                                x: 0,
+                                y: 9/16*api.winWidth+10,
+                                w: api.winWidth,
+                                h: api.winHeight-9/16*api.winWidth
+                            },
+                            pageParam: {
+                                postContent: this.postContent
+                            },
+                            animation: {
+                                type: 'movein',
+                                subType: 'from_bottom',
+                                duration: 300
+                            },
+                            bounces: false,
+                            bgColor: 'rgba(0,0,0,0)',
+                            vScrollBarEnabled: true,
+                            hScrollBarEnabled: true
+                        });
+
+                    }
+                }
+            })
+
+
+            //初始化播放器
+            function _initVideoClient(url,title){
+                videoPlayer.openPlay({
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: api.winWidth,
+                        h: 9 / 16 * api.winWidth
+                    },
+                    texts: {
+                        head: {
+                            title
+                        }
+                    },
+                    centerPlayBtn: {
+                        size: 80,
+                        iconPath: 'widget://image/play.png'
+                    },
+                    styles: {
+                        head: {
+                            bg: 'rgba(161,161,161,0)',
+                            height: 44,
+                            y: 20,
+                            titleSize: 20,
+                            titleColor: '#fff',
+                            backSize: 22,
+                            backImg: 'fs://image/back.png',
+                            customButtons: [],
+                        },
+                        foot: {
+                            bg: 'rgba(161,161,161,0.1)',
+                            height: 44,
+                            playSize: 22,
+                            playImg: 'fs://img/paly.png',
+                            pauseImg: 'fs://img/pause.png',
+                            timeSize: 14,
+                            timeColor: '#fff',
+                            sliderImg: 'fs://img/slder.png',
+                            progressColor: '#BEBEBE',
+                            progressSelected: '#1296db',
+                            rotationSize: 22,
+                            verticalImg: 'widget://image/fullscreen.png',
+                            horizontalImg: 'widget://image/fullscreen.png',
+                        }
+                    },
+                    path: url,
+                    coverImg: 'widget://image/coverImg.png',
+                    autoPlay: true,
+                    fixed: true
+                }, function(ret, err) {
+                    if (ret.eventType === 'back') {
+                        if (ret.value === false) {
+                            api.closeWin();
+                        }
+                    }else if(ret.eventType === 'failed'){
+                        api.toast({
+                            msg: '播放失败',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                });
+
+                api.addEventListener({
+                    name: 'keyback'
+                }, function(ret, err) {
+                    //判断当前是否处于全屏播放
+                    videoPlayer.isFullscreen(function(ret) {
+                        if (ret.isFullscreen === false) {
+                            if(_avDetailIsShow){
+                                api.closeFrame({name: 'avDetail'})
+                                _avDetailIsShow = false
+                            }else if(_avCommentsIsShow){
+                                api.closeFrame({name: 'avComments'})
+                                _avCommentsIsShow = false
+                            }else{
+                                videoPlayer.close()
+                                api.closeWin()
+                            }
+                        } else {
+                            videoPlayer.onBack()
+                        }
+                    })
+                });
+
+                api.addEventListener({
+                    name:'resume'
+                }, function(ret){
+                    videoPlayer.onResume()
+                    videoPlayer.start()
+                });
+
+                api.addEventListener({
+                    name:'pause'
+                }, function(ret){
+                    videoPlayer.onPause()
+                });
+
+            }
+
+            api.addEventListener({
+                name: 'closeAvDetailFrame'
+            }, function(ret, err){
+                _avDetailIsShow = false
+            });
+
+        }
+    </script>
+</body>
+
+</html>

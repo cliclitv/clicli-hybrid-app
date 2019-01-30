@@ -78,11 +78,8 @@
                 mounted(){
                     this.$refs.content.innerHTML = this.postContent
                 },
-                methods: {
+                methods:{
                     close(){
-                        api.sendEvent({
-                            name: 'closeAvDetailFrame'
-                        })
                         api.closeFrame()
                     }
                 }
