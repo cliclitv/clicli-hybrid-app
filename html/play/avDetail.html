@@ -276,14 +276,12 @@
                         e.currentTarget.style.background = 'rgba(0,156,255,0.4)'
                     },
                     loadVideoPlayer(url,title){
-
                         axios({
                             method: 'get',
                             url: 'https://www.clicli.top/jx?url=' + url
                         }).then(response => {
                             if(response.data.code === 0){
                                 console.log(response.data.url)
-                                // return response.data.url
                                 _initVideoClient(response.data.url,title)
                             }
                         })
