@@ -8,9 +8,9 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/api.css" />
     <style>
-        /*[v-cloak] {
+        [v-cloak] {
             display: none;
-        }*/
+        }
 
         html,
         body {
@@ -39,6 +39,7 @@
             position: fixed;
             top: 0;
             left: 0;
+            z-index: 9999;
         }
 
         .close{
@@ -51,36 +52,96 @@
             padding: 10px 20px;
         }
 
+        .comment-item{
+            padding: 10px 20px;
+            position: relative;
+            background-color: #fff;
+            border-bottom: 1px solid #f1f1f1;
+            text-align: left;
+        }
+        .avatar{
+            height: 44px;
+            width: 44px;
+            border-radius: 50%;
+            float: left;
+            background-image: url('../../image/avatar2.png');
+            background-position: center;
+            background-size: contain;
+        }
+        .comment-detail{
+            margin-left: 64px;
+        }
+        .comment-name{
+            font-size: 16px;
+            color: #515151;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+        }
+        .comment-time{
+            font-size: 14px;
+            color: #515151;
+            padding: 5px 0;
+        }
+        .comment-content{
+            font-size: 16px;
+            color: #333;
+            width: auto;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
     </style>
 </head>
 
 <body>
 
-
-
     <div id="app" v-cloak>
         <div class="header"><img src="../../image/close.png" alt="" class="close" @click="close"></div>
-        <div class="content" ref="content"></div>
+        <div class="comment-item" v-for="(item, index) in commentsList" :key="index">
+            <img class="avatar" :src="getAvatar(item.uqq)" alt="">
+            <div class="comment-detail">
+                <p class="comment-name">{{item.uname}}</p>
+                <p class="comment-time">{{item.ctime}}</p>
+                <p class="comment-content">{{item.content}}</p>
+            </div>
+        </div>
     </div>
 
     <script src="../../script/api.js"></script>
     <script src="../../script/vue.min.js"></script>
     <script src="../../script/axios.min.js"></script>
-    <script src="../../script/hyperdown.js"></script>
     <script type="text/javascript">
         apiready = () => {
 
             const app = new Vue({
                 el: '#app',
                 data: {
-                    postContent: api.pageParam.postContent
+                    pid: api.pageParam.pid,
+                    commentsList: []
                 },
                 mounted(){
-                    this.$refs.content.innerHTML = this.postContent
+                    this.getCommentsList()
                 },
                 methods:{
                     close(){
+                        api.sendEvent({
+                            name: 'closeAvCommentsFrame'
+                        })
                         api.closeFrame()
+                    },
+                    getCommentsList(){
+                        axios({
+                            method: 'get',
+                            url: 'https://api.clicli.top/comments?pid=' + this.pid + '&page=1&pageSize=100'
+                        }).then(response => {
+                            if(response.data.code === 201){
+                                this.commentsList = response.data.comments
+                            }
+                        })
+                    },
+                    getAvatar(uqq){
+                        return 'http://q1.qlogo.cn/g?b=qq&nk='+uqq+'&s=5'
                     }
                 }
             })

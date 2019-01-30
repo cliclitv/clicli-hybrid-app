@@ -21,12 +21,6 @@
 
         .content-container{
             margin-top: 56.25vw;
-            /*padding: 10px 2vw;
-            background-color: #FEFEFE;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            flex-wrap: wrap;*/
         }
 
         /*番剧简介*/
@@ -209,14 +203,12 @@
                     postIntro: [],
                     postContent: '',
                     videosList: [],
-                    postCount: {},
-                    commentsList: [],
+                    postCount: {}
                 },
                 mounted() {
                     this.getPostIntro()
                     this.getVideosList()
                     this.getPostCount()
-                    this.getCommentsList()
                     api.parseTapmode()
                 },
                 methods: {
@@ -258,16 +250,6 @@
                             }
                         })
                     },
-                    getCommentsList(){
-                        axios({
-                            method: 'get',
-                            url: 'https://api.clicli.top/comments?pid=' + pid + '&page=1&pageSize=100'
-                        }).then(response => {
-                            if(response.data.code === 201){
-                                this.commentsList = response.data.comments
-                            }
-                        })
-                    },
                     getUqq(email){
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
                     },
@@ -291,7 +273,6 @@
                         })
                     },
                     goAvDetail(){
-                        console.log("111");
                         _avDetailIsShow = true
                         api.openFrame({
                             name: 'avDetail',
@@ -318,7 +299,6 @@
 
                     },
                     goAvComments(){
-                        console.log("222");
                         _avCommentsIsShow = true
                         api.openFrame({
                             name: 'avComments',
@@ -330,7 +310,7 @@
                                 h: api.winHeight-9/16*api.winWidth
                             },
                             pageParam: {
-                                postContent: this.postContent
+                                pid
                             },
                             animation: {
                                 type: 'movein',
@@ -452,6 +432,12 @@
                 name: 'closeAvDetailFrame'
             }, function(ret, err){
                 _avDetailIsShow = false
+            });
+
+            api.addEventListener({
+                name: 'closeAvCommentsFrame'
+            }, function(ret, err){
+                _avCommentsIsShow = false
             });
 
         }
