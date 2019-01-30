@@ -226,6 +226,7 @@
                                 let parser = new HyperDown
                                 let html = parser.makeHtml(response.data.result.content)
                                 this.postContent = html
+                                console.log(html);
                             }
                         })
                     },
@@ -235,9 +236,8 @@
                             url: 'https://api.clicli.top/videos?pid=' + pid + '&page=1&pageSize=100'
                         }).then(response => {
                             if(response.data.code === 201){
-                                console.log(response.data.videos)
                                 this.videosList = response.data.videos
-                                _initVideoClient(response.data.videos[0].content,response.data.videos[0].title)
+                                this.loadVideoPlayer(response.data.videos[0].content,response.data.videos[0].title)
                                 setTimeout(()=>{
                                     document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
                                 },100)
@@ -268,13 +268,25 @@
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
                     },
                     getImgUrl(content){
-                        console.log(content)
                         return 'background-image:url('+ (content || "").split(')')[0].split('[suo](')[1] +')'
                     },
                     playVideo(url,title,e){
                         videoPlayer.close()
-                        _initVideoClient(url,title)
+                        this.loadVideoPlayer(url,title)
                         e.currentTarget.style.background = 'rgba(0,156,255,0.4)'
+                    },
+                    loadVideoPlayer(url,title){
+
+                        axios({
+                            method: 'get',
+                            url: 'https://www.clicli.top/jx?url=' + url
+                        }).then(response => {
+                            if(response.data.code === 0){
+                                console.log(response.data.url)
+                                // return response.data.url
+                                _initVideoClient(response.data.url,title)
+                            }
+                        })
                     }
                 }
             })
@@ -330,6 +342,12 @@
                         if (ret.value === false) {
                             api.closeWin();
                         }
+                    }else if(ret.eventType === 'failed'){
+                        api.toast({
+                            msg: '播放失败',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
                     }
                 });
 
@@ -339,6 +357,7 @@
                     //判断当前是否处于全屏播放
                     videoPlayer.isFullscreen(function(ret) {
                         if (ret.isFullscreen === false) {
+                            videoPlayer.close()
                             api.closeWin()
                         } else {
                             videoPlayer.onBack()
