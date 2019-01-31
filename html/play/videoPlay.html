@@ -333,9 +333,22 @@
                                 method: 'get',
                                 url
                             }).then(response => {
+                                console.log(JSON.stringify(response.data));
                                 if (response.data.code === 0) {
                                     console.log(response.data.url)
                                     _initVideoClient(response.data.url, title)
+                                }
+                            }).catch( error => {
+                                switch (error.response.status) {
+                                    case 500:
+                                        api.toast({
+                                            msg: '服务器开小差了',
+                                            duration: 2000,
+                                            location: 'bottom'
+                                        })
+                                        break;
+                                        
+                                    default:
                                 }
                             })
                         } else {
