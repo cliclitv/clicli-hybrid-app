@@ -183,6 +183,9 @@
                             if (response.data.code === 201) {
                                 if(response.data.posts !== null){
                                     this.postsList = response.data.posts
+                                    if(response.data.posts.length<20){
+                                        this.loading = false
+                                    }
                                 }else{
                                     this.loading = false
                                 }
@@ -206,10 +209,15 @@
                                     for ( let i = 0; i < response.data.posts.length; i ++ ) {
                                         this.postsList.push(response.data.posts[i])
                                     }
+                                    if(response.data.posts.length<20){
+                                        this.loading = false
+                                    }
                                 }else{
                                     this.loading = false
                                     //移除事件监听
-
+                                    api.removeEventListener({
+                                        name: 'scrolltobottom'
+                                    })
                                 }
                             }
                         }).catch(error => {
