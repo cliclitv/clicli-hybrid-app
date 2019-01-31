@@ -51,7 +51,7 @@
     <div id="footer" class="border-t">
         <ul class="flex-wrap" >
             <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con active" >主站</li>
-            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >留言</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >追番</li>
             <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >动态</li>
             <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >我的</li>
         </ul>
@@ -167,7 +167,6 @@
         }else {
             index++
         }
-        alert(index)
         api.setFrameGroupIndex({
             name: 'group',
             index: index,

@@ -81,6 +81,7 @@
             background-image: url('../../image/avatar2.png');
             background-position: center;
             background-size: contain;
+            border: 5px solid #ddd;
         }
         .comment-detail{
             margin-left: 64px;
@@ -99,7 +100,7 @@
         }
         .comment-content{
             font-size: 16px;
-            color: #333;
+            color: #515151;
             width: auto;
             word-wrap: break-word;
             word-break: break-all;
@@ -154,6 +155,11 @@
             <img src="../../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="" v-if="commentsList === null">
             <p style="font-size:14px;color:#999;" v-if="commentsList === null">空空如也</p>
         </div>
+        <!-- 提示网络错误图片 -->
+        <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
+            <img src="../../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+            <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
+        </div>
         <!-- 加载图标 -->
         <div class='loading' v-show="loading">
             <img src='../../image/loading.png'>
@@ -172,7 +178,8 @@
                 data: {
                     pid: api.pageParam.pid,
                     commentsList: [],
-                    loading: true
+                    loading: true,
+                    isError: false
                 },
                 mounted(){
                     this.getCommentsList()
@@ -193,10 +200,16 @@
                                 this.commentsList = response.data.comments
                                 this.loading = false
                             }
+                        }).catch( error => {
+                            this.loading = false
+                            this.isError = true
                         })
                     },
                     getAvatar(uqq){
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+uqq+'&s=5'
+                    },
+                    reload(){
+                        location.reload()
                     }
                 }
             })

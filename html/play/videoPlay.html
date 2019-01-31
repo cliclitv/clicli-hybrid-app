@@ -43,9 +43,15 @@
             background-color: #009688;
             border: 1px solid #ddd;
         }
+        .post-intro .intro-img:active{
+            opacity: 0.6;
+        }
         .post-intro .intro-content{
             color: #515151;
             padding-right: 15px;
+        }
+        .intro-content:active{
+            opacity: 0.6;
         }
         .intro-content .intro-title{
             color: #515151;
@@ -205,7 +211,7 @@
                 <p style="font-size:14px;color:#999;" v-if="videosList === null">空空如也</p>
             </div>
             <!-- 提示网络错误图片 -->
-            <div class="tips" style="text-align:center;" v-show="isError" @click="reload">
+            <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
                 <img src="../../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
                 <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
             </div>
@@ -273,10 +279,12 @@
                             if(response.data.code === 201){
                                 this.videosList = response.data.videos
                                 this.loading = false
-                                this.loadVideoPlayer(response.data.videos[0].content,response.data.videos[0].title)
-                                setTimeout(()=>{
-                                    document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
-                                },100)
+                                if(response.data.videos !== null){
+                                    this.loadVideoPlayer(response.data.videos[0].content,response.data.videos[0].title)
+                                    setTimeout(()=>{
+                                        document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
+                                    },100)
+                                }
                             }
                         }).catch(error => {
                             this.loading = false

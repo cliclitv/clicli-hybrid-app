@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
@@ -116,7 +118,7 @@
             <p style="font-size:14px;color:#999;">空空如也</p>
         </div>
         <!-- 提示网络错误图片 -->
-        <div class="tips" style="text-align:center;" v-show="isError" @click="reload">
+        <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
             <img src="../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
             <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
         </div>
@@ -147,7 +149,7 @@
                 },
                 methods: {
                     getImgUrl(content){
-                        return 'background-image:url('+ content.split(')')[0].split('[suo](')[1] +')'
+                        return 'background-image:url('+ content.split('[suo](')[1].split(')')[0] +')'
                     },
                     goAvDetail(pid,title) {
                         api.openWin({
