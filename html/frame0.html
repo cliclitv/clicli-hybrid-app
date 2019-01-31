@@ -102,7 +102,7 @@
 
         <div class="content-container">
 
-            <div class="post-item" v-for="item in postsList" @click="goAvDetail(item.id,item.title)">
+            <div class="post-item" v-for="item in postsList" @click="goVideoPlay(item.id,item.title)">
                 <div class="post-img" :style="getImgUrl(item.content)"></div>
                 <div class="post-intro">
                     <div class="post-name">{{item.title}}</div>
@@ -151,7 +151,7 @@
                     getImgUrl(content){
                         return 'background-image:url('+ content.split('[suo](')[1].split(')')[0] +')'
                     },
-                    goAvDetail(pid,title) {
+                    goVideoPlay(pid,title) {
                         api.openWin({
                             name: 'videoPlay',
                             url: './play/videoPlay.html',
