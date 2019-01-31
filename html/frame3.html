@@ -205,7 +205,7 @@
                     getPostsList() {
                         axios({
                             method: 'get',
-                            url: 'https://api.clicli.top/posts/both?status=public&sort=yuanchuang&page=' + this.page + '&pageSize=20'
+                            url: 'https://api.clicli.top/posts/type?status=ugc&page='+ this.page +'&pageSize=20'
                         }).then(response => {
                             if (response.data.code === 201) {
                                 if(response.data.posts !== null){

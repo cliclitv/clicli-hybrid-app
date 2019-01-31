@@ -174,8 +174,8 @@
             <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCount.cv}}</span>
         </div>
         <div class="post-label">
-            <span v-show="postIntro.sort == 'xinfan'">新番</span>
-            <span v-show="postIntro.type == 'tuijian'">推荐</span>
+            <span v-text="translate(postIntro.sort)"></span>
+            <span v-text="translate(postIntro.type)"></span>
         </div>
         <div class="content" ref="content"></div>
     </div>
@@ -204,6 +204,26 @@
                     },
                     getAvatar(uqq){
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+ uqq +'&s=5'
+                    },
+                    translate(sortName) {
+                        switch (sortName) {
+                            case 'xinfan':
+                                return '新番'
+                            case 'tuijian':
+                                return '推荐'
+                            case 'danmei':
+                                return '耽美'
+                            case 'moren':
+                                return '默认'
+                            case 'lianzai':
+                                return '连载'
+                            case 'wenzhang':
+                                return '文章'
+                            case 'yuanchuang':
+                                return '原创'
+                            default:
+                                return '其他'
+                        }
                     }
                 }
             })
