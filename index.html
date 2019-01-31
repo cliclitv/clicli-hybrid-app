@@ -8,9 +8,10 @@
     <link rel="stylesheet" type="text/css" href="./css/api.css"/>
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
     <style>
-        header{ background-color: #FEFEFE; color: #515151; position: fixed; top: 25px; width: 100%;}
+        header{ background-color: #FEFEFE; color: #515151; position: fixed; top: 25px; width: 100%; z-index: 9999; }
         header ul li { height: 50px; line-height: 50px; text-align: left; padding-left: 20px; display: none; color: #515151; position: relative;font-size: 28px;  }
         header ul li.active{ display: block; }
+        header ul li span { font-size: 22px; padding-right: 5px; transition: 0.2s; border-bottom: 2px solid #FEFEFE; }
         #footer{  background-color: #FEFEFE; }
         #footer ul li{color: #bbb; padding-top: 34px; margin-top: 2px; padding-bottom: 4px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center; }
         #footer ul li.active{ color: #524F0A; }
@@ -25,6 +26,11 @@
         .flex-con{
           overflow: auto
         }
+        .selected{
+            color: #009688;
+            font-size: 28px;
+            border-bottom: 2px solid #009688;
+        }
     </style>
 </head>
 <body>
@@ -33,7 +39,7 @@
     <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
     <header>
         <ul>
-            <li class="border-b active" >推荐</li>
+            <li class="border-b active" ><span id="recommend" class="selected">推荐</span>&nbsp;&nbsp;<span id="new">新更</span></li>
             <li class="border-b" >补档反馈</li>
             <li class="border-b" >说点什么</li>
             <li id="mine" class="border-b" >个人中心</li>
@@ -55,6 +61,10 @@
 </html>
 <script type="text/javascript" src="script/api.js"></script>
 <script type="text/javascript">
+
+    let _recommendOnSelected = true,
+        _newOnSelected = false
+
     apiready = () => {
         api.setStatusBarStyle({
             style: 'dark',
@@ -62,13 +72,41 @@
         });
         api.parseTapmode()
         funIniGroup()
+        switchFunc()
+    }
+
+    function switchFunc(){
+        let recommendBtn = document.querySelector('#recommend')
+        let newBtn = document.querySelector('#new')
+        recommendBtn.onclick = function(){
+            recommendBtn.className = "selected"
+            newBtn.className = ""
+            api.setFrameGroupIndex({
+                name: 'group',
+                index: 0,
+                scroll: true
+            })
+            _recommendOnSelected = true
+            _newOnSelected = false
+        }
+        newBtn.onclick = function(){
+            newBtn.className = "selected"
+            recommendBtn.className = ""
+            api.setFrameGroupIndex({
+                name: 'group',
+                index: 1,
+                scroll: true
+            })
+            _recommendOnSelected = false
+            _newOnSelected = true
+        }
     }
 
     function funIniGroup(){
         let eHeaderLis = $api.domAll('header li')
             frames = []
-        let frame = ['frame0.html','frame1.html','frame2.html','frame3.html']
-        for (let i = 0,len = eHeaderLis.length; i < len; i++) {
+        let frame = ['frame0.html','frame1.html','frame2.html','frame3.html','frame4.html']
+        for (let i = 0; i < eHeaderLis.length+1; i++) {
                 frames.push( {
                     url: './html/'+frame[i],
                     bgColor : '#FEFEFE',
@@ -81,7 +119,7 @@
             scrollEnabled: false,
             rect: {
                 x: 0,
-                y: $api.dom('header').offsetHeight+25,
+                y: $api.dom('header').offsetHeight+27,
                 w: api.winWidth,
                 h: $api.dom('#main').offsetHeight-75
             },
@@ -89,7 +127,7 @@
             index: 0,
             frames: frames,
             background: '#FEFEFE',
-            preload: 3
+            preload: 0
         }, (ret, err) => {
 
         })
@@ -111,10 +149,29 @@
         }
         $api.addCls( eFootLis[index], 'active')
         $api.addCls( eHeaderLis[index], 'active')
+        if(index == 0){
+            if(_recommendOnSelected){
+                api.setFrameGroupIndex({
+                    name: 'group',
+                    index: 0,
+                    scroll: true
+                })
+            }else{
+                api.setFrameGroupIndex({
+                    name: 'group',
+                    index: 1,
+                    scroll: true
+                })
+            }
+            return
+        }else {
+            index++
+        }
+        alert(index)
         api.setFrameGroupIndex({
             name: 'group',
             index: index,
             scroll: true
-        });
+        })
     }
 </script>

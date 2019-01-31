@@ -68,6 +68,29 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+
+        /*没有数据，正在加载*/
+        .loading{
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .loading img{
+            height: 40px;
+            width: 40px;
+            animation: que 1.6s linear infinite;
+        }
+        @keyframes que{
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -87,6 +110,21 @@
 
         </div>
 
+        <!-- 提示数据为空图片 -->
+        <div class="tips" style="text-align:center;" v-if="postsList === null">
+            <img src="../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+            <p style="font-size:14px;color:#999;">空空如也</p>
+        </div>
+        <!-- 提示网络错误图片 -->
+        <div class="tips" style="text-align:center;" v-show="isError" @click="reload">
+            <img src="../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+            <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
+        </div>
+        <!-- 加载图标 -->
+        <div class='loading' v-show="loading">
+            <img src='../image/loading.png'>
+        </div>
+
     </div>
 
     <script src="../script/api.js"></script>
@@ -97,7 +135,9 @@
             const app = new Vue({
                 el: '#app',
                 data: {
-                    postsList: []
+                    postsList: [],
+                    loading: true,
+                    isError: false
                 },
                 created(){
 
@@ -119,7 +159,7 @@
                             animation: {
                                 type: 'movein'
                             }
-                        });
+                        })
                     },
                     getRecommendList(){
                         axios({
@@ -128,8 +168,15 @@
                         }).then(response => {
                             if(response.data.code === 201){
                                 this.postsList = response.data.posts
+                                this.loading = false
                             }
+                        }).catch(error => {
+                            this.loading = false
+                            this.isError = true
                         })
+                    },
+                    reload(){
+                        location.reload()
                     }
                 }
             })

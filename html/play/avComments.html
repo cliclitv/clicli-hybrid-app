@@ -105,16 +105,41 @@
             word-break: break-all;
         }
 
+        /*没有数据，正在加载*/
+        .loading{
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .loading img{
+            height: 40px;
+            width: 40px;
+            animation: que 1.6s linear infinite;
+        }
+        @keyframes que{
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
     <div id="app" v-cloak>
+
         <div class="header">
             <img src="../../image/close.png" alt="" class="close" @click="close">
             <p>番剧评论</p>
         </div>
+
         <div class="comment-item" v-for="(item, index) in commentsList" :key="index">
             <img class="avatar" :src="getAvatar(item.uqq)" alt="">
             <div class="comment-detail">
@@ -123,11 +148,17 @@
                 <p class="comment-content">{{item.content}}</p>
             </div>
         </div>
+
         <!-- 提示数据为空图片 -->
         <div class="tips" style="text-align:center;">
             <img src="../../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="" v-if="commentsList === null">
             <p style="font-size:14px;color:#999;" v-if="commentsList === null">空空如也</p>
         </div>
+        <!-- 加载图标 -->
+        <div class='loading' v-show="loading">
+            <img src='../../image/loading.png'>
+        </div>
+
     </div>
 
     <script src="../../script/api.js"></script>
@@ -140,7 +171,8 @@
                 el: '#app',
                 data: {
                     pid: api.pageParam.pid,
-                    commentsList: []
+                    commentsList: [],
+                    loading: true
                 },
                 mounted(){
                     this.getCommentsList()
@@ -159,6 +191,7 @@
                         }).then(response => {
                             if(response.data.code === 201){
                                 this.commentsList = response.data.comments
+                                this.loading = false
                             }
                         })
                     },
