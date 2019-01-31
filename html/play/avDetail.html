@@ -21,10 +21,9 @@
 
         #app{
             padding: 50px 0 10px;
-        }
-
-        img{
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .header{
@@ -42,14 +41,113 @@
             z-index: 9999;
         }
 
-        .close{
-            height: 25px;
-            width: 25px;
+        .header .close{
+            height: 22px;
+            width: 22px;
             padding: 10px;
+            float: left;
+        }
+
+        .header p{
+            right: 56px;
+            left: 56px;
+            display: inline-block;
+            overflow: hidden;
+            width: auto;
+            margin: 0;
+            padding: 0;
+            text-overflow: ellipsis;
+            line-height: 44px;
+            position: absolute;
+            text-align: center;
+            white-space: nowrap;
+            color: #FEFEFE;
+            font-size: 20px;
+        }
+
+        .uper{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .uper .avatar{
+            height: 44px;
+            width: 44px;
+            border-radius: 50%;
+            background-image: url('../../image/avatar2.png');
+            background-position: center;
+            background-size: contain;
+            margin: 10px 10px 10px 0;
+            border: 5px solid #ECECEC;
+        }
+
+        .uper .name{
+            font-size: 20px;
+            color: #515151;
+            padding: 0;
+            margin: 0;
+        }
+
+        .intro-title{
+            color: #515151;
+            font-size: 20px;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .statistic{
+            padding: 10px 0;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .statistic .pv-icon{
+            height: 20px;
+            width: 20px;
+            margin-right: 5px;
+        }
+        .statistic .pv{
+            color: #999;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .statistic .comments-icon{
+            height: 18px;
+            width: 18px;
+            margin-right: 5px;
+        }
+        .statistic .comments-num{
+            color: #999;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .post-label span{
+            padding: 5px 10px;
+            background-color: #F2AA24;
+            border-radius: 5px;
+            color: #FFF;
+            margin-right: 6px;
+            font-size: 14px;
         }
 
         .content{
-            padding: 10px 20px;
+            width: 100%;
+            padding: 10px 0;
+            text-align: left;
+        }
+
+        .content img{
+            width: 100%;
+        }
+        .content p{
+            padding-left: 20px;
+            padding-right: 20px;
         }
 
     </style>
@@ -58,7 +156,23 @@
 <body>
 
     <div id="app" v-cloak>
-        <div class="header"><img src="../../image/close.png" alt="" class="close" @click="close"></div>
+        <div class="header">
+            <img src="../../image/close.png" alt="" class="close" @click="close">
+            <p>番剧介绍</p>
+        </div>
+        <div class="uper">
+            <img class="avatar" :src="getAvatar(postIntro.uqq)" alt="">
+            <div class="name">{{postIntro.uname}}</div>
+        </div>
+        <div class="intro-title">{{postIntro.title}}</div>
+        <div class="statistic">
+            <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postCount.pid}}</span>
+            <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCount.cv}}</span>
+        </div>
+        <div class="post-label">
+            <span v-show="postIntro.sort == 'xinfan'">新番</span>
+            <span v-show="postIntro.type == 'tuijian'">推荐</span>
+        </div>
         <div class="content" ref="content"></div>
     </div>
 
@@ -70,7 +184,9 @@
             const app = new Vue({
                 el: '#app',
                 data: {
-                    postContent: api.pageParam.postContent
+                    postContent: api.pageParam.postContent,
+                    postIntro: api.pageParam.postIntro,
+                    postCount: api.pageParam.postCount
                 },
                 mounted(){
                     this.$refs.content.innerHTML = this.postContent
@@ -81,6 +197,9 @@
                             name: 'closeAvDetailFrame'
                         })
                         api.closeFrame()
+                    },
+                    getAvatar(uqq){
+                        return 'http://q1.qlogo.cn/g?b=qq&nk='+ uqq +'&s=5'
                     }
                 }
             })

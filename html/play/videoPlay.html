@@ -8,9 +8,9 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="../../css/api.css" />
     <style>
-        /*[v-cloak] {
+        [v-cloak] {
             display: none;
-        }*/
+        }
 
         html,
         body {
@@ -49,7 +49,7 @@
         }
         .intro-content .intro-title{
             color: #515151;
-            font-size: 18px;
+            font-size: 20px;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -154,9 +154,9 @@
 
             <div class="post-intro">
                 <div :style="getImgUrl(postIntro.content)" alt="" class="intro-img" @click="goAvDetail" tapmode></div>
-                <div class="intro-content">
+                <div class="intro-content" @click="goAvComments" tapmode>
                     <div class="intro-title">{{postIntro.title}}</div>
-                    <div class="statistic" @click="goAvComments" tapmode>
+                    <div class="statistic">
                         <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postCount.pid}}</span>
                         <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCount.cv}}</span>
                     </div>
@@ -167,14 +167,19 @@
                 </div>
             </div>
 
-            <div class="video-list">
+            <div class="video-list" v-if="videosList !== null">
                 <div class="video-item" v-for="item in videosList" @click="playVideo(item.content,item.title,$event)">
-                    <img :src="getUqq(item.uqq)" alt="" class="avatar">
+                    <img :src="getAvatar(item.uqq)" alt="" class="avatar">
                     <div class="intro">
                         <p class="oid">第{{item.oid}}话</p>
                         <p class="title">{{item.title}}</p>
                     </div>
                 </div>
+            </div>
+            <!-- 提示数据为空图片 -->
+            <div class="tips" style="text-align:center;">
+                <img src="../../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="" v-if="videosList === null">
+                <p style="font-size:14px;color:#999;" v-if="videosList === null">空空如也</p>
             </div>
 
         </div>
@@ -250,7 +255,7 @@
                             }
                         })
                     },
-                    getUqq(email){
+                    getAvatar(email){
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+email.split('@qq')[0]+'&s=5'
                     },
                     getImgUrl(content){
@@ -284,7 +289,9 @@
                                 h: api.winHeight-9/16*api.winWidth
                             },
                             pageParam: {
-                                postContent: this.postContent
+                                postContent: this.postContent,
+                                postIntro: this.postIntro,
+                                postCount: this.postCount
                             },
                             animation: {
                                 type: 'movein',
@@ -375,7 +382,7 @@
                     },
                     path: url,
                     coverImg: 'widget://image/coverImg.png',
-                    autoPlay: true,
+                    autoPlay: false,
                     fixed: true
                 }, function(ret, err) {
                     if (ret.eventType === 'back') {

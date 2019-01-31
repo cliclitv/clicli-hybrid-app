@@ -23,10 +23,6 @@
             padding: 50px 0 10px;
         }
 
-        img{
-            width: 100%;
-        }
-
         .header{
             height: 40px;
             width: 100%;
@@ -42,10 +38,28 @@
             z-index: 9999;
         }
 
-        .close{
-            height: 25px;
-            width: 25px;
+        .header .close{
+            height: 22px;
+            width: 22px;
             padding: 10px;
+            float: left;
+        }
+
+        .header p{
+            right: 56px;
+            left: 56px;
+            display: inline-block;
+            overflow: hidden;
+            width: auto;
+            margin: 0;
+            padding: 0;
+            text-overflow: ellipsis;
+            line-height: 44px;
+            position: absolute;
+            text-align: center;
+            white-space: nowrap;
+            color: #FEFEFE;
+            font-size: 20px;
         }
 
         .content{
@@ -97,7 +111,10 @@
 <body>
 
     <div id="app" v-cloak>
-        <div class="header"><img src="../../image/close.png" alt="" class="close" @click="close"></div>
+        <div class="header">
+            <img src="../../image/close.png" alt="" class="close" @click="close">
+            <p>番剧评论</p>
+        </div>
         <div class="comment-item" v-for="(item, index) in commentsList" :key="index">
             <img class="avatar" :src="getAvatar(item.uqq)" alt="">
             <div class="comment-detail">
@@ -105,6 +122,11 @@
                 <p class="comment-time">{{item.ctime}}</p>
                 <p class="comment-content">{{item.content}}</p>
             </div>
+        </div>
+        <!-- 提示数据为空图片 -->
+        <div class="tips" style="text-align:center;">
+            <img src="../../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="" v-if="commentsList === null">
+            <p style="font-size:14px;color:#999;" v-if="commentsList === null">空空如也</p>
         </div>
     </div>
 
