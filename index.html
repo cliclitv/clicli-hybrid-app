@@ -31,6 +31,18 @@
             font-size: 28px;
             border-bottom: 2px solid #009688;
         }
+        .search{
+            float: right;
+            top: 0;
+            margin-right: 10px;
+            width: 26px;
+            height: 26px;
+            padding: 12px;
+        }
+        .search:active{
+            background-color: #ddd;
+            border-radius: 50px;
+        }
     </style>
 </head>
 <body>
@@ -39,9 +51,9 @@
     <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
     <header>
         <ul>
-            <li class="border-b active" ><span id="recommend" class="selected">推荐</span>&nbsp;&nbsp;<span id="new">最新</span></li>
-            <li class="border-b" >热门新番</li>
-            <li class="border-b" >UGC</li>
+            <li class="border-b active" ><span id="recommend" class="selected">推荐</span>&nbsp;&nbsp;<span id="new">最新</span><img src="./image/search.png" alt="" class="search"></li>
+            <li class="border-b" >热门新番<img src="./image/search.png" alt="" class="search"></li>
+            <li class="border-b" >UGC<img src="./image/search.png" alt="" class="search"></li>
             <li id="mine" class="border-b" >个人中心</li>
         </ul>
     </header>
@@ -77,6 +89,25 @@
         funIniGroup()
         switchFunc()
         listenMasterStationSwiperEvent()
+        initSearchFunc()
+    }
+
+    function initSearchFunc(){
+        let searchBtns = document.querySelectorAll('.search')
+        for( let i=0; i<searchBtns.length; i++ ){
+            this.onclick = () => {
+                api.openWin({
+                    name: 'search',
+                    url: './html/search/search.html',
+                    animation: {
+                        type: 'movein',
+                        subType: 'from_right',
+                        duration: 300
+                    }
+                })
+            }
+        }
+
     }
 
     function listenMasterStationSwiperEvent(){
