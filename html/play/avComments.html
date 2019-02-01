@@ -20,7 +20,7 @@
         }
 
         #app{
-            padding: 50px 0;
+            padding: 0;
         }
 
         .header{
@@ -32,10 +32,7 @@
             /*border-top-left-radius: 20px;
             border-top-right-radius: 20px;*/
             display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
+            position: relative;
         }
 
         .header .close{
@@ -63,8 +60,9 @@
         }
 
         .content-container{
-            background-color: #FFF;
+            background-color: #FEFEFE;
             height: auto;
+            overflow: scroll;
         }
 
         .content{
@@ -74,7 +72,7 @@
         .comment-item{
             padding: 10px 20px;
             position: relative;
-            background-color: #fff;
+            background-color: #FEFEFE;
             border-bottom: 1px solid #f1f1f1;
             text-align: left;
         }
@@ -146,7 +144,8 @@
             <p>番剧评论</p>
         </div>
 
-        <div class="content-container">
+        <div class="content-container" ref="container">
+
             <div class="comment-item" v-for="(item, index) in commentsList" :key="index">
                 <img class="avatar" :src="getAvatar(item.uqq)" alt="">
                 <div class="comment-detail">
@@ -156,21 +155,21 @@
                 </div>
             </div>
 
-        </div>
+            <!-- 提示数据为空图片 -->
+            <div class="tips" style="text-align:center;">
+                <img src="../../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="" v-if="commentsList === null">
+                <p style="font-size:14px;color:#999;" v-if="commentsList === null">空空如也</p>
+            </div>
+            <!-- 提示网络错误图片 -->
+            <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
+                <img src="../../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+                <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
+            </div>
+            <!-- 加载图标 -->
+            <div class='loading' v-show="loading">
+                <img src='../../image/loading.png'>
+            </div>
 
-        <!-- 提示数据为空图片 -->
-        <div class="tips" style="text-align:center;">
-            <img src="../../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="" v-if="commentsList === null">
-            <p style="font-size:14px;color:#999;" v-if="commentsList === null">空空如也</p>
-        </div>
-        <!-- 提示网络错误图片 -->
-        <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
-            <img src="../../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
-            <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
-        </div>
-        <!-- 加载图标 -->
-        <div class='loading' v-show="loading">
-            <img src='../../image/loading.png'>
         </div>
 
     </div>
@@ -190,6 +189,7 @@
                     isError: false
                 },
                 mounted(){
+                    this.$refs.container.style.height = api.winHeight - 9 / 16 * api.winWidth - 2 + 'px'
                     this.getCommentsList()
                 },
                 methods:{
