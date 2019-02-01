@@ -373,9 +373,9 @@
                             url: './avDetail.html',
                             rect: {
                                 x: 0,
-                                y: 9 / 16 * api.winWidth + 10,
+                                y: 9 / 16 * api.winWidth - 50,
                                 w: api.winWidth,
-                                h: api.winHeight - 9 / 16 * api.winWidth
+                                h: api.winHeight - 9 / 16 * api.winWidth + 50
                             },
                             pageParam: {
                                 postContent: this.postContent,
@@ -401,9 +401,9 @@
                             url: './avComments.html',
                             rect: {
                                 x: 0,
-                                y: 9 / 16 * api.winWidth + 10,
+                                y: 9 / 16 * api.winWidth - 50,
                                 w: api.winWidth,
-                                h: api.winHeight - 9 / 16 * api.winWidth
+                                h: api.winHeight - 9 / 16 * api.winWidth + 50
                             },
                             pageParam: {
                                 pid
@@ -494,6 +494,7 @@
                     autoPlay: false,
                     fixed: true
                 }, function(ret, err) {
+                    console.log(JSON.stringify(ret));
                     if (ret.eventType === 'back') {
                         if (ret.value === false) {
                             api.closeWin();

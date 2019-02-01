@@ -8,9 +8,9 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
-        /*[v-cloak]{
+        [v-cloak]{
             display: none;
-        }*/
+        }
 
         html,
         body {
@@ -116,7 +116,7 @@
 
     <div id="app" v-cloak>
 
-        <div class="content-container">
+        <div class="content-container" v-if="weekList.length !== 0">
 
             <div class="Monday">
                 <div class="day-name">周一</div>
