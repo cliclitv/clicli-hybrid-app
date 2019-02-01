@@ -158,6 +158,13 @@
                         console.log('已滚动到底部')
                         this.loadMore()
                     });
+                    api.addEventListener({
+                        name:'swiperight'
+                    }, function(ret, err){
+                       api.sendEvent({
+                           name: 'swipeToRecommend'
+                       })
+                    })
                 },
                 methods: {
                     getImgUrl(content) {

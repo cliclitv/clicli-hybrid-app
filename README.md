@@ -1,7 +1,7 @@
 ### clicli-hybrid-app
 🍰 A hybrid app powered by apicloud and vue .
 
-To Do
+to do
 
 - [x] 整体框架结构
 - [x] 番剧播放页
@@ -20,9 +20,9 @@ add feature
 - [ ] 统计番剧浏览量
 - [ ] 用户发表评论
 - [ ] 查看up主投稿列表
-- [ ] 推荐与最新页面滑动切换
+- [x] 推荐与最新页面滑动切换
 
-choose
+try
 
 - [ ] 获取与清除缓存
 - [ ] 获取版本信息

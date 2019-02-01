@@ -146,6 +146,13 @@
                 },
                 mounted() {
                     this.getRecommendList()
+                    api.addEventListener({
+                        name:'swipeleft'
+                    }, function(ret, err){
+                       api.sendEvent({
+                           name: 'swipeToNew'    
+                       })
+                    })
                 },
                 methods: {
                     getImgUrl(content){

@@ -65,6 +65,9 @@
     let _recommendOnSelected = true,
         _newOnSelected = false
 
+    const recommendBtn = document.querySelector('#recommend')
+    const newBtn = document.querySelector('#new')
+
     apiready = () => {
         api.setStatusBarStyle({
             style: 'dark',
@@ -73,33 +76,57 @@
         api.parseTapmode()
         funIniGroup()
         switchFunc()
+        listenMasterStationSwiperEvent()
+    }
+
+    function listenMasterStationSwiperEvent(){
+        //左滑
+        api.addEventListener({
+            name: 'swipeToRecommend'
+        }, function(ret, err){
+            recommendBtnOnSelected()
+        })
+        //右滑
+        api.addEventListener({
+            name: 'swipeToNew'
+        }, function(ret, err){
+            newBtnOnSelected()
+        })
     }
 
     function switchFunc(){
-        let recommendBtn = document.querySelector('#recommend')
-        let newBtn = document.querySelector('#new')
         recommendBtn.onclick = function(){
-            recommendBtn.className = "selected"
-            newBtn.className = ""
-            api.setFrameGroupIndex({
-                name: 'group',
-                index: 0,
-                scroll: true
-            })
-            _recommendOnSelected = true
-            _newOnSelected = false
+            recommendBtnOnSelected()
         }
         newBtn.onclick = function(){
-            newBtn.className = "selected"
-            recommendBtn.className = ""
-            api.setFrameGroupIndex({
-                name: 'group',
-                index: 1,
-                scroll: true
-            })
-            _recommendOnSelected = false
-            _newOnSelected = true
+            newBtnOnSelected()
         }
+    }
+
+    //推荐 被选中
+    function recommendBtnOnSelected(){
+        recommendBtn.className = "selected"
+        newBtn.className = ""
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: 0,
+            scroll: true
+        })
+        _recommendOnSelected = true
+        _newOnSelected = false
+    }
+
+    //最新 被选中
+    function newBtnOnSelected(){
+        newBtn.className = "selected"
+        recommendBtn.className = ""
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: 1,
+            scroll: true
+        })
+        _recommendOnSelected = false
+        _newOnSelected = true
     }
 
     function funIniGroup(){
