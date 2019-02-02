@@ -155,7 +155,7 @@
         <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
 
         <div class="search-bar">
-            <img src="../../image/back.png" alt="" class="back-btn">
+            <img src="../../image/back.png" alt="" class="back-btn" @click="close">
             <input type="search" class="search-input" ref="searchInput" placeholder="搜索一下下*花又不会坏……" @search="getPostsList">
             <img src="../../image/search.png" alt="" class="search-btn" @click="getPostsList">
         </div>
@@ -235,6 +235,7 @@
                         })
                     },
                     getPostsList() {
+                        if(this.$refs.searchInput.value === "") return
                         this.loading = true
                         this.isNull = false
                         this.postsList = []
@@ -289,7 +290,10 @@
                     //         this.loading = false
                     //         this.isError = true
                     //     })
-                    // }
+                    // },
+                    close(){
+                        api.closeWin()
+                    }
                 }
             })
         }
