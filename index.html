@@ -95,7 +95,7 @@
     function initSearchFunc(){
         let searchBtns = document.querySelectorAll('.search')
         for( let i=0; i<searchBtns.length; i++ ){
-            this.onclick = () => {
+            searchBtns[i].onclick = () => {
                 api.openWin({
                     name: 'search',
                     url: './html/search/search.html',
