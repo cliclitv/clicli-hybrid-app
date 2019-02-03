@@ -132,6 +132,9 @@
             align-items: center;
             flex-wrap: wrap;
         }
+        .video-item:active{
+            opacity: 0.6;
+        }
 
         .video-item .avatar {
             height: 40px;
@@ -228,7 +231,7 @@
             <!-- 提示网络错误图片 -->
             <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
                 <img src="../../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
-                <p style="font-size:14px;color:#999;">喔！出错啦，点我重试</p>
+                <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
             </div>
             <!-- 加载图标 -->
             <div class='loading' v-show="loading">
@@ -269,6 +272,7 @@
                     this.getPostIntro()
                     this.getVideosList()
                     this.getPostCount()
+                    this.addPv()
                     api.parseTapmode()
                 },
                 methods: {
@@ -316,6 +320,16 @@
                             }
                         })
                     },
+                    addPv(){
+                        axios({
+                            method: 'get',
+                            url: 'https://www.clicli.top/get/pv?pid=' + pid
+                        }).then(response => {
+                            if (response.data.code === 0) {
+                                //mark record success
+                            }
+                        })
+                    },
                     getAvatar(email) {
                         return 'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@qq')[0] + '&s=5'
                     },
@@ -339,16 +353,19 @@
                                     _initVideoClient(response.data.url, title)
                                 }
                             }).catch( error => {
-                                switch (error.response.status) {
-                                    case 500:
-                                        api.toast({
-                                            msg: '服务器开小差了',
-                                            duration: 2000,
-                                            location: 'bottom'
-                                        })
-                                        break;
+                                console.log(JSON.stringify(error))
+                                if(error.response.status){
+                                    switch (error.response.status) {
+                                        case 500:
+                                            api.toast({
+                                                msg: '服务器开小差了',
+                                                duration: 2000,
+                                                location: 'bottom'
+                                            })
+                                            break;
 
-                                    default:
+                                        default:
+                                    }
                                 }
                             })
                         } else {
@@ -359,6 +376,21 @@
                                 if (response.data.code === 0) {
                                     console.log(response.data.url)
                                     _initVideoClient(response.data.url, title)
+                                }
+                            }).catch( error => {
+                                console.log(JSON.stringify(error))
+                                if(error){
+                                    switch (error.response.status) {
+                                        case 500:
+                                            api.toast({
+                                                msg: '服务器开小差了',
+                                                duration: 2000,
+                                                location: 'bottom'
+                                            })
+                                            break;
+
+                                        default:
+                                    }
                                 }
                             })
                         }
@@ -503,7 +535,7 @@
                         }
                     } else if (ret.eventType === 'failed') {
                         api.toast({
-                            msg: '播放失败',
+                            msg: '播放失败,上PC站看看吧',
                             duration: 2000,
                             location: 'bottom'
                         });

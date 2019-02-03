@@ -73,7 +73,7 @@
         .post-item .post-intro {
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
-            border-left: 3px solid #F52525;
+            border-left: 3px solid #F4D03F;
             background-color: #fff;
         }
 
@@ -229,7 +229,7 @@
                         this.page ++
                         axios({
                             method: 'get',
-                            url: 'https://api.clicli.top/posts/both?status=public&sort=yuanchuang&page=' + this.page + '&pageSize=20'
+                            url: 'https://api.clicli.top/posts/type?status=ugc&page=' + this.page + '&pageSize=20'
                         }).then(response => {
                             if (response.data.code === 201) {
                                 if(response.data.posts !== null){
