@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #FEFEFE;
+            padding: 0;
+            margin: 0;
+        }
+
+        #app{
+            padding: 75px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /*导航栏样式*/
+        #header {
+            position: fixed;
+            height: 50px;
+            z-index: 10;
+            top: 25px;
+            left: 0;
+            right: 0;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: #FEFEFE;
+        }
+
+        #header img {
+            height: 20px;
+            width: 20px;
+            padding: 15px;
+            float: left;
+        }
+
+        #header img:active{
+            background-color: #ddd;
+            border-radius: 50%;
+        }
+
+        #header p {
+            right: 56px;
+            left: 56px;
+            display: inline-block;
+            overflow: hidden;
+            width: auto;
+            margin: 0;
+            padding: 0;
+            text-overflow: ellipsis;
+            line-height: 50px;
+            position: absolute;
+            text-align: center;
+            white-space: nowrap;
+            color: #515151;
+            font-size: 20px;
+        }
+
+        #logo {
+            height: 100px;
+            width: auto;
+        }
+
+        #usernumber {
+            display: block;
+            height: 44px;
+            width: 260px;
+            background-color: #FEFEFE;
+            margin-bottom: 10px;
+            padding: 4px 16px 4px 50px;
+            outline: none;
+            border-bottom: 1px solid #ddd;
+            color: #777;
+            font-size: 18px;
+        }
+        #usernumber:hover{
+            border-bottom: 1px solid #1296db;
+        }
+
+        #usernumber-icon {
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            left: 10px;
+            top: 10px;
+        }
+
+        #password {
+            display: block;
+            height: 44px;
+            width: 260px;
+            background-color: #FEFEFE;
+            margin-bottom: 10px;
+            padding: 4px 16px 4px 50px;
+            outline: none;
+            border-bottom: 1px solid #ddd;
+            color: #777;
+            font-size: 18px;
+        }
+        #password:hover{
+            border-bottom: 1px solid #1296db;
+        }
+
+        #password-icon {
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            left: 10px;
+            top: 10px;
+        }
+
+        .submit {
+            height: 50px;
+            width: 330px;
+            line-height: 50px;
+            background: #1296DB;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .submit:active{
+            opacity: 0.7;
+        }
+
+        .disabled {
+            pointer-events: none;
+            background: #A9A9A9;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+
+        <!-- 我是占位状态栏高度的 -->
+        <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
+        <!-- 我是导航栏 -->
+        <header id="header">
+            <img class="close" src="../../image/back.png" @click="goBack">
+            <p class="title">登录</p>
+        </header>
+
+        <div class="content-container">
+            <img id="logo" src="../../image/clicli-logo.png" alt="">
+            <div style="position:relative;">
+                <img id="usernumber-icon" src="../../image/usernumber.png" alt="">
+                <input id="usernumber" type="text" v-model="name" @input="listenChange" @porpertychange="listenChange" placeholder="用户名">
+            </div>
+            <div style="position:relative;">
+                <img id="password-icon" src="../../image/password.png" alt="">
+                <input id="password" type="password" v-model="pwd" @input="listenChange" @porpertychange="listenChange" placeholder="密码">
+            </div>
+            <div class="submit disabled" @click="login">登录</div>
+        </div>
+
+    </div>
+
+    <script src="../../script/api.js"></script>
+    <script src="../../script/vue.min.js"></script>
+    <script src="../../script/axios.min.js"></script>
+    <script type="text/javascript">
+
+        apiready = () => {
+
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    name: '',
+                    pwd: '',
+                },
+                mounted(){
+
+                },
+                methods: {
+                    goBack(){
+                        api.closeFrame()
+                    },
+                    listenChange(){
+                        let submit = document.querySelector(".submit")
+                        let classVal = submit.getAttribute("class")
+                        if (this.name.length != 0 && this.pwd.length != 0) {
+                            classVal = classVal.replace("disabled", "")
+                            submit.setAttribute("class", classVal)
+                        } else {
+                            if (!this.hasClass(submit, "disabled")) {
+                                classVal = classVal.concat(" disabled")
+                                submit.setAttribute("class", classVal)
+                            }
+                        }
+                    },
+                    //判断是否已存在 class 属性
+                    hasClass(ele, cls) {
+                        return ele.className.match(new RegExp("(\\s|^)" + cls + "(\\s|$)"));
+                    },
+                    login(){
+                        axios.defaults.withCredentials=true
+                        axios({
+                            method: 'post',
+                            url: 'https://api.clicli.top/api/login',
+                            data: {
+                                name: this.name,
+                                pwd: this.pwd
+                            }
+                        }).then(response => {
+                            console.log(JSON.stringify(response))
+                            if (response.data.code === 201) {
+                                this.user = response.data.user
+                                $api.setStorage('user-info', response.data.user)
+                                api.sendEvent({
+                                    name: 'loginSuccess'
+                                })
+                                api.closeFrame()
+                            } else {
+                                api.toast({
+                                    msg: '用户名或密码错误',
+                                    duration: 2000,
+                                    location: 'bottom'
+                                })
+                            }
+                        }).catch(error => {
+                            console.log(JSON.stringify(error))
+                            api.toast({
+                                msg: '喔，出错啦，请稍后重试！',
+                                duration: 2000,
+                                location: 'bottom'
+                            })
+                        })
+                    }
+                }
+            })
+
+        }
+    </script>
+</body>
+
+</html>

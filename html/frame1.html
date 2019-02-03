@@ -157,7 +157,7 @@
                     }, (ret, err) => {
                         console.log('已滚动到底部')
                         this.loadMore()
-                    });
+                    })
                     api.addEventListener({
                         name:'swiperight'
                     }, function(ret, err){
@@ -195,6 +195,7 @@
                                     }
                                 }else{
                                     this.loading = false
+                                    this.postsList = null
                                 }
                             }
                         }).catch(error => {

@@ -49,6 +49,7 @@
             height: 80px;
             width: 80px;
             flex-shrink: 0;
+            border-radius: 50%;
         }
 
         .content-container{
@@ -57,121 +58,286 @@
             color: #515151;
         }
 
-        .wrong-test {
-            padding: 15px 20px;
+        .article-navbar{
+            margin-left: 20px;
+            padding: 0 10px;
+            border-left: 3px solid #009688;
+        }
+
+        .post-container{
+            padding: 10px 2vw;
             background-color: #FEFEFE;
             display: flex;
             flex-direction: row;
             align-items: center;
-            width: auto;
-            border: 1px solid #F1F1F1;
+            flex-wrap: wrap;
         }
-        .wrong-test img{
-            height: 24px;
-            width: 24px;
-            margin-right: 5px;
+
+        .post-item {
+            width: 44vw;
+            height: auto;
+            background-color: #009688;
+            margin: 10px 2vw;
+            border-radius: 5px;
+            box-shadow: 0px 0px 8px #999;
         }
-        .wrong-test:active{
-            background-color: #EEE;
+
+        .post-item .post-img {
+            width: 100%;
+            height: 120px;
+            background-repeat: no-repeat;
+            background-position: center 0;
+            background-size: cover;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
-        .test-collect{
-            padding: 15px 20px;
-            background-color: #FEFEFE;
+
+        .post-item .post-intro {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-left: 3px solid #F52525;
+            background-color: #fff;
+        }
+
+        .post-item .post-intro .post-time {
+            padding: 5px 10px 10px;
+            color: #808080;
+            font-size: 12px;
+        }
+
+        .post-item .post-intro .post-name {
+            height: 40px;
+            padding: 10px 10px 4px;
+            color: #515151;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /*没有数据，正在加载*/
+        .loading {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
-            width: auto;
         }
-        .test-collect img{
-            height: 24px;
-            width: 24px;
-            margin-right: 5px;
+
+        .loading img {
+            height: 40px;
+            width: 40px;
+            animation: que 1.6s linear infinite;
         }
-        .test-collect:active{
-            background-color: #EEE;
-        }
-        .file-download{
-            padding: 15px 20px;
-            background-color: #FEFEFE;
-            display: flex;
-            flex-direction: row;
-            align-items: center
-            width: auto;
-            border: 1px solid #F1F1F1;
-        }
-        .file-download img{
-            height: 24px;
-            width: 24px;
-            margin-right: 5px;
-        }
-        .file-download:active{
-            background-color: #EEE;
-        }
-        .more{
-            padding: 15px 20px;
-            background-color: #FEFEFE;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: auto;
-            border-bottom: 1px solid #F1F1F1;
-        }
-        .more img{
-            height: 18px;
-            width: 18px;
-            padding: 4px;
-            margin-right: 5px;
-        }
-        .more:active{
-            background-color: #EEE;
+
+        @keyframes que {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
     </style>
 </head>
 <body>
-    <div id="app">
-        <header @click="goMyInfo">
+    <div id="app" v-cloak>
+        <header @click="getMyInfo" v-if="user !== null">
             <div class="student-intro">
-                <p class="student-name">飘香豆腐</p>
-                <p class="student-signature">Talk is cheap , show me you code</p>
+                <p class="student-name">{{user.name}}</p>
+                <p class="student-signature">{{user.desc}}</p>
+            </div>
+            <img class="student-avatar" :src="getAvatar(user.qq)" alt="">
+        </header>
+        <header @click="goLogin" v-if="user === null">
+            <div class="student-intro">
+                <p class="student-name">未登录</p>
+                <p class="student-signature">点我登录</p>
             </div>
             <img class="student-avatar" src="../image/avatar.png" alt="">
         </header>
         <div class="content-container">
-
+            <div class="article-navbar">我的投稿</div>
+            <div class="post-container">
+                <div class="post-item" v-for="item in postsList" @click="goVideoPlay(item.id,item.title)">
+                    <div class="post-img" :style="getImgUrl(item.content)"></div>
+                    <div class="post-intro">
+                        <div class="post-name">{{item.title}}</div>
+                        <div class="post-time">{{item.time}}</div>
+                    </div>
+                </div>
+            </div>
+            <!-- 提示数据为空图片 -->
+            <div class="tips" style="text-align:center;" v-if="postsList === null">
+                <img src="../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+                <p style="font-size:14px;color:#999;">空空如也</p>
+            </div>
+            <!-- 提示网络错误图片 -->
+            <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
+                <img src="../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+                <p style="font-size:14px;color:#999;">喔！出错啦，点我重试</p>
+            </div>
+            <!-- 加载图标 -->
+            <div class='loading' v-show="loading">
+                <img src='../image/loading.png'>
+            </div>
         </div>
     </div>
 <script src="../script/api.js"></script>
 <script src="../script/vue.min.js"></script>
+<script src="../script/axios.min.js"></script>
 <script type="text/javascript">
     apiready = () => {
         const app = new Vue({
             el: "#app",
             data: {
-
+                postsList: [],
+                loading: true,
+                isError: false,
+                page: 1,
+                user: null
             },
             mounted(){
-
+                this.getAuth()
+                this.getPostsList()
+                api.addEventListener({
+                    name: 'scrolltobottom',
+                    extra: {
+                        threshold: 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+                    }
+                }, (ret, err) => {
+                    console.log('已滚动到底部')
+                    this.loadMore()
+                })
+                api.addEventListener({
+                    name: 'loginSuccess'
+                }, function(ret, err){
+                    location.reload()
+                })
+                api.addEventListener({
+                    name: 'logout'
+                }, function(ret, err){
+                    location.reload()
+                })
             },
             methods: {
-                goMyInfo(){
+                getAuth(){
+                    axios({
+                        method: 'get',
+                        url: 'https://api.clicli.top/auth'
+                    }).then(response => {
+                        console.log(JSON.stringify(response))
+                        if (response.data.code === 201) {
+                            if(response.data.user !== null){
+                                this.user = response.data.user
+                            }else{
+                                this.user = null
+                            }
+                        }
+                    }).catch(error => {
+                        console.log(JSON.stringify(error))
+                        this.user = null
+                    })
+                },
+                getPostsList(){
+                    axios({
+                        method: 'get',
+                        url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.uid + '&page=' + this.page + '&pageSize=20'
+                    }).then(response => {
+                        console.log(JSON.stringify(response));
+                        if (response.data.code === 201) {
+                            console.log(JSON.stringify(response.data.posts));
+                            if(response.data.posts !== null){
+                                this.postsList = response.data.posts
+                                if(response.data.posts.length<20){
+                                    this.loading = false
+                                }
+                            }else{
+                                this.loading = false
+                                this.postsList = null
+                            }
+                        }
+                    }).catch(error => {
+                        this.loading = false
+                        this.isError = true
+                    })
+                },
+                getImgUrl(content) {
+                    return 'background-image:url(' + content.split('[suo](')[1].split(')')[0] + ')'
+                },
+                getAvatar(uqq){
+                    return 'http://q1.qlogo.cn/g?b=qq&nk='+ uqq +'&s=5'
+                },
+                reload(){
+                    location.reload()
+                },
+                loadMore(){
+                    this.page ++
+                    axios({
+                        method: 'get',
+                        url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.uid + '&page=' + this.page + '&pageSize=20'
+                    }).then(response => {
+                        if (response.data.code === 201) {
+                            if(response.data.posts !== null){
+                                for ( let i = 0; i < response.data.posts.length; i ++ ) {
+                                    this.postsList.push(response.data.posts[i])
+                                }
+                                if(response.data.posts.length<20){
+                                    this.loading = false
+                                }
+                            }else{
+                                this.loading = false
+                                //移除事件监听
+                                api.removeEventListener({
+                                    name: 'scrolltobottom'
+                                })
+                            }
+                        }
+                    }).catch(error => {
+                        this.loading = false
+                        this.isError = true
+                    })
+                },
+                goVideoPlay(pid, title) {
+                    api.openWin({
+                        name: 'videoPlay',
+                        url: './play/videoPlay.html',
+                        pageParam: {
+                            pid
+                        },
+                        animation: {
+                            type: 'movein'
+                        }
+                    })
+                },
+                goLogin(){
+                    api.openFrame({
+                        name: 'login',
+                        url: './login/login.html',
+                        animation: {
+                            type: 'movein',
+                            subType: 'from_right',
+                            duration: 300
+                        }
+                    })
+                    api.sendEvent({
+                        name: 'loginPageOpenStatus',
+                        extra: {
+                            key: 1
+                        }
+                    })
+                },
+                getMyInfo(){
                     api.openWin({
                         name: 'myInfo',
                         url: './mine/myInfo.html',
                         pageParam: {
-                            name: 'test'
+                            user: this.user
                         }
-                    });
-
-                },
-                goMoreInfo(){
-                    api.openWin({
-                        name: 'moreInfo',
-                        url: './mine/moreInfo.html',
-                        pageParam: {
-                            name: 'test'
-                        }
-                    });
+                    })
                 }
             }
         })

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #FEFEFE;
+            padding: 0;
+            margin: 0;
+        }
+
+        #app{
+            padding: 75px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /*导航栏样式*/
+        #header {
+            position: fixed;
+            height: 50px;
+            z-index: 10;
+            top: 25px;
+            left: 0;
+            right: 0;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: #FEFEFE;
+        }
+
+        #header img {
+            height: 20px;
+            width: 20px;
+            padding: 15px;
+            float: left;
+        }
+
+        #header img:active{
+            background-color: #ddd;
+            border-radius: 50%;
+        }
+
+        #header p {
+            right: 56px;
+            left: 56px;
+            display: inline-block;
+            overflow: hidden;
+            width: auto;
+            margin: 0;
+            padding: 0;
+            text-overflow: ellipsis;
+            line-height: 50px;
+            position: absolute;
+            text-align: center;
+            white-space: nowrap;
+            color: #515151;
+            font-size: 20px;
+        }
+
+        .content-container{
+            padding: 20px 0;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+            color: #515151;
+        }
+
+        .avatar {
+            padding: 10px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .avatar img {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+        }
+
+        .avatar img:active {
+            background-color: #EEE;
+            border-radius: 10px;
+        }
+
+        .username {
+            padding: 12px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            border: 1px solid #F1F1F1;
+        }
+
+        .usernumber {
+            padding: 12px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .identity {
+            padding: 12px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            border: 1px solid #F1F1F1;
+        }
+
+        .signature {
+            padding: 12px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            border-bottom: 1px solid #F1F1F1;
+        }
+        .signature:active {
+            background-color: #f8f8f8;
+        }
+
+        .logout{
+            height: 50px;
+            width: 330px;
+            line-height: 50px;
+            background: #1296DB;
+            color: #fff;
+            border-radius: 10px;
+            margin: 10px auto;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .logout:active{
+            opacity: 0.7;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+
+        <!-- 我是占位状态栏高度的 -->
+        <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
+        <!-- 我是导航栏 -->
+        <header id="header">
+            <img class="back" src="../../image/back.png" @click="goBack">
+            <p class="title">个人信息</p>
+        </header>
+
+        <div class="content-container">
+
+            <div class="avatar">
+                <span>头像</span>
+                <img :src="getAvatar(user.qq)" alt="">
+            </div>
+            <div class="username">
+                <span>用户名</span>
+                <span>{{user.name}}</span>
+            </div>
+            <div class="usernumber">
+                <span>QQ</span>
+                <span>{{user.qq}}</span>
+            </div>
+            <div class="identity">
+                <span>身份</span>
+                <span>{{user.role}}</span>
+            </div>
+            <div class="signature">
+                <span>个性签名</span>
+                <span>{{user.desc}}</span>
+            </div>
+
+            <!-- <div class="logout" @click="logout">退出登录</div> -->
+
+        </div>
+
+    </div>
+
+    <script src="../../script/api.js"></script>
+    <script src="../../script/vue.min.js"></script>
+    <script src="../../script/axios.min.js"></script>
+    <script src="../../script/js.cookie.min.js"></script>
+    <script type="text/javascript">
+
+        apiready = () => {
+
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    user: {}
+                },
+                mounted(){
+                    this.user = api.pageParam.user
+                    console.log(JSON.stringify(this.user))
+                },
+                methods: {
+                    goBack(){
+                        api.closeWin()
+                    },
+                    getAvatar(uqq){
+                        return 'http://q1.qlogo.cn/g?b=qq&nk='+ uqq +'&s=5'
+                    },
+                    logout(){
+                        Cookies.remove('uname', {
+                          path: '/',
+                          domain: 'clicli.top'
+                        })
+                        Cookies.remove('uid', {
+                          path: '/',
+                          domain: 'clicli.top'
+                        })
+                        Cookies.remove('uqq', {
+                          path: '/',
+                          domain: 'clicli.top'
+                        })
+                        $api.rmStorage('user-info')
+                        api.sendEvent({
+                            name: 'logout'
+                        })
+                        api.closeWin()
+                    }
+                }
+            })
+
+        }
+    </script>
+</body>
+
+</html>

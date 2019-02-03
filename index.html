@@ -80,6 +80,8 @@
     const recommendBtn = document.querySelector('#recommend')
     const newBtn = document.querySelector('#new')
 
+    let _loginPageOpenStatus = false
+
     apiready = () => {
         api.setStatusBarStyle({
             style: 'dark',
@@ -90,6 +92,7 @@
         switchFunc()
         listenMasterStationSwiperEvent()
         initSearchFunc()
+        listenLoginPageOpenStatus()
     }
 
     function initSearchFunc(){
@@ -122,6 +125,38 @@
             name: 'swipeToNew'
         }, function(ret, err){
             newBtnOnSelected()
+        })
+    }
+
+    function listenLoginPageOpenStatus(){
+        api.addEventListener({
+            name: 'loginPageOpenStatus'
+        }, function(ret, err){
+            if( ret.value.key === 1 ){
+                 _loginPageOpenStatus = true
+            }
+        })
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+            if(_loginPageOpenStatus){
+                api.closeFrame({
+                    name: 'login'
+                })
+                _loginPageOpenStatus = false
+            }else{
+                api.closeWidget({
+                    id: 'A6093043874032',
+                    retData: {
+                        name: 'closeWidget'
+                    },
+                    animation: {
+                        type: 'flip',
+                        subType: 'from_bottom',
+                        duration: 500
+                    }
+                })
+            }
         })
     }
 
