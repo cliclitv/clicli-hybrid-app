@@ -236,6 +236,7 @@
                             console.log(JSON.stringify(response))
                             if (response.data.code === 201) {
                                 $api.setStorage('user-info', response.data.user)
+                                $api.setStorage('isLogin', '1');
                                 api.sendEvent({
                                     name: 'loginSuccess'
                                 })

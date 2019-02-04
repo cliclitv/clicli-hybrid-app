@@ -202,7 +202,7 @@
                 <span>{{user.desc}}</span>
             </div>
 
-            <!-- <div class="logout" @click="logout">退出登录</div> -->
+            <div class="logout" @click="logout">退出登录</div>
 
         </div>
 
@@ -223,7 +223,6 @@
                 },
                 mounted(){
                     this.user = api.pageParam.user
-                    console.log(JSON.stringify(this.user))
                 },
                 methods: {
                     goBack(){
@@ -233,19 +232,8 @@
                         return 'http://q1.qlogo.cn/g?b=qq&nk='+ uqq +'&s=5'
                     },
                     logout(){
-                        Cookies.remove('uname', {
-                          path: '/',
-                          domain: 'clicli.top'
-                        })
-                        Cookies.remove('uid', {
-                          path: '/',
-                          domain: 'clicli.top'
-                        })
-                        Cookies.remove('uqq', {
-                          path: '/',
-                          domain: 'clicli.top'
-                        })
                         $api.rmStorage('user-info')
+                        $api.setStorage('isLogin', '0')
                         api.sendEvent({
                             name: 'logout'
                         })
