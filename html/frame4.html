@@ -198,11 +198,11 @@
                 loading: true,
                 isError: false,
                 page: 1,
-                user: null
+                user: null,
+                uid: ''
             },
             mounted(){
                 this.getAuth()
-                this.getPostsList()
                 api.addEventListener({
                     name: 'scrolltobottom',
                     extra: {
@@ -236,6 +236,7 @@
                             }else{
                                 this.user = null
                             }
+                            this.getPostsList()
                         }
                     }).catch(error => {
                         console.log(JSON.stringify(error))
@@ -245,7 +246,7 @@
                 getPostsList(){
                     axios({
                         method: 'get',
-                        url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.uid + '&page=' + this.page + '&pageSize=20'
+                        url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
                     }).then(response => {
                         console.log(JSON.stringify(response));
                         if (response.data.code === 201) {
@@ -278,7 +279,7 @@
                     this.page ++
                     axios({
                         method: 'get',
-                        url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.uid + '&page=' + this.page + '&pageSize=20'
+                        url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
                     }).then(response => {
                         if (response.data.code === 201) {
                             if(response.data.posts !== null){
