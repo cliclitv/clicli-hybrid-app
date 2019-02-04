@@ -204,8 +204,8 @@
                 <div class="intro-content" @click="goAvComments" tapmode>
                     <div class="intro-title">{{postIntro.title}}</div>
                     <div class="statistic">
-                        <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postCount.pid}}</span>
-                        <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCount.cv}}</span>
+                        <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postPV}}</span>
+                        <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCV}}</span>
                     </div>
                     <div class="post-label">
                         <span v-text="translate(postIntro.sort)"></span>
@@ -231,7 +231,7 @@
             <!-- 提示网络错误图片 -->
             <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
                 <img src="../../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
-                <p style="font-size:14px;color:#999;">网络gg了，点我重试</p>
+                <p style="font-size:14px;color:#999;">喔！出错啦，点我重试</p>
             </div>
             <!-- 加载图标 -->
             <div class='loading' v-show="loading">
@@ -264,15 +264,16 @@
                     postIntro: [],
                     postContent: '',
                     videosList: [],
-                    postCount: {},
+                    postCV: 0,
+                    postPV: 0,
                     loading: true,
                     isError: false
                 },
                 mounted() {
                     this.getPostIntro()
                     this.getVideosList()
-                    this.getPostCount()
-                    this.addPv()
+                    this.getPostCV()
+                    this.getPostPV()
                     api.parseTapmode()
                 },
                 methods: {
@@ -310,23 +311,23 @@
                             this.isError = true
                         })
                     },
-                    getPostCount() {
+                    getPostCV() {
                         axios({
                             method: 'get',
                             url: 'https://api.clicli.top/count/' + pid
                         }).then(response => {
                             if (response.data.code === 201) {
-                                this.postCount = response.data.count
+                                this.postCV = response.data.count.cv
                             }
                         })
                     },
-                    addPv(){
+                    getPostPV() {
                         axios({
                             method: 'get',
                             url: 'https://www.clicli.top/get/pv?pid=' + pid
                         }).then(response => {
                             if (response.data.code === 0) {
-                                //mark record success
+                                this.postPV = response.data.pv
                             }
                         })
                     },
@@ -412,7 +413,8 @@
                             pageParam: {
                                 postContent: this.postContent,
                                 postIntro: this.postIntro,
-                                postCount: this.postCount
+                                postPV: this.postPV,
+                                postCV: this.postCV
                             },
                             animation: {
                                 type: 'movein',

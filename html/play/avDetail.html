@@ -183,8 +183,8 @@
             </div>
             <div class="intro-title">{{postIntro.title}}</div>
             <div class="statistic">
-                <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postCount.pid}}</span>
-                <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCount.cv}}</span>
+                <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postPV}}</span>
+                <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCV}}</span>
             </div>
             <div class="post-label">
                 <span v-text="translate(postIntro.sort)"></span>
@@ -204,7 +204,8 @@
                 data: {
                     postContent: api.pageParam.postContent,
                     postIntro: api.pageParam.postIntro,
-                    postCount: api.pageParam.postCount
+                    postCV: api.pageParam.postCV,
+                    postPV: api.pageParam.postPV
                 },
                 mounted(){
                     this.$refs.container.style.height = api.winHeight - 9 / 16 * api.winWidth - 2 + 'px'
