@@ -271,7 +271,7 @@
                                 this.postsList = null
                                 api.removeEventListener({
                                     name: 'scrolltobottom'
-                                })    
+                                })
                             }
                         }
                     }).catch(error => {
@@ -280,7 +280,11 @@
                     })
                 },
                 getImgUrl(content) {
-                    return 'background-image:url(' + content.split('[suo](')[1].split(')')[0] + ')'
+                    if(content.indexOf('[suo]') !== -1){
+                        return 'background-image:url('+ content.split('[suo](')[1].split(')')[0] +')'
+                    }else{
+                        return 'background-image:url('+ content.split('(')[1].split(')')[0] +')'
+                    }
                 },
                 getAvatar(uqq){
                     return 'http://q1.qlogo.cn/g?b=qq&nk='+ uqq +'&s=5'
