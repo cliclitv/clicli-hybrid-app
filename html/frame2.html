@@ -43,8 +43,8 @@
 
         .day-name{
             width: 100%;
-            padding: 10px 20px;
-            font-size: 30px;
+            padding: 2px 20px;
+            font-size: 24px;
             font-weight: bold;
             color: #616161;
             border-left: 5px solid #F2AA24;:
@@ -156,7 +156,7 @@
             </div>
             <div class="Monday">
                 <div class="day-name">周五</div>
-                <div class="post-item" v-for="item in Wednesday" @click="goVideoPlay(item.av,item.title)">
+                <div class="post-item" v-for="item in Friday" @click="goVideoPlay(item.av,item.title)">
                     <div class="post-img" :style="getImgUrl(item.suo)"></div>
                     <div class="post-intro">
                         <div class="post-name">{{item.title}}</div>
@@ -174,7 +174,7 @@
             </div>
             <div class="Monday">
                 <div class="day-name">周日</div>
-                <div class="post-item" v-for="item in Wednesday" @click="goVideoPlay(item.av,item.title)">
+                <div class="post-item" v-for="item in Sunday" @click="goVideoPlay(item.av,item.title)">
                     <div class="post-img" :style="getImgUrl(item.suo)"></div>
                     <div class="post-intro">
                         <div class="post-name">{{item.title}}</div>
