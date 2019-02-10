@@ -9,11 +9,11 @@
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
     <style>
         header{ background-color: #FEFEFE; color: #515151; position: fixed; top: 25px; width: 100%; z-index: 9999; }
-        header ul li { height: 50px; line-height: 50px; text-align: left; padding-left: 20px; display: none; color: #515151; position: relative;font-size: 28px;  }
+        header ul li { height: 50px; line-height: 50px; text-align: left; padding-left: 20px; display: none; color: #515151; position: relative;font-size: 26px;  }
         header ul li.active{ display: block; }
         header ul li span { font-size: 22px; padding-right: 5px; transition: 0.2s; border-bottom: 2px solid #FEFEFE; }
         #footer{  background-color: #FEFEFE; }
-        #footer ul li{color: #bbb; padding-top: 34px; margin-top: 2px; padding-bottom: 4px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center; }
+        #footer ul li{color: #bbb; font-size: 12px; padding-top: 34px; margin-top: 2px; padding-bottom: 4px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center; }
         #footer ul li.active{ color: #524F0A; }
         #footer ul li:nth-child(1){ background-image: url(./image/frame0_0.png); }
         #footer ul li:nth-child(2){ background-image: url(./image/frame1_0.png); }
@@ -28,7 +28,7 @@
         }
         .selected{
             color: #009688;
-            font-size: 28px;
+            font-size: 26px;
             border-bottom: 2px solid #009688;
         }
         .search{
@@ -212,7 +212,7 @@
             scrollEnabled: false,
             rect: {
                 x: 0,
-                y: $api.dom('header').offsetHeight+27,
+                y: $api.dom('header').offsetHeight+28,
                 w: api.winWidth,
                 h: $api.dom('#main').offsetHeight-75
             },

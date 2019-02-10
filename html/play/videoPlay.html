@@ -141,7 +141,7 @@
             width: 40px;
             margin: 10px;
             border-radius: 50%;
-            background-image: url('../../image/avatar2.png');
+            background-image: url('../../image/avatar.png');
             background-position: center;
             background-size: contain;
         }
@@ -338,7 +338,11 @@
                         if(content.indexOf('[suo]') !== -1){
                             return 'background-image:url('+ content.split('[suo](')[1].split(')')[0] +')'
                         }else{
-                            return 'background-image:url('+ content.split('(')[1].split(')')[0] +')'
+                            if(content.indexOf('![](') !== -1){
+                                return 'background-image:url('+ content.split('](')[1].split(')')[0] +')'
+                            }else{
+                                return 'background-image:url("https://b-ssl.duitang.com/uploads/item/201501/07/20150107202826_UXcuQ.gif")'
+                            }
                         }
                     },
                     playVideo(url, title, e) {
@@ -539,11 +543,12 @@
                     console.log(JSON.stringify(ret));
                     if (ret.eventType === 'back') {
                         if (ret.value === false) {
-                            api.closeWin();
+                            videoPlayer.close()
+                            api.closeWin()
                         }
                     } else if (ret.eventType === 'failed') {
                         api.toast({
-                            msg: '播放失败,上PC站看看吧',
+                            msg: '播放失败,重新试试或上PC站看看吧',
                             duration: 2000,
                             location: 'bottom'
                         });
