@@ -7,4 +7,4 @@ var t,e=arguments[3];!function(e,n){"object"==typeof exports&&"undefined"!=typeo
 },{}],"Focm":[function(require,module,exports) {
 "use strict";require("./style.css");var e=require("fre"),l="http://d0.ananas.chaoxing.com/download/ce2bc417d5d9636bf5cd9da5e09e180c?fn=clicli-beta",c="https://ws1.sinaimg.cn/large/0065Zy9egy1g0eyxkjvcfj308c08cdh3.jpg";function a(){return(0,e.h)("div",{class:"mainer"},(0,e.h)("div",{class:"logo"}),(0,e.h)("h1",null,"人·生·就·是·佛"),(0,e.h)("ul",{class:"link"},(0,e.h)("a",{href:l,target:"_blank"},(0,e.h)("li",null,"Android")),(0,e.h)("a",{href:""},(0,e.h)("li",null,"IOS"))),(0,e.h)("div",{class:"qcode"},(0,e.h)("img",{src:c,alt:"c站 app"})))}(0,e.render)((0,e.h)(a,null),document.getElementById("root"));
 },{"./style.css":"2iMt","fre":"6oLy"}]},{},["Focm"], null)
-//# sourceMappingURL=/dev.aee461c1.map
+//# sourceMappingURL=/dev.d73530c0.map
