@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "rd /s /q dist && parcel build index.html"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,6 @@
     "cssnano": "^4.1.10"
   },
   "dependencies": {
-    "fre": "^1.0.0-beta2"
+    "fre": "^1.0.0-beta3"
   }
 }

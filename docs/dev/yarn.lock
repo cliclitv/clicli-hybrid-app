@@ -605,10 +605,10 @@ esutils@^2.0.0, esutils@^2.0.2:
   resolved "http://registry.npm.taobao.org/esutils/download/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
   integrity sha1-Cr9PHKpbyx96nYrMbepPqqBLrJs=
 
-fre@^1.0.0-beta2:
-  version "1.0.0-beta2"
-  resolved "http://registry.npm.taobao.org/fre/download/fre-1.0.0-beta2.tgz#f2539fa91d769e800f093637a2b29569c020abea"
-  integrity sha1-8lOfqR12noAPCTY3orKVacAgq+o=
+fre@^1.0.0-beta3:
+  version "1.0.0-beta3"
+  resolved "http://registry.npm.taobao.org/fre/download/fre-1.0.0-beta3.tgz#22438e94fe65b423401d862fd673d43e86ac2d66"
+  integrity sha1-IkOOlP5ltCNAHYYv1nPUPoasLWY=
 
 function-bind@^1.1.1:
   version "1.1.1"
