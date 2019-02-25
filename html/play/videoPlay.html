@@ -246,6 +246,7 @@
     <script src="../../script/vue.min.js"></script>
     <script src="../../script/axios.min.js"></script>
     <script src="../../script/hyperdown.js"></script>
+    <script src="../../script/md5.min.js"></script>
     <script type="text/javascript">
         apiready = () => {
 
@@ -331,7 +332,7 @@
                             }
                         })
                     },
-                    getAvatar(email) {
+                    getAvatar(avatar) {
                         if (/^[0-9]+$/.test(avatar)) {
                             return `https://q2.qlogo.cn/headimg_dl?dst_uin=` + avatar + `&spec=100`
                         } else {
