@@ -332,7 +332,12 @@
                         })
                     },
                     getAvatar(email) {
-                        return 'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@qq')[0] + '&s=5'
+                        if (/^[0-9]+$/.test(avatar)) {
+                            return `https://q2.qlogo.cn/headimg_dl?dst_uin=` + avatar + `&spec=100`
+                        } else {
+                            let hash = md5(avatar)
+                            return `https://cdn.v2ex.com/gravatar/${hash}`
+                        }
                     },
                     getImgUrl(content) {
                         if(content.indexOf('[suo]') !== -1){
