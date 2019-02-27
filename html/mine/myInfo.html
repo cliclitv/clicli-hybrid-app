@@ -208,48 +208,12 @@
 
     </div>
 
-    <script src="../../script/api.js"></script>
-    <script src="../../script/vue.min.js"></script>
-    <script src="../../script/axios.min.js"></script>
-    <script src="../../script/js.cookie.min.js"></script>
-    <script src="../../script/md5.min.js"></script>
-    <script type="text/javascript">
-
-        apiready = () => {
-
-            const app = new Vue({
-                el: '#app',
-                data: {
-                    user: {}
-                },
-                mounted(){
-                    this.user = api.pageParam.user
-                },
-                methods: {
-                    goBack(){
-                        api.closeWin()
-                    },
-                    getAvatar(avatar){
-                      if (/^[0-9]+$/.test(avatar)) {
-                          return `https://q2.qlogo.cn/headimg_dl?dst_uin=` + avatar + `&spec=100`
-                      } else {
-                          let hash = md5(avatar)
-                          return `https://cdn.v2ex.com/gravatar/${hash}`
-                      }
-                    },
-                    logout(){
-                        $api.rmStorage('user-info')
-                        $api.setStorage('isLogin', '0')
-                        api.sendEvent({
-                            name: 'logout'
-                        })
-                        api.closeWin()
-                    }
-                }
-            })
-
-        }
-    </script>
+    <script src="../../script/vendors/api.js"></script>
+    <script src="../../script/vendors/vue.min.js"></script>
+    <script src="../../script/vendors/axios.min.js"></script>
+    <script src="../../script/vendors/js.cookie.min.js"></script>
+    <script src="../../script/vendors/md5.min.js"></script>
+    <script src="../../script/dist/myInfo.js"></script>
 </body>
 
 </html>
