@@ -2,9 +2,9 @@ import './style.css'
 import { h, render, useState } from 'fre'
 
 const DOWN_URL =
-  'http://d0.ananas.chaoxing.com/download/ce2bc417d5d9636bf5cd9da5e09e180c?fn=clicli-beta'
+  'http://d0.ananas.chaoxing.com/download/7cc465d6799f48916c0f52cc7dcfac94?fn=clicli-v+0.0.5'
 const QCODE =
-  'https://ws1.sinaimg.cn/large/0065Zy9egy1g0eyxkjvcfj308c08cdh3.jpg'
+  'https://ws3.sinaimg.cn/large/0078bOVFgy1g0lc1qlf25j308c08c75h.jpg'
 
 function App() {
   return (
