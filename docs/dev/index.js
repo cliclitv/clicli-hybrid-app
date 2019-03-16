@@ -2,7 +2,7 @@ import './style.css'
 import { h, render, useState } from 'fre'
 
 const DOWN_URL =
-  'http://d0.ananas.chaoxing.com/download/ce2bc417d5d9636bf5cd9da5e09e180c?fn=clicli-beta'
+  'http://www.clicli.top/app/clicli.apk'
 const QCODE =
   'https://ws1.sinaimg.cn/large/0065Zy9egy1g0eyxkjvcfj308c08cdh3.jpg'
 
