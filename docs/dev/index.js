@@ -1,8 +1,7 @@
 import './style.css'
 import { h, render, useState } from 'fre'
 
-const DOWN_URL =
-  'http://d0.ananas.chaoxing.com/download/7cc465d6799f48916c0f52cc7dcfac94?fn=clicli-v+0.0.5'
+const DOWN_URL = 'http://www.clicli.top/app/clicli.apk'
 const QCODE =
   'https://ws3.sinaimg.cn/large/0078bOVFgy1g0lc1qlf25j308c08c75h.jpg'
 
