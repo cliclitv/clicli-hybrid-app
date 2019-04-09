@@ -8,7 +8,15 @@ const apiready = () => {
             page: 1
         },
         created() {
-
+            api.setRefreshHeaderInfo({
+                bgColor: '#FEFEFE',
+                textColor: '#808080',
+                textDown: '下拉刷新...',
+                textUp: '松开刷新...'
+            }, (ret, err) => {
+                location.reload()
+                api.refreshHeaderLoadDone()
+            })
         },
         mounted() {
             this.getPostsList()
@@ -47,6 +55,13 @@ const apiready = () => {
                 })
             },
             getPostsList() {
+                api.showProgress({
+                    style: 'default',
+                    animationType: 'fade',
+                    title: '努力加载中...',
+                    text: '先喝杯茶...',
+                    modal: false
+                })
                 axios({
                     method: 'get',
                     url: 'https://api.clicli.top/posts/type?status=ugc&page='+ this.page +'&pageSize=20'
@@ -62,9 +77,11 @@ const apiready = () => {
                             this.postsList = null
                         }
                     }
+                    api.hideProgress()
                 }).catch(error => {
                     this.loading = false
                     this.isError = true
+                    api.hideProgress()
                 })
             },
             reload() {
