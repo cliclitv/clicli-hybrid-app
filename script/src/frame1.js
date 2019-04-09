@@ -1,4 +1,4 @@
-apiready = () => {
+const apiready = () => {
     const app = new Vue({
         el: '#app',
         data: {
@@ -8,7 +8,15 @@ apiready = () => {
             page: 1
         },
         created() {
-
+            api.setRefreshHeaderInfo({
+                bgColor: '#FEFEFE',
+                textColor: '#808080',
+                textDown: '下拉刷新...',
+                textUp: '松开刷新...'
+            }, (ret, err) => {
+                location.reload()
+                api.refreshHeaderLoadDone()
+            })
         },
         mounted() {
             this.getPostsList()
@@ -54,6 +62,13 @@ apiready = () => {
                 })
             },
             getPostsList() {
+                api.showProgress({
+                    style: 'default',
+                    animationType: 'fade',
+                    title: '努力加载中...',
+                    text: '先喝杯茶...',
+                    modal: false
+                })
                 axios({
                     method: 'get',
                     url: 'https://api.clicli.top/posts/type?status=public&page=' + this.page + '&pageSize=20'
@@ -68,10 +83,16 @@ apiready = () => {
                             this.loading = false
                             this.postsList = null
                         }
+                        api.hideProgress()
+                    }else{
+                        this.loading = false
+                        this.isError = true
+                        api.hideProgress()
                     }
                 }).catch(error => {
                     this.loading = false
                     this.isError = true
+                    api.hideProgress()
                 })
             },
             reload() {

@@ -1,4 +1,4 @@
-apiready = () => {
+const apiready = () => {
 
     let pid = api.pageParam.pid,
         title = api.pageParam.title

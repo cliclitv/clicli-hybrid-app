@@ -1,3 +1,5 @@
+'use strict';
+
 var _recommendOnSelected = true,
     _newOnSelected = false;
 
@@ -6,7 +8,7 @@ var newBtn = document.querySelector('#new');
 
 var _loginPageOpenStatus = false;
 
-apiready = function () {
+var apiready = function apiready() {
     api.setStatusBarStyle({
         style: 'dark',
         color: 'rgba(255,255,255,0.00001)'

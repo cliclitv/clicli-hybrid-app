@@ -6,7 +6,7 @@ const newBtn = document.querySelector('#new')
 
 let _loginPageOpenStatus = false
 
-apiready = () => {
+const apiready = () => {
     api.setStatusBarStyle({
         style: 'dark',
         color: 'rgba(255,255,255,0.00001)'

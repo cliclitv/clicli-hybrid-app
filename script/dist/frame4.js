@@ -1,4 +1,6 @@
-apiready = function apiready() {
+'use strict';
+
+var apiready = function apiready() {
     var app = new Vue({
         el: "#app",
         data: {
@@ -14,7 +16,7 @@ apiready = function apiready() {
 
             this.getAuth();
 
-            if(this.isLogin == '1'){
+            if (this.isLogin == '1') {
                 api.addEventListener({
                     name: 'scrolltobottom',
                     extra: {

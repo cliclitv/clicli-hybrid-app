@@ -1,4 +1,6 @@
-apiready = function apiready() {
+'use strict';
+
+var apiready = function apiready() {
 
     var pid = api.pageParam.pid,
         title = api.pageParam.title;

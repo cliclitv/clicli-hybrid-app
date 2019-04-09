@@ -1,4 +1,6 @@
-apiready = function apiready() {
+'use strict';
+
+var apiready = function apiready() {
     var app = new Vue({
         el: '#app',
         data: {

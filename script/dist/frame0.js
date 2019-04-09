@@ -1,4 +1,6 @@
-apiready = function apiready() {
+'use strict';
+
+var apiready = function apiready() {
     var app = new Vue({
         el: '#app',
         data: {
@@ -6,7 +8,17 @@ apiready = function apiready() {
             loading: true,
             isError: false
         },
-        created: function created() {},
+        created: function created() {
+            api.setRefreshHeaderInfo({
+                bgColor: '#FEFEFE',
+                textColor: '#808080',
+                textDown: '下拉刷新...',
+                textUp: '松开刷新...'
+            }, function (ret, err) {
+                location.reload();
+                api.refreshHeaderLoadDone();
+            });
+        },
         mounted: function mounted() {
             this.getRecommendList();
             api.addEventListener({
@@ -45,6 +57,13 @@ apiready = function apiready() {
             getRecommendList: function getRecommendList() {
                 var _this = this;
 
+                api.showProgress({
+                    style: 'default',
+                    animationType: 'fade',
+                    title: '努力加载中...',
+                    text: '先喝杯茶...',
+                    modal: false
+                });
                 axios({
                     method: 'get',
                     url: 'https://api.clicli.top/posts/both?status=public&type=tuijian&page=1&pageSize=20'
@@ -52,10 +71,16 @@ apiready = function apiready() {
                     if (response.data.code === 201) {
                         _this.postsList = response.data.posts;
                         _this.loading = false;
+                        api.hideProgress();
+                    } else {
+                        _this.loading = false;
+                        _this.isError = true;
+                        api.hideProgress();
                     }
                 }).catch(function (error) {
                     _this.loading = false;
                     _this.isError = true;
+                    api.hideProgress();
                 });
             },
             reload: function reload() {
