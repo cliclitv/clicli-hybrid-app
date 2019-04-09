@@ -113,6 +113,17 @@
             border: 1px solid #F1F1F1;
         }
 
+        .uid {
+            padding: 12px 20px;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            border: 1px solid #F1F1F1;
+        }
+
         .usernumber {
             padding: 12px 20px;
             background-color: #FEFEFE;
@@ -188,6 +199,10 @@
             <div class="username">
                 <span>用户名</span>
                 <span>{{user.name}}</span>
+            </div>
+            <div class="uid">
+                <span>UID</span>
+                <span>{{user.id}}</span>
             </div>
             <div class="usernumber">
                 <span>QQ</span>
