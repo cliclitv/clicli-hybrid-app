@@ -54,6 +54,9 @@ const apiready = () => {
                             this.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title)
                             setTimeout(() => {
                                 document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
+                                api.setFullScreen({
+                                    fullScreen: true
+                                })
                             }, 100)
                         }
                     }
@@ -300,6 +303,9 @@ const apiready = () => {
             if (ret.eventType === 'back') {
                 if (ret.value === false) {
                     videoPlayer.close()
+                    api.setFullScreen({
+                        fullScreen: false
+                    })
                     api.closeWin()
                 }
             } else if (ret.eventType === 'failed') {
@@ -329,6 +335,9 @@ const apiready = () => {
                         _avCommentsIsShow = false
                     } else {
                         videoPlayer.close()
+                        api.setFullScreen({
+                            fullScreen: false
+                        })
                         api.closeWin()
                     }
                 } else {

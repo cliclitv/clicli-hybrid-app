@@ -61,6 +61,9 @@ var apiready = function apiready() {
                             _this2.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title);
                             setTimeout(function () {
                                 document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)';
+                                api.setFullScreen({
+                                    fullScreen: true
+                                });
                             }, 100);
                         }
                     }
@@ -308,6 +311,9 @@ var apiready = function apiready() {
             if (ret.eventType === 'back') {
                 if (ret.value === false) {
                     videoPlayer.close();
+                    api.setFullScreen({
+                        fullScreen: false
+                    });
                     api.closeWin();
                 }
             } else if (ret.eventType === 'failed') {
@@ -337,6 +343,9 @@ var apiready = function apiready() {
                         _avCommentsIsShow = false;
                     } else {
                         videoPlayer.close();
+                        api.setFullScreen({
+                            fullScreen: false
+                        });
                         api.closeWin();
                     }
                 } else {
