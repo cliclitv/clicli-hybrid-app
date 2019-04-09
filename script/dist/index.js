@@ -19,6 +19,7 @@ var apiready = function apiready() {
     listenMasterStationSwiperEvent();
     initSearchFunc();
     listenLoginPageOpenStatus();
+    navbarDoubleClick();
 };
 
 function initSearchFunc() {
@@ -86,11 +87,13 @@ function listenLoginPageOpenStatus() {
 }
 
 function switchFunc() {
-    recommendBtn.onclick = function () {
+    recommendBtn.onclick = function (e) {
         recommendBtnOnSelected();
+        e.stopPropagation();
     };
-    newBtn.onclick = function () {
+    newBtn.onclick = function (e) {
         newBtnOnSelected();
+        e.stopPropagation();
     };
 }
 
@@ -188,4 +191,32 @@ function randomSwitchBtn(tag) {
         index: index,
         scroll: true
     });
+}
+
+//监听导航栏双击事件
+function navbarDoubleClick() {
+    var touchtime = new Date().getTime();
+    var navbars = document.querySelectorAll('.border-b');
+
+    var _loop = function _loop(i) {
+        navbars[i].onclick = function (e) {
+            if (new Date().getTime() - touchtime < 500) {
+                console.log("dbclick");
+                api.sendEvent({
+                    name: 'navbarDoubleClick',
+                    extra: {
+                        key: i,
+                        isRecommend: _recommendOnSelected
+                    }
+                });
+            } else {
+                touchtime = new Date().getTime();
+                console.log("click");
+            }
+        };
+    };
+
+    for (var i = 0; i < navbars.length; i++) {
+        _loop(i);
+    }
 }

@@ -20,6 +20,8 @@ var apiready = function apiready() {
             });
         },
         mounted: function mounted() {
+            var _this = this;
+
             this.getRecommendList();
             api.addEventListener({
                 name: 'swipeleft'
@@ -27,6 +29,14 @@ var apiready = function apiready() {
                 api.sendEvent({
                     name: 'swipeToNew'
                 });
+            });
+            //监听导航栏双击
+            api.addEventListener({
+                name: 'navbarDoubleClick'
+            }, function (ret, err) {
+                if (ret.value.key == 0 && ret.value.isRecommend) {
+                    _this.smoothscroll();
+                }
             });
         },
 
@@ -55,7 +65,7 @@ var apiready = function apiready() {
                 });
             },
             getRecommendList: function getRecommendList() {
-                var _this = this;
+                var _this2 = this;
 
                 api.showProgress({
                     style: 'default',
@@ -69,22 +79,33 @@ var apiready = function apiready() {
                     url: 'https://api.clicli.top/posts/both?status=public&type=tuijian&page=1&pageSize=20'
                 }).then(function (response) {
                     if (response.data.code === 201) {
-                        _this.postsList = response.data.posts;
-                        _this.loading = false;
+                        _this2.postsList = response.data.posts;
+                        _this2.loading = false;
                         api.hideProgress();
                     } else {
-                        _this.loading = false;
-                        _this.isError = true;
+                        _this2.loading = false;
+                        _this2.isError = true;
                         api.hideProgress();
                     }
                 }).catch(function (error) {
-                    _this.loading = false;
-                    _this.isError = true;
+                    _this2.loading = false;
+                    _this2.isError = true;
                     api.hideProgress();
                 });
             },
             reload: function reload() {
                 location.reload();
+            },
+
+            //滚动绘制
+            smoothscroll: function smoothscroll() {
+                var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                if (currentScroll > 0) {
+                    //告诉浏览器您希望执行动画并请求浏览器在下一次重绘之前调用指定的函数来更新动画
+                    window.requestAnimationFrame(this.smoothscroll);
+                    //进行页面位置重绘
+                    window.scrollTo(0, currentScroll - currentScroll / 5);
+                }
             }
         }
     });

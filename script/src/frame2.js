@@ -19,6 +19,14 @@ const apiready = () => {
         },
         mounted() {
             this.getWeekList()
+            //监听导航栏双击
+            api.addEventListener({
+                name: 'navbarDoubleClick'
+            }, (ret, err) => {
+                if(ret.value.key == 1){
+                    this.smoothscroll()
+                }
+            })
         },
         methods: {
             goVideoPlay(pid, title) {
@@ -97,6 +105,16 @@ const apiready = () => {
                 if (day == 5) return '周五'
                 if (day == 6) return '周六'
                 if (day == 0) return '周日'
+            },
+            //滚动绘制
+            smoothscroll() {
+                let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
+                if (currentScroll > 0) {
+                    //告诉浏览器您希望执行动画并请求浏览器在下一次重绘之前调用指定的函数来更新动画
+                    window.requestAnimationFrame(this.smoothscroll)
+                    //进行页面位置重绘
+                    window.scrollTo(0, currentScroll - (currentScroll / 5))
+                }
             }
         }
     })

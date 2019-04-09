@@ -20,7 +20,17 @@ var apiready = function apiready() {
             });
         },
         mounted: function mounted() {
+            var _this = this;
+
             this.getWeekList();
+            //监听导航栏双击
+            api.addEventListener({
+                name: 'navbarDoubleClick'
+            }, function (ret, err) {
+                if (ret.value.key == 1) {
+                    _this.smoothscroll();
+                }
+            });
         },
 
         methods: {
@@ -37,7 +47,7 @@ var apiready = function apiready() {
                 });
             },
             getWeekList: function getWeekList() {
-                var _this = this;
+                var _this2 = this;
 
                 api.showProgress({
                     style: 'default',
@@ -65,17 +75,17 @@ var apiready = function apiready() {
                             var day = new Date(item.time).getDay();
                             ret[day].push(item);
                         });
-                        _this.weekList = ret;
-                        _this.loading = false;
+                        _this2.weekList = ret;
+                        _this2.loading = false;
                         api.hideProgress();
                     } else {
-                        _this.loading = false;
-                        _this.isError = true;
+                        _this2.loading = false;
+                        _this2.isError = true;
                         api.hideProgress();
                     }
                 }).catch(function (error) {
-                    _this.loading = false;
-                    _this.isError = true;
+                    _this2.loading = false;
+                    _this2.isError = true;
                     api.hideProgress();
                 });
             },
@@ -101,6 +111,17 @@ var apiready = function apiready() {
                 if (day == 5) return '周五';
                 if (day == 6) return '周六';
                 if (day == 0) return '周日';
+            },
+
+            //滚动绘制
+            smoothscroll: function smoothscroll() {
+                var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                if (currentScroll > 0) {
+                    //告诉浏览器您希望执行动画并请求浏览器在下一次重绘之前调用指定的函数来更新动画
+                    window.requestAnimationFrame(this.smoothscroll);
+                    //进行页面位置重绘
+                    window.scrollTo(0, currentScroll - currentScroll / 5);
+                }
             }
         }
     });

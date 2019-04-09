@@ -17,6 +17,7 @@ const apiready = () => {
     listenMasterStationSwiperEvent()
     initSearchFunc()
     listenLoginPageOpenStatus()
+    navbarDoubleClick()
 }
 
 function initSearchFunc() {
@@ -41,13 +42,13 @@ function listenMasterStationSwiperEvent() {
     //左滑
     api.addEventListener({
             name: 'swipeToRecommend'
-        }, function(ret, err) {
+        }, (ret, err) => {
             recommendBtnOnSelected()
         })
         //右滑
     api.addEventListener({
         name: 'swipeToNew'
-    }, function(ret, err) {
+    }, (ret, err) => {
         newBtnOnSelected()
     })
 }
@@ -55,14 +56,14 @@ function listenMasterStationSwiperEvent() {
 function listenLoginPageOpenStatus() {
     api.addEventListener({
         name: 'loginPageOpenStatus'
-    }, function(ret, err) {
+    }, (ret, err) => {
         if (ret.value.key === 1) {
             _loginPageOpenStatus = true
         }
     })
     api.addEventListener({
         name: 'keyback'
-    }, function(ret, err) {
+    }, (ret, err) => {
         if (_loginPageOpenStatus) {
             api.closeFrame({
                 name: 'login'
@@ -85,11 +86,13 @@ function listenLoginPageOpenStatus() {
 }
 
 function switchFunc() {
-    recommendBtn.onclick = function() {
+    recommendBtn.onclick = (e) => {
         recommendBtnOnSelected()
+        e.stopPropagation()
     }
-    newBtn.onclick = function() {
+    newBtn.onclick = (e) => {
         newBtnOnSelected()
+        e.stopPropagation()
     }
 }
 
@@ -189,4 +192,28 @@ function randomSwitchBtn(tag) {
         index: index,
         scroll: true
     })
+}
+
+
+//监听导航栏双击事件
+function navbarDoubleClick() {
+    let touchtime = new Date().getTime()
+    let navbars = document.querySelectorAll('.border-b')
+    for (let i = 0; i < navbars.length; i++) {
+        navbars[i].onclick = (e) => {
+            if (new Date().getTime() - touchtime < 500) {
+                console.log("dbclick")
+                api.sendEvent({
+                    name: 'navbarDoubleClick',
+                    extra: {
+                        key: i,
+                        isRecommend: _recommendOnSelected
+                    }
+                })
+            } else {
+                touchtime = new Date().getTime()
+                console.log("click")
+            }
+        }
+    }
 }

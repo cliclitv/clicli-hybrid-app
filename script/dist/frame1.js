@@ -40,6 +40,14 @@ var apiready = function apiready() {
                     name: 'swipeToRecommend'
                 });
             });
+            //监听导航栏双击
+            api.addEventListener({
+                name: 'navbarDoubleClick'
+            }, function (ret, err) {
+                if (ret.value.key == 0 && !ret.value.isRecommend) {
+                    _this.smoothscroll();
+                }
+            });
         },
 
         methods: {
@@ -133,6 +141,17 @@ var apiready = function apiready() {
                     _this3.loading = false;
                     _this3.isError = true;
                 });
+            },
+
+            //滚动绘制
+            smoothscroll: function smoothscroll() {
+                var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                if (currentScroll > 0) {
+                    //告诉浏览器您希望执行动画并请求浏览器在下一次重绘之前调用指定的函数来更新动画
+                    window.requestAnimationFrame(this.smoothscroll);
+                    //进行页面位置重绘
+                    window.scrollTo(0, currentScroll - currentScroll / 5);
+                }
             }
         }
     });
