@@ -28,13 +28,7 @@
             flex-wrap: wrap;*/
         }
 
-        .Monday,
-        .Tuesday,
-        .Wednesday,
-        .Thursday,
-        .Friday,
-        .Saturday,
-        .Sunday{
+        .day{
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -47,13 +41,17 @@
             font-size: 20px;
             font-weight: bold;
             color: #616161;
-            border-left: 5px solid #F2AA24;:
+            border-left: 5px solid #F2AA24;
         }
 
         .post-item {
             width: 44vw;
             height: auto;
-            background-color: #009688;
+            /*background-color: #009688;*/
+            background-image: url(image/loading_more.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
             margin: 10px 2vw;
             border-radius: 5px;
             box-shadow: 0px 0px 8px #999;
@@ -77,8 +75,8 @@
         }
 
         .post-item .post-intro .post-name {
-            height: 36px;
-            padding: 10px 10px;
+            height: 34px;
+            padding: 8px 10px;
             color: #515151;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -120,64 +118,10 @@
 
         <div class="content-container" v-if="weekList.length !== 0">
 
-            <div class="Monday">
-                <div class="day-name">周一</div>
-                <div class="post-item" v-for="item in Monday" @click="goVideoPlay(item.av,item.title)">
-                    <div class="post-img" :style="getImgUrl(item.suo)"></div>
-                    <div class="post-intro">
-                        <div class="post-name">{{item.title}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="Monday">
-                <div class="day-name">周二</div>
-                <div class="post-item" v-for="item in Tuesday" @click="goVideoPlay(item.av,item.title)">
-                    <div class="post-img" :style="getImgUrl(item.suo)"></div>
-                    <div class="post-intro">
-                        <div class="post-name">{{item.title}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="Monday">
-                <div class="day-name">周三</div>
-                <div class="post-item" v-for="item in Wednesday" @click="goVideoPlay(item.av,item.title)">
-                    <div class="post-img" :style="getImgUrl(item.suo)"></div>
-                    <div class="post-intro">
-                        <div class="post-name">{{item.title}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="Monday">
-                <div class="day-name">周四</div>
-                <div class="post-item" v-for="item in Thursday" @click="goVideoPlay(item.av,item.title)">
-                    <div class="post-img" :style="getImgUrl(item.suo)"></div>
-                    <div class="post-intro">
-                        <div class="post-name">{{item.title}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="Monday">
-                <div class="day-name">周五</div>
-                <div class="post-item" v-for="item in Friday" @click="goVideoPlay(item.av,item.title)">
-                    <div class="post-img" :style="getImgUrl(item.suo)"></div>
-                    <div class="post-intro">
-                        <div class="post-name">{{item.title}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="Monday">
-                <div class="day-name">周六</div>
-                <div class="post-item" v-for="item in Saturday" @click="goVideoPlay(item.av,item.title)">
-                    <div class="post-img" :style="getImgUrl(item.suo)"></div>
-                    <div class="post-intro">
-                        <div class="post-name">{{item.title}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="Monday">
-                <div class="day-name">周日</div>
-                <div class="post-item" v-for="item in Sunday" @click="goVideoPlay(item.av,item.title)">
-                    <div class="post-img" :style="getImgUrl(item.suo)"></div>
+            <div class="day" v-for="(itemList,key) in weekList">
+                <div class="day-name" v-html="getDay(key)"></div>
+                <div class="post-item" v-for="item in itemList" @click="goVideoPlay(item.id,item.title)">
+                    <div class="post-img" :style="getSuo(item.content)"></div>
                     <div class="post-intro">
                         <div class="post-name">{{item.title}}</div>
                     </div>

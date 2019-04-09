@@ -1,29 +1,27 @@
-apiready = () => {
+const apiready = () => {
     const app = new Vue({
         el: '#app',
         data: {
             weekList: [],
-            Monday: [],
-            Tuesday: [],
-            Wednesday: [],
-            Thursday: [],
-            Friday: [],
-            Saturday: [],
-            Sunday: [],
             loading: true,
             isError: false
         },
-        created(){
-
+        created() {
+            api.setRefreshHeaderInfo({
+                bgColor: '#FEFEFE',
+                textColor: '#808080',
+                textDown: '下拉刷新...',
+                textUp: '松开刷新...'
+            }, (ret, err) => {
+                location.reload()
+                api.refreshHeaderLoadDone()
+            })
         },
         mounted() {
             this.getWeekList()
         },
         methods: {
-            getImgUrl(content){
-                return 'background-image:url('+ content +')'
-            },
-            goVideoPlay(pid,title) {
+            goVideoPlay(pid, title) {
                 api.openWin({
                     name: 'videoPlay',
                     url: './play/videoPlay.html',
@@ -35,29 +33,70 @@ apiready = () => {
                     }
                 })
             },
-            getWeekList(){
+            getWeekList() {
+                api.showProgress({
+                    style: 'default',
+                    animationType: 'fade',
+                    title: '努力加载中...',
+                    text: '先喝杯茶...',
+                    modal: false
+                })
                 axios({
                     method: 'get',
-                    url: 'https://www.clicli.top/week/'
+                    url: 'https://api.clicli.top/posts/both?status=public&sort=xinfan&page=1&pageSize=100'
                 }).then(response => {
 
-                    this.weekList = response.data.data
-                    this.Monday = response.data.data[0].content
-                    this.Tuesday = response.data.data[1].content
-                    this.Wednesday = response.data.data[2].content
-                    this.Thursday = response.data.data[3].content
-                    this.Friday = response.data.data[4].content
-                    this.Saturday = response.data.data[5].content
-                    this.Sunday = response.data.data[6].content
-                    this.loading = false
+                    if (response.data.code === 201) {
+                        let ret = {
+                            1: [],
+                            2: [],
+                            3: [],
+                            4: [],
+                            5: [],
+                            6: [],
+                            0: [],
+                        }
+                        response.data.posts.forEach(item => {
+                            let day = new Date(item.time).getDay()
+                            ret[day].push(item)
+                        })
+                        this.weekList = ret
+                        this.loading = false
+                        api.hideProgress()
+                    } else {
+                        this.loading = false
+                        this.isError = true
+                        api.hideProgress()
+                    }
 
                 }).catch(error => {
                     this.loading = false
                     this.isError = true
+                    api.hideProgress()
                 })
             },
-            reload(){
+            reload() {
                 location.reload()
+            },
+            getSuo(content) {
+                if (content.indexOf('[suo]') !== -1) {
+                    return 'background-image:url(' + content.split('[suo](')[1].split(')')[0] + ')'
+                } else {
+                    if (content.indexOf('![](') !== -1) {
+                        return 'background-image:url(' + content.split('](')[1].split(')')[0] + ')'
+                    } else {
+                        return 'background-image:url("https://b-ssl.duitang.com/uploads/item/201501/07/20150107202826_UXcuQ.gif")'
+                    }
+                }
+            },
+            getDay(day) {
+                if (day == 1) return '周一'
+                if (day == 2) return '周二'
+                if (day == 3) return '周三'
+                if (day == 4) return '周四'
+                if (day == 5) return '周五'
+                if (day == 6) return '周六'
+                if (day == 0) return '周日'
             }
         }
     })
