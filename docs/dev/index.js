@@ -3,7 +3,7 @@ import { h, render, useState } from 'fre'
 
 const DOWN_URL = 'http://www.clicli.top/app/clicli.apk'
 const QCODE =
-  'http://wx1.sinaimg.cn/large/0060lm7Tly1g1xosrqruzj308c08cjsa.jpg'
+  'http://wx3.sinaimg.cn/large/0060lm7Tly1g1xp555wz7j30b40b4taq.jpg'
 
 function App() {
   return (
