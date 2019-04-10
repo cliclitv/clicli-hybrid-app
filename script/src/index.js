@@ -261,5 +261,5 @@ function bindPushService() {
     api.addEventListener({name:'pause'}, (ret,err) => {
         let ajpush = api.require('ajpush')
         ajpush.onPause()
-    });
+    })
 }
