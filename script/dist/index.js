@@ -231,22 +231,27 @@ function bindPushService() {
             //success
         }
     });
-    //监听推送信息
-    ajpush.setListener(function (ret) {
-        var id = ret.id;
-        var title = ret.title;
-        var content = ret.content;
-        var extra = ret.extra;
-        //根据 extra 进行跳转
-        api.openWin({
-            name: 'videoPlay',
-            url: 'html/play/videoPlay.html',
-            pageParam: {
-                pid: extra.gv
-            },
-            animation: {
-                type: 'movein'
-            }
-        });
+    //监听设备状态栏通知点击
+    api.addEventListener({
+        name: 'appintent'
+    }, function (ret, err) {
+        if (ret && ret.appParam.ajpush) {
+            var _ajpush = ret.appParam.ajpush;
+            var id = _ajpush.id;
+            var title = _ajpush.title;
+            var content = _ajpush.content;
+            var extra = _ajpush.extra;
+            //根据 extra 进行跳转
+            api.openWin({
+                name: 'videoPlay',
+                url: 'html/play/videoPlay.html',
+                pageParam: {
+                    pid: extra.gv
+                },
+                animation: {
+                    type: 'movein'
+                }
+            });
+        }
     });
 }

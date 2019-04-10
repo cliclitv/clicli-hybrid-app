@@ -229,14 +229,17 @@ function bindPushService() {
                 //success
             }
         })
-        //监听推送信息
-    ajpush.setListener(
-        ret => {
-            let id = ret.id
-            let title = ret.title
-            let content = ret.content
-            let extra = ret.extra
-            //根据 extra 进行跳转
+        //监听设备状态栏通知点击
+    api.addEventListener({
+        name: 'appintent'
+    }, (ret, err) => {
+        if (ret && ret.appParam.ajpush) {
+            let ajpush = ret.appParam.ajpush
+            let id = ajpush.id
+            let title = ajpush.title
+            let content = ajpush.content
+            let extra = ajpush.extra
+                //根据 extra 进行跳转
             api.openWin({
                 name: 'videoPlay',
                 url: 'html/play/videoPlay.html',
@@ -248,5 +251,5 @@ function bindPushService() {
                 }
             })
         }
-    )
+    })
 }
