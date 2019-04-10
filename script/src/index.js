@@ -18,6 +18,7 @@ const apiready = () => {
     initSearchFunc()
     listenLoginPageOpenStatus()
     navbarDoubleClick()
+    bindPushService()
 }
 
 function initSearchFunc() {
@@ -216,4 +217,15 @@ function navbarDoubleClick() {
             }
         }
     }
+}
+
+
+//绑定推送相关
+function bindPushService(){
+    let ajpush = api.require('ajpush')
+    ajpush.init( ret => {
+        if (ret && ret.status){
+            //success
+        }
+    })
 }

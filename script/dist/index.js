@@ -20,6 +20,7 @@ var apiready = function apiready() {
     initSearchFunc();
     listenLoginPageOpenStatus();
     navbarDoubleClick();
+    bindPushService();
 };
 
 function initSearchFunc() {
@@ -219,4 +220,14 @@ function navbarDoubleClick() {
     for (var i = 0; i < navbars.length; i++) {
         _loop(i);
     }
+}
+
+//绑定推送相关
+function bindPushService() {
+    var ajpush = api.require('ajpush');
+    ajpush.init(function (ret) {
+        if (ret && ret.status) {
+            //success
+        }
+    });
 }
