@@ -254,4 +254,14 @@ function bindPushService() {
             });
         }
     });
+    //监听进入前台
+    api.addEventListener({ name: 'resume' }, function (ret, err) {
+        var ajpush = api.require('ajpush');
+        ajpush.onResume();
+    });
+    //监听进入后台
+    api.addEventListener({ name: 'pause' }, function (ret, err) {
+        var ajpush = api.require('ajpush');
+        ajpush.onPause();
+    });
 }

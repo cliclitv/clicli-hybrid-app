@@ -223,13 +223,13 @@ function navbarDoubleClick() {
 //绑定推送相关
 function bindPushService() {
     let ajpush = api.require('ajpush')
-        //初始化
+    //初始化
     ajpush.init(ret => {
-            if (ret && ret.status) {
-                //success
-            }
-        })
-        //监听设备状态栏通知点击
+        if (ret && ret.status) {
+            //success
+        }
+    })
+    //监听设备状态栏通知点击
     api.addEventListener({
         name: 'appintent'
     }, (ret, err) => {
@@ -252,4 +252,14 @@ function bindPushService() {
             })
         }
     })
+    //监听进入前台
+    api.addEventListener({name:'resume'}, (ret,err) => {
+        let ajpush = api.require('ajpush')
+        ajpush.onResume()
+    })
+    //监听进入后台
+    api.addEventListener({name:'pause'}, (ret,err) => {
+        let ajpush = api.require('ajpush')
+        ajpush.onPause()
+    });
 }
