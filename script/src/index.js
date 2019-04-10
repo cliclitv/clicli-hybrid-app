@@ -221,11 +221,32 @@ function navbarDoubleClick() {
 
 
 //绑定推送相关
-function bindPushService(){
+function bindPushService() {
     let ajpush = api.require('ajpush')
-    ajpush.init( ret => {
-        if (ret && ret.status){
-            //success
+        //初始化
+    ajpush.init(ret => {
+            if (ret && ret.status) {
+                //success
+            }
+        })
+        //监听推送信息
+    ajpush.setListener(
+        ret => {
+            let id = ret.id
+            let title = ret.title
+            let content = ret.content
+            let extra = ret.extra
+            //根据 extra 进行跳转
+            api.openWin({
+                name: 'videoPlay',
+                url: 'html/play/videoPlay.html',
+                pageParam: {
+                    pid: extra.gv
+                },
+                animation: {
+                    type: 'movein'
+                }
+            })
         }
-    })
+    )
 }

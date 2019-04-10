@@ -225,9 +225,28 @@ function navbarDoubleClick() {
 //绑定推送相关
 function bindPushService() {
     var ajpush = api.require('ajpush');
+    //初始化
     ajpush.init(function (ret) {
         if (ret && ret.status) {
             //success
         }
+    });
+    //监听推送信息
+    ajpush.setListener(function (ret) {
+        var id = ret.id;
+        var title = ret.title;
+        var content = ret.content;
+        var extra = ret.extra;
+        //根据 extra 进行跳转
+        api.openWin({
+            name: 'videoPlay',
+            url: 'html/play/videoPlay.html',
+            pageParam: {
+                pid: extra.gv
+            },
+            animation: {
+                type: 'movein'
+            }
+        });
     });
 }
