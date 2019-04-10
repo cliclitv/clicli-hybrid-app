@@ -63,6 +63,7 @@ function listenLoginPageOpenStatus() {
             _loginPageOpenStatus = true;
         }
     });
+    var touchtime = new Date().getTime();
     api.addEventListener({
         name: 'keyback'
     }, function (ret, err) {
@@ -72,17 +73,28 @@ function listenLoginPageOpenStatus() {
             });
             _loginPageOpenStatus = false;
         } else {
-            api.closeWidget({
-                id: 'A6093043874032',
-                retData: {
-                    name: 'closeWidget'
-                },
-                animation: {
-                    type: 'flip',
-                    subType: 'from_bottom',
-                    duration: 500
-                }
-            });
+
+            if (new Date().getTime() - touchtime < 3000) {
+                api.closeWidget({
+                    id: 'A6093043874032',
+                    retData: {
+                        name: 'closeWidget'
+                    },
+                    silent: true,
+                    animation: {
+                        type: 'flip',
+                        subType: 'from_bottom',
+                        duration: 500
+                    }
+                });
+            } else {
+                touchtime = new Date().getTime();
+                api.toast({
+                    msg: '再按一次退出clicli',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+            }
         }
     });
 }
