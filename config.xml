@@ -27,5 +27,5 @@
 	<permission name="fileSystem" />
 	<permission name="internet" />
 	<permission name="bootCompleted" />
-	<permission name="hardware" />    <feature name="ajpush">        <param name="app_key" value="df9da60f9a78e741a43a118b" />        <param name="channel" value="clicli official" />    </feature>
+	<permission name="hardware" />    <feature name="ajpush">        <param name="app_key" value="df9da60f9a78e741a43a118b" />        <param name="channel" value="clicli official" />    </feature>    <preference name="checkSslTrusted" value="false" />
 </widget>
