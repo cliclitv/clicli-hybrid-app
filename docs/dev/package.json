@@ -1,8 +1,8 @@
 {
-  "name": "counter",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@clicli/app",
+  "version": "0.0.1",
+  "description": "app for clicli",
+  "main": "../clicli.apk",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html",
@@ -12,9 +12,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/plugin-transform-react-jsx": "^7.2.0",
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@babel/preset-react": "^7.0.0",
     "cssnano": "^4.1.10"
   },

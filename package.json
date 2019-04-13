@@ -1,9 +1,9 @@
 {
-    "scripts": {
-        "build": "./node_modules/.bin/babel script/src -d script/dist"
-    },
-    "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-preset-es2015": "^6.24.1"
-    }
+  "scripts": {
+    "build": "./node_modules/.bin/babel script/src -d script/dist"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
 }

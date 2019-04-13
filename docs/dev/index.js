@@ -1,25 +1,25 @@
 import './style.css'
-import { h, render, useState } from 'fre'
+import { h, render } from 'fre'
 
-const DOWN_URL = 'http://www.clicli.top/app/clicli.apk'
+const DOWN_URL = 'https://unpkg.com/@clicli/app'
 const QCODE =
-  'http://wx3.sinaimg.cn/large/0060lm7Tly1g1xp555wz7j30b40b4taq.jpg'
+  'https://ws1.sinaimg.cn/large/0065Zy9egy1g214spuj16j308c08c745.jpg'
 
-function App() {
+function App () {
   return (
-    <div class="mainer">
-      <div class="logo" />
+    <div class='mainer'>
+      <div class='logo' />
       <h1>人·生·就·是·佛</h1>
-      <ul class="link">
-        <a href={DOWN_URL} target="_blank">
+      <ul class='link'>
+        <a href={DOWN_URL} target='_blank'>
           <li>Android</li>
         </a>
-        <a href="">
+        <a href=''>
           <li>IOS</li>
         </a>
       </ul>
-      <div class="qcode">
-        <img src={QCODE} alt="c站 app" />
+      <div class='qcode'>
+        <img src={QCODE} alt='c站 app' />
       </div>
     </div>
   )
