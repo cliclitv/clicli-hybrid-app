@@ -65,6 +65,60 @@ const apiready = () => {
                     this.postsList = null
                 })
             },
+            getMyBGM(){
+                if(this.isLogin === '1'){
+                    api.openWin({
+                        name: 'page1',
+                        url: './page1.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    })
+                }else{
+                    api.openFrame({
+                        name: 'login',
+                        url: './login/login.html',
+                        animation: {
+                            type: 'movein',
+                            subType: 'from_right',
+                            duration: 300
+                        }
+                    })
+                    api.sendEvent({
+                        name: 'loginPageOpenStatus',
+                        extra: {
+                            key: 1
+                        }
+                    })
+                }
+            },
+            getMyUp(){
+                if(this.isLogin === '1'){
+                    api.openWin({
+                        name: 'page2',
+                        url: './page2.html',
+                        pageParam: {
+                            name: 'test'
+                        }
+                    })
+                }else{
+                    api.openFrame({
+                        name: 'login',
+                        url: './login/login.html',
+                        animation: {
+                            type: 'movein',
+                            subType: 'from_right',
+                            duration: 300
+                        }
+                    })
+                    api.sendEvent({
+                        name: 'loginPageOpenStatus',
+                        extra: {
+                            key: 1
+                        }
+                    })
+                }
+            },
             getPostsList(){
                 axios({
                     method: 'get',

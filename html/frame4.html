@@ -68,9 +68,31 @@
         }
 
         .article-navbar {
-            margin-left: 20px;
+            padding-left: 20px;
             padding: 0 10px;
             border-left: 3px solid #009688;
+            font-size: 18px;
+            line-height: 44px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-bottom: 1px solid #ECECEC;
+        }
+
+        .article-navbar:active{
+            background-color: #ECECEC;
+        }
+
+        .my-bgm{
+            height: 28px;
+            width: 28px;
+            margin-right: 10px;
+        }
+
+        .my-up{
+            height: 28px;
+            width: 28px;
+            margin-right: 10px;
         }
 
         .post-container {
@@ -170,8 +192,9 @@
             <img class="student-avatar" src="../image/avatar.png" alt="">
         </header>
         <div class="content-container">
-            <div class="article-navbar">我的番剧投稿</div>
-            <div class="post-container">
+            <div class="article-navbar" @click="getMyBGM"><img class="my-bgm" src="../image/my-bgm.png" alt="">我上传的番剧</div>
+            <div class="article-navbar" @click="getMyUp"><img class="my-up" src="../image/my-up.png" alt="">我上传的投稿</div>
+            <!-- <div class="post-container">
                 <div class="post-item" v-for="item in postsList" @click="goVideoPlay(item.id,item.title)">
                     <div class="post-img" :style="getImgUrl(item.content)"></div>
                     <div class="post-intro">
@@ -179,21 +202,21 @@
                         <div class="post-time">{{item.time}}</div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- 提示数据为空图片 -->
-            <div class="tips" style="text-align:center;" v-if="postsList === null">
+            <!-- <div class="tips" style="text-align:center;" v-if="postsList === null">
                 <img src="../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="">
                 <p style="font-size:14px;color:#999;">空空如也</p>
-            </div>
+            </div> -->
             <!-- 提示网络错误图片 -->
-            <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
+            <!-- <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
                 <img src="../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
                 <p style="font-size:14px;color:#999;">喔！出错啦，点我重试</p>
-            </div>
+            </div> -->
             <!-- 加载图标 -->
-            <div class='loading' v-show="loading">
+            <!-- <div class='loading' v-show="loading">
                 <img src='../image/loading.png'>
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="../script/vendors/api.js"></script>
