@@ -36,7 +36,7 @@ var apiready = function apiready() {
 
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/post/' + pid
+                    url: 'https://api.clicli.us/post/' + pid
                 }).then(function (response) {
                     if (response.data.code === 201) {
                         _this.postIntro = response.data.result;
@@ -52,7 +52,7 @@ var apiready = function apiready() {
 
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/videos?pid=' + pid + '&page=1&pageSize=100'
+                    url: 'https://api.clicli.us/videos?pid=' + pid + '&page=1&pageSize=300'
                 }).then(function (response) {
                     if (response.data.code === 201) {
                         _this2.videosList = response.data.videos;
@@ -77,7 +77,7 @@ var apiready = function apiready() {
 
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/count/' + pid
+                    url: 'https://api.clicli.top/post/' + pid
                 }).then(function (response) {
                     if (response.data.code === 201) {
                         _this3.postCV = response.data.count.cv;
@@ -89,7 +89,7 @@ var apiready = function apiready() {
 
                 axios({
                     method: 'get',
-                    url: 'https://www.clicli.top/get/pv?pid=' + pid
+                    url: 'https://www.clicli.us/get/pv?pid=' + pid
                 }).then(function (response) {
                     if (response.data.code === 0) {
                         _this4.postPV = response.data.pv;
@@ -121,6 +121,15 @@ var apiready = function apiready() {
                 e.currentTarget.style.background = 'rgba(0,156,255,0.4)';
             },
             loadVideoPlayer: function loadVideoPlayer(url, title) {
+
+                api.showProgress({
+                    style: 'default',
+                    animationType: 'fade',
+                    title: '努力加载中...',
+                    text: '先喝杯茶...',
+                    modal: false
+                });
+
                 if (url.indexOf('www.clicli') > -1) {
                     axios({
                         method: 'get',
@@ -131,6 +140,7 @@ var apiready = function apiready() {
                             console.log(response.data.url);
                             _initVideoClient(response.data.url, title);
                         }
+                        api.hideProgress();
                     }).catch(function (error) {
                         console.log(JSON.stringify(error));
                         if (error.response.status) {
@@ -146,16 +156,18 @@ var apiready = function apiready() {
                                 default:
                             }
                         }
+                        api.hideProgress();
                     });
                 } else {
                     axios({
                         method: 'get',
-                        url: 'https://www.clicli.top/jx?url=' + url
+                        url: 'https://www.clicli.us/jx?url=' + url
                     }).then(function (response) {
                         if (response.data.code === 0) {
                             console.log(response.data.url);
                             _initVideoClient(response.data.url, title);
                         }
+                        api.hideProgress();
                     }).catch(function (error) {
                         console.log(JSON.stringify(error));
                         if (error) {
@@ -171,6 +183,7 @@ var apiready = function apiready() {
                                 default:
                             }
                         }
+                        api.hideProgress();
                     });
                 }
             },
