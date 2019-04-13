@@ -22,7 +22,7 @@ const apiready = () => {
             getCommentsList(){
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/comments?pid=' + this.pid + '&page=1&pageSize=100'
+                    url: 'https://api.clicli.us/comments?pid=' + this.pid + '&page=1&pageSize=300'
                 }).then(response => {
                     if(response.data.code === 201){
                         this.commentsList = response.data.comments

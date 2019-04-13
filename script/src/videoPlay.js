@@ -68,10 +68,10 @@ const apiready = () => {
             getPostCV() {
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/post/' + pid
+                    url: 'https://api.clicli.us/post/' + pid
                 }).then(response => {
                     if (response.data.code === 201) {
-                        this.postCV = response.data.count.cv
+                        this.postCV = response.data.result.count.cv
                     }
                 })
             },

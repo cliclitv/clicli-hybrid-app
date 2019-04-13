@@ -77,10 +77,10 @@ var apiready = function apiready() {
 
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/post/' + pid
+                    url: 'https://api.clicli.us/post/' + pid
                 }).then(function (response) {
                     if (response.data.code === 201) {
-                        _this3.postCV = response.data.count.cv;
+                        _this3.postCV = response.data.result.count.cv;
                     }
                 });
             },
