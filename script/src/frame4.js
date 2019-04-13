@@ -39,7 +39,7 @@ const apiready = () => {
                 axios.defaults.withCredentials=true
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/auth'
+                    url: 'https://api.clicli.us/auth'
                 }).then(response => {
                     console.log(JSON.stringify(response))
                     if (response.data.code === 201) {
@@ -68,7 +68,7 @@ const apiready = () => {
             getPostsList(){
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
                 }).then(response => {
                     console.log(JSON.stringify(response));
                     if (response.data.code === 201) {
@@ -116,7 +116,7 @@ const apiready = () => {
                 this.page ++
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
                 }).then(response => {
                     if (response.data.code === 201) {
                         if(response.data.posts !== null){

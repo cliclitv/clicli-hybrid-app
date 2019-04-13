@@ -69,7 +69,7 @@ const apiready = () => {
                 })
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/both?status=public&type=tuijian&page=1&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=推荐&page=1&pageSize=10'
                 }).then(response => {
                     if (response.data.code === 201) {
                         this.postsList = response.data.posts

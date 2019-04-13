@@ -79,7 +79,7 @@ const apiready = () => {
                 })
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/type?status=public&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=&page=' + this.page + '&pageSize=20'
                 }).then(response => {
                     if (response.data.code === 201) {
                         if(response.data.posts !== null){
@@ -110,7 +110,7 @@ const apiready = () => {
                 this.page ++
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/type?status=public&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=&page=' + this.page + '&pageSize=20'
                 }).then(response => {
                     if (response.data.code === 201) {
                         if(response.data.posts !== null){

@@ -86,7 +86,7 @@ var apiready = function apiready() {
                 });
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/type?status=public&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=&page=' + this.page + '&pageSize=20'
                 }).then(function (response) {
                     if (response.data.code === 201) {
                         if (response.data.posts !== null) {
@@ -119,7 +119,7 @@ var apiready = function apiready() {
                 this.page++;
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/type?status=public&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=&page=' + this.page + '&pageSize=20'
                 }).then(function (response) {
                     if (response.data.code === 201) {
                         if (response.data.posts !== null) {

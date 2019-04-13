@@ -46,7 +46,7 @@ var apiready = function apiready() {
                 axios.defaults.withCredentials = true;
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/auth'
+                    url: 'https://api.clicli.us/auth'
                 }).then(function (response) {
                     console.log(JSON.stringify(response));
                     if (response.data.code === 201) {
@@ -77,7 +77,7 @@ var apiready = function apiready() {
 
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
                 }).then(function (response) {
                     console.log(JSON.stringify(response));
                     if (response.data.code === 201) {
@@ -127,7 +127,7 @@ var apiready = function apiready() {
                 this.page++;
                 axios({
                     method: 'get',
-                    url: 'https://api.clicli.top/posts/both?status=public&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
+                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
                 }).then(function (response) {
                     if (response.data.code === 201) {
                         if (response.data.posts !== null) {
