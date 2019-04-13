@@ -46,7 +46,7 @@ const apiready = () => {
                 axios.defaults.withCredentials=true
                 axios({
                     method: 'post',
-                    url: 'https://api.clicli.top/api/login',
+                    url: 'https://api.clicli.us/user/login',
                     data: {
                         name: this.name,
                         pwd: this.pwd
