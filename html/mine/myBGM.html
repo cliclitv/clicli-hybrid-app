@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        html,
+        body {
+            background-color: #FEFEFE;
+            padding: 0;
+            margin: 0；
+        }
+
+        /*导航栏样式*/
+        #header {
+            position: fixed;
+            height: 50px;
+            z-index: 10;
+            top: 25px;
+            left: 0;
+            right: 0;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: #FEFEFE;
+        }
+
+        #header img {
+            height: 20px;
+            width: 20px;
+            padding: 15px;
+            float: left;
+        }
+
+        #header img:active{
+            background-color: #ddd;
+            border-radius: 50%;
+        }
+
+        #header p {
+            right: 56px;
+            left: 56px;
+            display: inline-block;
+            overflow: hidden;
+            width: auto;
+            margin: 0;
+            padding: 0;
+            text-overflow: ellipsis;
+            line-height: 50px;
+            position: absolute;
+            text-align: center;
+            white-space: nowrap;
+            color: #515151;
+            font-size: 20px;
+        }
+
+        .content-container {
+            padding: 10px 2vw;
+            background-color: #FEFEFE;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-top: 75px;
+        }
+
+        .post-item {
+            width: 44vw;
+            height: auto;
+            margin: 10px 2vw;
+            border-radius: 5px;
+            box-shadow: 0px 0px 8px #999;
+        }
+
+        .post-item .post-img {
+            width: 100%;
+            height: 120px;
+            background-repeat: no-repeat;
+            background-position: center 0;
+            background-size: cover;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .post-item .post-intro {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-left: 3px solid #F52525;
+            background-color: #fff;
+        }
+
+        .post-item .post-intro .post-time {
+            padding: 5px 10px 10px;
+            color: #808080;
+            font-size: 12px;
+        }
+
+        .post-item .post-intro .post-name {
+            height: 36px;
+            padding: 10px 10px 4px;
+            color: #515151;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 20px;
+            font-size: 14px;
+        }
+        /*没有数据，正在加载*/
+
+        .loading {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .loading img {
+            height: 40px;
+            width: 40px;
+            animation: que 1.6s linear infinite;
+        }
+
+        @keyframes que {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+
+        <!-- 我是占位状态栏高度的 -->
+        <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
+
+        <!-- 我是导航栏 -->
+        <header id="header">
+            <img class="back" src="../../image/back.png" @click="goBack">
+            <p class="title">我上传的番剧</p>
+        </header>
+
+        <div class="content-container">
+
+            <div class="post-item" v-for="item in postsList" @click="goVideoPlay(item.id,item.title)">
+                <div class="post-img" :style="getImgUrl(item.content)"></div>
+                <div class="post-intro">
+                    <div class="post-name">{{item.title}}</div>
+                    <div class="post-time">{{item.time}}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 提示数据为空图片 -->
+        <div class="tips" style="text-align:center;" v-if="postsList === null">
+            <img src="../../image/empty.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+            <p style="font-size:14px;color:#999;">空空如也</p>
+        </div>
+        <!-- 提示网络错误图片 -->
+        <div class="tips" style="text-align:center;margin-bottom:20px;" v-show="isError" @click="reload">
+            <img src="../../image/error.png" style="width:200px;height:160px;margin-top:20px;" alt="">
+            <p style="font-size:14px;color:#999;">喔！出错啦，点我重试</p>
+        </div>
+        <!-- 加载图标 -->
+        <div class='loading' v-show="loading">
+            <img src='../../image/loading.png'>
+        </div>
+
+    </div>
+
+    <script src="../../script/vendors/api.js"></script>
+    <script src="../../script/vendors/vue.min.js"></script>
+    <script src="../../script/vendors/axios.min.js"></script>
+    <script src="../../script/vendors/md5.min.js"></script>
+    <script src="../../script/dist/myBGM.js"></script>
+</body>
+
+</html>

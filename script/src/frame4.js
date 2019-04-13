@@ -12,17 +12,6 @@ const apiready = () => {
         mounted(){
             this.getAuth()
 
-            if(this.isLogin == '1'){
-                api.addEventListener({
-                    name: 'scrolltobottom',
-                    extra: {
-                        threshold: 0 //设置距离底部多少距离时触发，默认值为0，数字类型
-                    }
-                }, (ret, err) => {
-                    console.log('已滚动到底部')
-                    this.loadMore()
-                })
-            }
             api.addEventListener({
                 name: 'loginSuccess'
             }, function(ret, err){
@@ -46,7 +35,6 @@ const apiready = () => {
                         if(this.isLogin === '1'){
                             const user = $api.getStorage('user-info')
                             this.user = user
-                            this.getPostsList()
                         }else{
                             this.user = null
                             this.loading = false
@@ -68,8 +56,8 @@ const apiready = () => {
             getMyBGM(){
                 if(this.isLogin === '1'){
                     api.openWin({
-                        name: 'page1',
-                        url: './page1.html',
+                        name: 'myBGM',
+                        url: './mine/myBGM.html',
                         pageParam: {
                             name: 'test'
                         }
@@ -95,8 +83,8 @@ const apiready = () => {
             getMyUp(){
                 if(this.isLogin === '1'){
                     api.openWin({
-                        name: 'page2',
-                        url: './page2.html',
+                        name: 'myUp',
+                        url: './mine/myUp.html',
                         pageParam: {
                             name: 'test'
                         }
@@ -119,42 +107,6 @@ const apiready = () => {
                     })
                 }
             },
-            getPostsList(){
-                axios({
-                    method: 'get',
-                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
-                }).then(response => {
-                    console.log(JSON.stringify(response));
-                    if (response.data.code === 201) {
-                        if(response.data.posts !== null){
-                            this.postsList = response.data.posts
-                            if(response.data.posts.length<20){
-                                this.loading = false
-                            }
-                        }else{
-                            this.loading = false
-                            this.postsList = null
-                            api.removeEventListener({
-                                name: 'scrolltobottom'
-                            })
-                        }
-                    }
-                }).catch(error => {
-                    this.loading = false
-                    this.isError = true
-                })
-            },
-            getImgUrl(content) {
-                if(content.indexOf('[suo]') !== -1){
-                    return 'background-image:url('+ content.split('[suo](')[1].split(')')[0] +')'
-                }else{
-                    if(content.indexOf('![](') !== -1){
-                        return 'background-image:url('+ content.split('](')[1].split(')')[0] +')'
-                    }else{
-                        return 'background-image:url("https://b-ssl.duitang.com/uploads/item/201501/07/20150107202826_UXcuQ.gif")'
-                    }
-                }
-            },
             getAvatar(avatar){
                 if (/^[0-9]+$/.test(avatar)) {
                     return `https://q2.qlogo.cn/headimg_dl?dst_uin=` + avatar + `&spec=100`
@@ -165,33 +117,6 @@ const apiready = () => {
             },
             reload(){
                 location.reload()
-            },
-            loadMore(){
-                this.page ++
-                axios({
-                    method: 'get',
-                    url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + this.user.id + '&page=' + this.page + '&pageSize=20'
-                }).then(response => {
-                    if (response.data.code === 201) {
-                        if(response.data.posts !== null){
-                            for ( let i = 0; i < response.data.posts.length; i ++ ) {
-                                this.postsList.push(response.data.posts[i])
-                            }
-                            if(response.data.posts.length<20){
-                                this.loading = false
-                            }
-                        }else{
-                            this.loading = false
-                            //移除事件监听
-                            api.removeEventListener({
-                                name: 'scrolltobottom'
-                            })
-                        }
-                    }
-                }).catch(error => {
-                    this.loading = false
-                    this.isError = true
-                })
             },
             goVideoPlay(pid, title) {
                 api.openWin({
