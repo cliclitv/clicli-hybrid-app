@@ -241,28 +241,6 @@ var apiready = function apiready() {
                     hScrollBarEnabled: true,
                     overScrollMode: 'always'
                 });
-            },
-            translate: function translate(sortName) {
-                switch (sortName) {
-                    case 'xinfan':
-                        return '新番';
-                    case 'tuijian':
-                        return '推荐';
-                    case 'danmei':
-                        return '耽美';
-                    case 'moren':
-                        return '默认';
-                    case 'lianzai':
-                        return '连载';
-                    case 'wenzhang':
-                        return '文章';
-                    case 'yuanchuang':
-                        return '原创';
-                    case 'wanjie':
-                        return '完结';
-                    default:
-                        return '其他';
-                }
             }
         }
     });
