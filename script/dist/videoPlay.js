@@ -61,9 +61,6 @@ var apiready = function apiready() {
                             _this2.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title);
                             setTimeout(function () {
                                 document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)';
-                                api.setFullScreen({
-                                    fullScreen: true
-                                });
                             }, 100);
                         }
                     }
@@ -334,6 +331,10 @@ var apiready = function apiready() {
                     msg: '播放失败,重新试试或上PC站看看吧',
                     duration: 2000,
                     location: 'bottom'
+                });
+            } else if (ret.eventType === 'show') {
+                api.setFullScreen({
+                    fullScreen: true
                 });
             }
         });

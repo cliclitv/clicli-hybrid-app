@@ -54,9 +54,6 @@ const apiready = () => {
                             this.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title)
                             setTimeout(() => {
                                 document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
-                                api.setFullScreen({
-                                    fullScreen: true
-                                })
                             }, 100)
                         }
                     }
@@ -327,6 +324,10 @@ const apiready = () => {
                     duration: 2000,
                     location: 'bottom'
                 });
+            } else if (ret.eventType === 'show') {
+                api.setFullScreen({
+                    fullScreen: true
+                })
             }
         });
 
