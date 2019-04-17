@@ -15,6 +15,8 @@ var apiready = function apiready() {
         el: '#app',
         data: {
             postIntro: [],
+            sortArr: [],
+            tagArr: [],
             postContent: '',
             videosList: [],
             postCV: 0,
@@ -40,6 +42,12 @@ var apiready = function apiready() {
                 }).then(function (response) {
                     if (response.data.code === 201) {
                         _this.postIntro = response.data.result;
+
+                        var sorts = _this.postIntro.sort;
+                        var tags = _this.postIntro.tag;
+                        _this.sortArr = sorts.trim().split(' ');
+                        _this.tagArr = tags.trim().split(' ');
+
                         var parser = new HyperDown();
                         var html = parser.makeHtml(response.data.result.content);
                         _this.postContent = html;

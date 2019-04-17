@@ -13,6 +13,8 @@ const apiready = () => {
         el: '#app',
         data: {
             postIntro: [],
+            sortArr: [],
+            tagArr: [],
             postContent: '',
             videosList: [],
             postCV: 0,
@@ -35,6 +37,12 @@ const apiready = () => {
                 }).then(response => {
                     if (response.data.code === 201) {
                         this.postIntro = response.data.result
+
+                        let sorts = this.postIntro.sort
+                        let tags = this.postIntro.tag
+                        this.sortArr = sorts.trim().split(' ')
+                        this.tagArr = tags.trim().split(' ')
+
                         let parser = new HyperDown
                         let html = parser.makeHtml(response.data.result.content)
                         this.postContent = html

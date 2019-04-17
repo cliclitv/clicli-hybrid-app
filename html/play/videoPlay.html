@@ -26,14 +26,14 @@
 
         .post-intro {
             padding: 20px 0;
-            height: 120px;
+            height: auto;
             background-color: #FEFEFE;
             position: relative;
             box-shadow: 1px 1px 5px #ddd;
         }
 
         .post-intro .intro-img {
-            height: 120px;
+            height: 100px;
             width: 90px;
             float: left;
             margin: 0 15px;
@@ -52,6 +52,7 @@
         .post-intro .intro-content {
             color: #515151;
             padding-right: 15px;
+            margin-left: 122px;
         }
 
         .intro-content:active {
@@ -106,6 +107,7 @@
             border-radius: 5px;
             color: #FFF;
             margin-right: 6px;
+            margin-bottom: 5px;
             font-size: 14px;
         }
         /*番剧集数列表*/
@@ -208,8 +210,12 @@
                         <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCV}}</span>
                     </div>
                     <div class="post-label">
-                        <span v-text="postIntro.sort"></span>
-                        <span v-text="postIntro.type"></span>
+                        <block v-for="sort in sortArr">
+                            <span v-text="sort"></span>
+                        </block>
+                        <block v-for="tag in tagArr">
+                            <span v-text="tag"></span>
+                        </block>
                     </div>
                 </div>
             </div>
