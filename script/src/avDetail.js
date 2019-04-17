@@ -5,12 +5,19 @@ const apiready = () => {
         data: {
             postContent: api.pageParam.postContent,
             postIntro: api.pageParam.postIntro,
+            sortArr: [],
+            tagArr: [],
             postCV: api.pageParam.postCV,
             postPV: api.pageParam.postPV
         },
         mounted(){
             this.$refs.container.style.height = api.winHeight - 9 / 16 * api.winWidth - 2 + 'px'
             this.$refs.content.innerHTML = this.postContent
+            //标签
+            let sorts = this.postIntro.sort
+            let tags = this.postIntro.tag
+            this.sortArr = sorts.trim().split(' ')
+            this.tagArr = tags.trim().split(' ')
         },
         methods: {
             close(){
@@ -25,28 +32,6 @@ const apiready = () => {
                 } else {
                     let hash = md5(avatar)
                     return `https://cdn.v2ex.com/gravatar/${hash}`
-                }
-            },
-            translate(sortName) {
-                switch (sortName) {
-                    case 'xinfan':
-                        return '新番'
-                    case 'tuijian':
-                        return '推荐'
-                    case 'danmei':
-                        return '耽美'
-                    case 'moren':
-                        return '默认'
-                    case 'lianzai':
-                        return '连载'
-                    case 'wenzhang':
-                        return '文章'
-                    case 'yuanchuang':
-                        return '原创'
-                    case 'wanjie':
-                        return '完结'
-                    default:
-                        return '其他'
                 }
             }
         }

@@ -182,8 +182,12 @@
                 <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCV}}</span>
             </div>
             <div class="post-label">
-                <span v-text="translate(postIntro.sort)"></span>
-                <span v-text="translate(postIntro.type)"></span>
+                <block v-for="sort in sortArr">
+                    <span v-text="sort"></span>
+                </block>
+                <block v-for="tag in tagArr">
+                    <span v-text="tag"></span>
+                </block>
             </div>
             <div class="content" ref="content"></div>
         </div>
