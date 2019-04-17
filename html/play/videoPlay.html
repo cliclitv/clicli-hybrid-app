@@ -33,7 +33,7 @@
         }
 
         .post-intro .intro-img {
-            height: 100px;
+            height: 120px;
             width: 90px;
             float: left;
             margin: 0 15px;
@@ -67,6 +67,11 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+        }
+
+        .intro-content .gv {
+            color: #999;
+            padding: 4px 0 0 2px;
         }
 
         .intro-content .statistic {
@@ -205,6 +210,7 @@
                 <div :style="getImgUrl(postIntro.content)" alt="" class="intro-img" @click="goAvDetail" tapmode></div>
                 <div class="intro-content" @click="goAvComments" tapmode>
                     <div class="intro-title">{{postIntro.title}}</div>
+                    <div class="gv">gv{{postIntro.id}}</div>
                     <div class="statistic">
                         <img class="pv-icon" src="../../image/pv.png" alt=""><span class="pv">{{postPV}}</span>
                         <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCV}}</span>
