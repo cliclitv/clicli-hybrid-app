@@ -8,26 +8,38 @@ li {
 }
 html {
   height: 100%;
+  background: linear-gradient(to top left, #1af5d0, #405e6e);
 }
 body {
-  background: url(https://ws1.sinaimg.cn/large/0065Zy9egy1g0exold22hj31xg0u0npd.jpg)
-    no-repeat center top;
-  background-size: auto 100%;
   transition: 1s;
+  height: 100%;
+  background: url(https://0d077ef9e74d8.cdn.sohucs.com/roUnPx0_png);
 }
-.mainer {
-  width: 500px;
+.main {
+  width: 1000px;
   margin: 0 auto;
-  transition: .5s;
+  display: flex;
+}
+.left {
+  width: 200px;
+  transition: 0.5s;
+}
+
+.right {
+  width: 620px;
+  background: url(https://0d077ef9e74d8.cdn.sohucs.com/roUiDdR_png) no-repeat
+    left;
+  height: 100vh;
+  background-size: 100%;
 }
 .logo {
   height: 100px;
   width: 100px;
   border-radius: 20px;
-  background: url(https://ws1.sinaimg.cn/large/0065Zy9egy1g0extq9eyxj30e80e8q3t.jpg);
+  background: url(https://0d077ef9e74d8.cdn.sohucs.com/roUj1hC_png);
   background-size: cover;
   margin: 80px auto 30px;
-  box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.8);
+  box-shadow: 10px 10px 10px #0a5658;
 }
 h1 {
   color: #fff;
@@ -48,28 +60,31 @@ h1 {
   text-align: center;
   width: 150px;
   padding: 6px 0;
-  border: 1px solid rgba(255, 255, 255, .8);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   display: inline-block;
   margin: 10px auto;
   border-radius: 4px;
-  transition: .5s
+  transition: 0.5s;
 }
 
-.link li:hover{
-  background: rgba(255, 255, 255, .2)
+.link li:hover {
+  background: rgba(26, 245, 245, 0.4);
 }
-.qcode{
-  text-align: center
+.qcode {
+  text-align: center;
 }
-.qcode img{
+.qcode img {
   widows: 150px;
   height: 150px;
   margin: 50px auto;
-  text-align: center
+  text-align: center;
 }
 
 @media screen and (max-width: 500px) {
-  .mainer{
+  .main ,.left{
     width: 100%;
+  }
+  .right{
+    display: none;
   }
 }

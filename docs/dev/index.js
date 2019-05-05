@@ -1,13 +1,14 @@
 import './style.css'
 import { h, render } from 'fre'
 
-const DOWN_URL = 'https://unpkg.com/@clicli/app'
+const DOWN_URL = 'https://cdn.jsdelivr.net/npm/@clicli/app@latest'
 const QCODE =
-  'https://ws1.sinaimg.cn/large/0065Zy9egy1g214spuj16j308c08c745.jpg'
+  'https://0d077ef9e74d8.cdn.sohucs.com/roUjdPS_jpg'
 
 function App () {
   return (
-    <div class='mainer'>
+    <div class='main'>
+      <div class="left">
       <div class='logo' />
       <h1>人·生·就·是·佛</h1>
       <ul class='link'>
@@ -21,6 +22,8 @@ function App () {
       <div class='qcode'>
         <img src={QCODE} alt='c站 app' />
       </div>
+      </div>
+      <div class="right"></div>
     </div>
   )
 }
