@@ -45,8 +45,18 @@ var apiready = function apiready() {
 
                         var sorts = _this.postIntro.sort;
                         var tags = _this.postIntro.tag;
-                        _this.sortArr = sorts.trim().split(' ');
-                        _this.tagArr = tags.trim().split(' ');
+
+                        if (sorts != ' ') {
+                            _this.sortArr = sorts.trim().split(' ');
+                        } else {
+                            _this.sortArr = [];
+                        }
+
+                        if (tags != ' ') {
+                            _this.tagArr = tags.trim().split(' ');
+                        } else {
+                            _this.tagArr = [];
+                        }
 
                         var parser = new HyperDown();
                         var html = parser.makeHtml(response.data.result.content);
@@ -66,10 +76,10 @@ var apiready = function apiready() {
                         _this2.videosList = response.data.videos;
                         _this2.loading = false;
                         if (response.data.videos !== null) {
-                            _this2.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title);
                             setTimeout(function () {
                                 document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)';
-                            }, 100);
+                                _this2.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title);
+                            }, 300);
                         }
                     }
                 }).catch(function (error) {
@@ -94,7 +104,7 @@ var apiready = function apiready() {
 
                 axios({
                     method: 'get',
-                    url: 'https://www.clicli.us/get/pv?pid=' + pid
+                    url: 'https://jx.clicli.us/get/pv?pid=' + pid
                 }).then(function (response) {
                     if (response.data.code === 0) {
                         _this4.postPV = response.data.pv;
@@ -135,7 +145,7 @@ var apiready = function apiready() {
                     modal: false
                 });
 
-                if (url.indexOf('www.clicli') > -1) {
+                if (url.indexOf('jx.clicli') > -1) {
                     axios({
                         method: 'get',
                         url: url
@@ -166,7 +176,7 @@ var apiready = function apiready() {
                 } else {
                     axios({
                         method: 'get',
-                        url: 'https://www.clicli.us/jx?url=' + url
+                        url: 'https://jx.clicli.us/jx?url=' + url
                     }).then(function (response) {
                         if (response.data.code === 0) {
                             console.log(response.data.url);

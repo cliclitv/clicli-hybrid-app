@@ -73,7 +73,7 @@ const apiready = () => {
                     console.log(JSON.stringify(error))
                     api.hideProgress()
                     api.toast({
-                        msg: '喔，出错啦，请稍后重试！',
+                        msg: '请检查用户名输入是否正确！',
                         duration: 2000,
                         location: 'bottom'
                     })

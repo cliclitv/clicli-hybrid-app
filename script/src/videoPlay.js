@@ -40,8 +40,18 @@ const apiready = () => {
 
                         let sorts = this.postIntro.sort
                         let tags = this.postIntro.tag
-                        this.sortArr = sorts.trim().split(' ')
-                        this.tagArr = tags.trim().split(' ')
+
+                        if(sorts != ' '){
+                            this.sortArr = sorts.trim().split(' ')
+                        }else{
+                            this.sortArr = []
+                        }
+
+                        if(tags != ' '){
+                            this.tagArr = tags.trim().split(' ')
+                        }else{
+                            this.tagArr = []
+                        }
 
                         let parser = new HyperDown
                         let html = parser.makeHtml(response.data.result.content)
@@ -59,10 +69,10 @@ const apiready = () => {
                         this.videosList = response.data.videos
                         this.loading = false
                         if (response.data.videos !== null) {
-                            this.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title)
                             setTimeout(() => {
                                 document.querySelectorAll('.video-item')[0].style.background = 'rgba(0,156,255,0.4)'
-                            }, 100)
+                                this.loadVideoPlayer(response.data.videos[0].content, response.data.videos[0].title)
+                            }, 300)
                         }
                     }
                 }).catch(error => {
@@ -83,7 +93,7 @@ const apiready = () => {
             getPostPV() {
                 axios({
                     method: 'get',
-                    url: 'https://www.clicli.us/get/pv?pid=' + pid
+                    url: 'https://jx.clicli.us/get/pv?pid=' + pid
                 }).then(response => {
                     if (response.data.code === 0) {
                         this.postPV = response.data.pv
@@ -124,7 +134,7 @@ const apiready = () => {
                     modal: false
                 })
 
-                if (url.indexOf('www.clicli') > -1) {
+                if (url.indexOf('jx.clicli') > -1) {
                     axios({
                         method: 'get',
                         url
@@ -155,7 +165,7 @@ const apiready = () => {
                 } else {
                     axios({
                         method: 'get',
-                        url: 'https://www.clicli.us/jx?url=' + url
+                        url: 'https://jx.clicli.us/jx?url=' + url
                     }).then(response => {
                         if (response.data.code === 0) {
                             console.log(response.data.url)

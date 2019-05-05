@@ -206,8 +206,8 @@
 
         <div class="content-container">
 
-            <div class="post-intro" v-if="postIntro.length !== 0">
-                <div :style="getImgUrl(postIntro.content)" alt="" class="intro-img" @click="goAvDetail" tapmode></div>
+            <div class="post-intro" v-if="postIntro !== null">
+                <div :style="getImgUrl(postIntro.content)" alt="" class="intro-img" @click="goAvDetail"></div>
                 <div class="intro-content" @click="goAvComments" tapmode>
                     <div class="intro-title">{{postIntro.title}}</div>
                     <div class="gv">gv{{postIntro.id}}</div>
@@ -216,12 +216,12 @@
                         <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCV}}</span>
                     </div>
                     <div class="post-label">
-                        <block v-for="sort in sortArr">
+                        <template v-for="sort in sortArr" v-if="sortArr.length !== 0">
                             <span v-text="sort"></span>
-                        </block>
-                        <block v-for="tag in tagArr">
+                        </template>
+                        <template v-for="tag in tagArr" v-if="tagArr.length !== 0">
                             <span v-text="tag"></span>
-                        </block>
+                        </template>
                     </div>
                 </div>
             </div>

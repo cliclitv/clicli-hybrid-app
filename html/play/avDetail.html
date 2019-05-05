@@ -140,13 +140,15 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .post-label span{
             padding: 5px 10px;
             background-color: #F2AA24;
             border-radius: 5px;
-            color: #FEFEFE;
+            color: #FFF;
             margin-right: 6px;
+            margin-bottom: 5px;
             font-size: 14px;
         }
 
@@ -188,12 +190,12 @@
                 <img class="comments-icon" src="../../image/comments.png" alt=""><span class="comments-num">{{postCV}}</span>
             </div>
             <div class="post-label">
-                <block v-for="sort in sortArr">
+                <template v-for="sort in sortArr">
                     <span v-text="sort"></span>
-                </block>
-                <block v-for="tag in tagArr">
+                </template>
+                <template v-for="tag in tagArr">
                     <span v-text="tag"></span>
-                </block>
+                </template>
             </div>
             <div class="content" ref="content"></div>
         </div>
