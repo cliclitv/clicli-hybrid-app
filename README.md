@@ -24,8 +24,6 @@ add feature
 
 try
 
-- [ ] 获取与清除缓存
-- [ ] 获取版本信息
 - [x] 提示新版本实现更新
 - [x] 消息推送
 
@@ -37,6 +35,6 @@ difference
 
 boom!!!!    
 
-更多精彩请访问     [https://www.clicli.top](https://www.clicli.top)
+更多精彩请访问     [https://www.clicli.us](https://www.clicli.us)
 
 ![image](https://jwchan.cn/images/background_header.png)
