@@ -281,7 +281,7 @@ function bindPushService() {
 
 //提醒开启自启动
 function tipRunYourself(){
-    if(localStorage.getItem('tipRunYourself') === undefined){
+    if(localStorage.getItem('tipRunYourself') === null){
         alert('(提醒三次)去设置里开启软件自启动可以收到好看番剧更新的及时推送哦')
         localStorage.setItem('tipRunYourself', '1')
     }else if(localStorage.getItem('tipRunYourself') === '1'){
