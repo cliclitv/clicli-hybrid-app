@@ -21,6 +21,7 @@ var apiready = function apiready() {
     listenLoginPageOpenStatus();
     navbarDoubleClick();
     bindPushService();
+    tipRunYourself();
 };
 
 function initSearchFunc() {
@@ -276,4 +277,20 @@ function bindPushService() {
         var ajpush = api.require('ajpush');
         ajpush.onPause();
     });
+}
+
+//提醒开启自启动
+function tipRunYourself() {
+    if (localStorage.getItem('tipRunYourself') === undefined) {
+        alert('(提醒三次)去设置里开启软件自启动可以收到好看番剧更新的及时推送哦');
+        localStorage.setItem('tipRunYourself', '1');
+    } else if (localStorage.getItem('tipRunYourself') === '1') {
+        alert('(再次提醒)去设置里开启软件自启动可以收到好看番剧更新的及时推送哦');
+        localStorage.setItem('tipRunYourself', '2');
+    } else if (localStorage.getItem('tipRunYourself') === '2') {
+        alert('(最后一次提醒)去设置里开启软件自启动可以收到好看番剧更新的及时推送哦');
+        localStorage.setItem('tipRunYourself', '3');
+    } else {
+        //nothing to do
+    }
 }
