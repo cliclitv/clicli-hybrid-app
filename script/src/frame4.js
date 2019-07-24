@@ -31,7 +31,7 @@ const apiready = () => {
                     url: 'https://api.clicli.us/auth'
                 }).then(response => {
                     console.log(JSON.stringify(response))
-                    if (response.data.code === 201) {
+                    if (response.data.token) {
                         if(this.isLogin === '1'){
                             const user = $api.getStorage('user-info')
                             this.user = user

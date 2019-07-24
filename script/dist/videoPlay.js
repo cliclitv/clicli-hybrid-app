@@ -40,7 +40,7 @@ var apiready = function apiready() {
                     method: 'get',
                     url: 'https://api.clicli.us/post/' + pid
                 }).then(function (response) {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         _this.postIntro = response.data.result;
 
                         var sorts = _this.postIntro.sort;
@@ -72,7 +72,7 @@ var apiready = function apiready() {
                     method: 'get',
                     url: 'https://api.clicli.us/videos?pid=' + pid + '&page=1&pageSize=300'
                 }).then(function (response) {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         _this2.videosList = response.data.videos;
                         _this2.loading = false;
                         if (response.data.videos !== null) {
@@ -94,7 +94,7 @@ var apiready = function apiready() {
                     method: 'get',
                     url: 'https://api.clicli.us/post/' + pid
                 }).then(function (response) {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         _this3.postCV = response.data.result.count.cv;
                     }
                 });

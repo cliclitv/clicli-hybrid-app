@@ -78,7 +78,7 @@ var apiready = function apiready() {
                     method: 'get',
                     url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=推荐&page=1&pageSize=10'
                 }).then(function (response) {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         _this2.postsList = response.data.posts;
                         _this2.loading = false;
                         api.hideProgress();

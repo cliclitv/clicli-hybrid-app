@@ -30,6 +30,17 @@ var apiready = function apiready() {
                     name: 'logout'
                 });
                 api.closeWin();
+            },
+            getRole: function getRole(level) {
+                if (level == 4) {
+                    return '管理';
+                } else if (level == 3) {
+                    return '审核';
+                } else if (level == 2) {
+                    return '作者';
+                } else {
+                    return '用户';
+                }
             }
         }
     });

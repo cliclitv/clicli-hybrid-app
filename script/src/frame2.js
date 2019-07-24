@@ -54,7 +54,7 @@ const apiready = () => {
                     url: 'https://api.clicli.us/posts?status=nowait&sort=新番&page=1&pageSize=100'
                 }).then(response => {
 
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         let ret = {
                             1: [],
                             2: [],

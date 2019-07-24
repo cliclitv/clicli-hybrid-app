@@ -35,7 +35,7 @@ const apiready = () => {
                     method: 'get',
                     url: 'https://api.clicli.us/post/' + pid
                 }).then(response => {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         this.postIntro = response.data.result
 
                         let sorts = this.postIntro.sort
@@ -65,7 +65,7 @@ const apiready = () => {
                     method: 'get',
                     url: 'https://api.clicli.us/videos?pid=' + pid + '&page=1&pageSize=300'
                 }).then(response => {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         this.videosList = response.data.videos
                         this.loading = false
                         if (response.data.videos !== null) {
@@ -85,7 +85,7 @@ const apiready = () => {
                     method: 'get',
                     url: 'https://api.clicli.us/post/' + pid
                 }).then(response => {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         this.postCV = response.data.result.count.cv
                     }
                 })

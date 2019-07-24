@@ -36,7 +36,7 @@ var apiready = function apiready() {
                     url: 'https://api.clicli.us/auth'
                 }).then(function (response) {
                     console.log(JSON.stringify(response));
-                    if (response.data.code === 201) {
+                    if (response.data.token) {
                         if (_this.isLogin === '1') {
                             var user = $api.getStorage('user-info');
                             _this.user = user;

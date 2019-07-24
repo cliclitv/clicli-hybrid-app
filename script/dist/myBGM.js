@@ -90,7 +90,7 @@ var apiready = function apiready() {
                 url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + $api.getStorage('user-info').id + '&page=' + this.page + '&pageSize=20'
             }).then(function (response) {
                 console.log(JSON.stringify(response));
-                if (response.data.code === 201) {
+                if (response.data.code === 200) {
                     if (response.data.posts !== null) {
                         _this2.postsList = response.data.posts;
                         if (response.data.posts.length < 20) {
@@ -118,7 +118,7 @@ var apiready = function apiready() {
                 method: 'get',
                 url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=' + $api.getStorage('user-info').id + '&page=' + this.page + '&pageSize=20'
             }).then(function (response) {
-                if (response.data.code === 201) {
+                if (response.data.code === 200) {
                     if (response.data.posts !== null) {
                         for (var i = 0; i < response.data.posts.length; i++) {
                             _this3.postsList.push(response.data.posts[i]);

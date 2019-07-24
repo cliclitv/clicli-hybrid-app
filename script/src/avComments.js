@@ -24,7 +24,7 @@ const apiready = () => {
                     method: 'get',
                     url: 'https://api.clicli.us/comments?pid=' + this.pid + '&page=1&pageSize=300'
                 }).then(response => {
-                    if(response.data.code === 201){
+                    if(response.data.code === 200){
                         this.commentsList = response.data.comments
                         this.loading = false
                     }

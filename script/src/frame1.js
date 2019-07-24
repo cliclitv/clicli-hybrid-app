@@ -81,7 +81,7 @@ const apiready = () => {
                     method: 'get',
                     url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=&page=' + this.page + '&pageSize=20'
                 }).then(response => {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         if(response.data.posts !== null){
                             this.postsList = response.data.posts
                             if(response.data.posts.length<20){
@@ -112,7 +112,7 @@ const apiready = () => {
                     method: 'get',
                     url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=&uid=&page=' + this.page + '&pageSize=20'
                 }).then(response => {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         if(response.data.posts !== null){
                             for ( let i = 0; i < response.data.posts.length; i ++ ) {
                                 this.postsList.push(response.data.posts[i])

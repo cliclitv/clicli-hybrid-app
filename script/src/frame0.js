@@ -71,7 +71,7 @@ const apiready = () => {
                     method: 'get',
                     url: 'https://api.clicli.us/posts?status=public&sort=bgm&tag=推荐&page=1&pageSize=10'
                 }).then(response => {
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         this.postsList = response.data.posts
                         this.loading = false
                         api.hideProgress()

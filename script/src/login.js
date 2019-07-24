@@ -53,7 +53,7 @@ const apiready = () => {
                     }
                 }).then(response => {
                     console.log(JSON.stringify(response))
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         $api.setStorage('user-info', response.data.user)
                         $api.setStorage('isLogin', '1');
                         api.sendEvent({
@@ -73,7 +73,7 @@ const apiready = () => {
                     console.log(JSON.stringify(error))
                     api.hideProgress()
                     api.toast({
-                        msg: '请检查用户名输入是否正确！',
+                        msg: '请检查用户名或密码输入是否正确！',
                         duration: 2000,
                         location: 'bottom'
                     })

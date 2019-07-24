@@ -61,7 +61,7 @@ var apiready = function apiready() {
                     url: 'https://api.clicli.us/posts?status=nowait&sort=新番&page=1&pageSize=100'
                 }).then(function (response) {
 
-                    if (response.data.code === 201) {
+                    if (response.data.code === 200) {
                         var ret = {
                             1: [],
                             2: [],
