@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "./node_modules/.bin/babel script/src -d script/dist"
+    "build": "babel src/script/src -d src/script/dist"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

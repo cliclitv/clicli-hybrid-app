@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>入口主页面</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <style>
+        header {
+            background-color: #FEFEFE;
+            color: #515151;
+            position: fixed;
+            top: 25px;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        header ul li {
+            height: 50px;
+            line-height: 50px;
+            text-align: left;
+            padding-left: 20px;
+            display: none;
+            color: #515151;
+            position: relative;
+            font-size: 26px;
+        }
+
+        header ul li.active {
+            display: block;
+        }
+
+        header ul li span {
+            font-size: 22px;
+            padding-right: 5px;
+            transition: 0.2s;
+            border-bottom: 2px solid #FEFEFE;
+        }
+
+        #footer {
+            background-color: #FEFEFE;
+        }
+
+        #footer ul li {
+            color: #bbb;
+            font-size: 12px;
+            padding-top: 34px;
+            margin-top: 2px;
+            padding-bottom: 4px;
+            background: url() no-repeat center 2px;
+            background-size: auto 30px;
+            text-align: center;
+        }
+
+        #footer ul li.active {
+            color: #524F0A;
+        }
+
+        #footer ul li:nth-child(1) {
+            background-image: url(./image/frame0_0.png);
+        }
+
+        #footer ul li:nth-child(2) {
+            background-image: url(./image/frame1_0.png);
+        }
+
+        #footer ul li:nth-child(3) {
+            background-image: url(./image/frame2_0.png);
+        }
+
+        #footer ul li:nth-child(4) {
+            background-image: url(./image/frame3_0.png);
+        }
+
+        #footer ul li:nth-child(1).active {
+            background-image: url(./image/frame0_1.png);
+        }
+
+        #footer ul li:nth-child(2).active {
+            background-image: url(./image/frame1_1.png);
+        }
+
+        #footer ul li:nth-child(3).active {
+            background-image: url(./image/frame2_1.png);
+        }
+
+        #footer ul li:nth-child(4).active {
+            background-image: url(./image/frame3_1.png);
+        }
+
+        .flex-con {
+            overflow: auto
+        }
+
+        .selected {
+            color: #009688;
+            font-size: 26px;
+            border-bottom: 2px solid #009688;
+        }
+
+        .search {
+            float: right;
+            top: 0;
+            margin-right: 10px;
+            width: 26px;
+            height: 26px;
+            padding: 12px;
+        }
+
+        .search:active {
+            background-color: #ddd;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" class="flex-wrap flex-vertical">
+        <!-- 我是占位状态栏高度的 -->
+        <div class="statusBarPlaceholder" style="height:25px;width:100%;background-color:#FEFEFE;position:fixed;top:0;"></div>
+        <header>
+            <ul>
+                <li class="border-b active"><span id="recommend" class="selected">推荐</span>&nbsp;&nbsp;<span id="new">最新</span><img src="./image/search.png" alt="" class="search"></li>
+                <li class="border-b">热门新番<img src="./image/search.png" alt="" class="search"></li>
+                <li class="border-b">UGC<img src="./image/search.png" alt="" class="search"></li>
+                <li id="mine" class="border-b">个人中心</li>
+            </ul>
+        </header>
+        <div id="main" class="flex-con">
+
+        </div>
+        <div id="footer" class="border-t">
+            <ul class="flex-wrap">
+                <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con active">主站</li>
+                <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con">新番</li>
+                <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con">投稿</li>
+                <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con">我的</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="script/vendors/api.js"></script>
+    <script src="script/dist/index.js"></script>
+</body>
+
+</html>
