@@ -5,6 +5,11 @@ const apiready = () => {
         data: {
             name: '',
             pwd: '',
+            //状态
+            currentLoginState: true,
+            Rname: '',
+            Rpwd: '',
+            Rqq: ''
         },
         mounted(){
             api.addEventListener({
@@ -19,15 +24,29 @@ const apiready = () => {
                 api.closeFrame()
             },
             listenChange(){
-                let submit = document.querySelector(".submit")
-                let classVal = submit.getAttribute("class")
+                let login = document.querySelector(".login")
+                let classVal = login.getAttribute("class")
                 if (this.name.length != 0 && this.pwd.length != 0) {
                     classVal = classVal.replace("disabled", "")
-                    submit.setAttribute("class", classVal)
+                    login.setAttribute("class", classVal)
                 } else {
-                    if (!this.hasClass(submit, "disabled")) {
+                    if (!this.hasClass(login, "disabled")) {
                         classVal = classVal.concat(" disabled")
-                        submit.setAttribute("class", classVal)
+                        login.setAttribute("class", classVal)
+                    }
+                }
+            },
+            RlistenChange(){
+                let register = document.querySelector(".register")
+                let classVal = register.getAttribute("class")
+                if (this.Rname.length != 0 && this.Rpwd.length != 0 && this.Rqq.length != 0) {
+                    console.log("不空")
+                    classVal = classVal.replace("disabled", "")
+                    register.setAttribute("class", classVal)
+                } else {
+                    if (!this.hasClass(register, "disabled")) {
+                        classVal = classVal.concat(" disabled")
+                        register.setAttribute("class", classVal)
                     }
                 }
             },
@@ -78,7 +97,60 @@ const apiready = () => {
                         location: 'bottom'
                     })
                 })
-            }
+            },
+            goRegister(){
+              this.currentLoginState = false
+            },
+            register(){
+              api.showProgress({
+                  style: 'default',
+                  animationType: 'fade',
+                  title: '努力注册中...',
+                  text: '先歇会呗...',
+                  modal: false
+              })
+              axios.defaults.withCredentials=true
+              axios({
+                  method: 'post',
+                  url: 'https://api.clicli.us/user/register',
+                  data: {
+                      name: this.Rname,
+                      pwd: this.Rpwd,
+                      qq: this.Rqq,
+                      level: 1,
+                      desc: '人懒，竟然没有签名~'
+                  }
+              }).then(response => {
+                  console.log(JSON.stringify(response))
+                  if (response.data.code === 200) {
+                      api.hideProgress()
+                      api.toast({
+                          msg: '注册成功',
+                          duration: 2000,
+                          location: 'bottom'
+                      })
+                      this.currentLoginState = true
+                  } else {
+                      api.hideProgress()
+                      api.toast({
+                          msg: '服务器忙',
+                          duration: 2000,
+                          location: 'bottom'
+                      })
+                  }
+              }).catch(error => {
+                  console.log(JSON.stringify(error))
+                  api.hideProgress()
+                  api.toast({
+                      msg: '网络出问题了',
+                      duration: 2000,
+                      location: 'bottom'
+                  })
+              })
+            },
+            goLogin(){
+              this.currentLoginState = true
+            },
         }
     })
 

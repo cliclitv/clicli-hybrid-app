@@ -6,7 +6,12 @@ var apiready = function apiready() {
         el: '#app',
         data: {
             name: '',
-            pwd: ''
+            pwd: '',
+            //状态
+            currentLoginState: true,
+            Rname: '',
+            Rpwd: '',
+            Rqq: ''
         },
         mounted: function mounted() {
             api.addEventListener({
@@ -22,15 +27,29 @@ var apiready = function apiready() {
                 api.closeFrame();
             },
             listenChange: function listenChange() {
-                var submit = document.querySelector(".submit");
-                var classVal = submit.getAttribute("class");
+                var login = document.querySelector(".login");
+                var classVal = login.getAttribute("class");
                 if (this.name.length != 0 && this.pwd.length != 0) {
                     classVal = classVal.replace("disabled", "");
-                    submit.setAttribute("class", classVal);
+                    login.setAttribute("class", classVal);
                 } else {
-                    if (!this.hasClass(submit, "disabled")) {
+                    if (!this.hasClass(login, "disabled")) {
                         classVal = classVal.concat(" disabled");
-                        submit.setAttribute("class", classVal);
+                        login.setAttribute("class", classVal);
+                    }
+                }
+            },
+            RlistenChange: function RlistenChange() {
+                var register = document.querySelector(".register");
+                var classVal = register.getAttribute("class");
+                if (this.Rname.length != 0 && this.Rpwd.length != 0 && this.Rqq.length != 0) {
+                    console.log("不空");
+                    classVal = classVal.replace("disabled", "");
+                    register.setAttribute("class", classVal);
+                } else {
+                    if (!this.hasClass(register, "disabled")) {
+                        classVal = classVal.concat(" disabled");
+                        register.setAttribute("class", classVal);
                     }
                 }
             },
@@ -82,6 +101,61 @@ var apiready = function apiready() {
                         location: 'bottom'
                     });
                 });
+            },
+            goRegister: function goRegister() {
+                this.currentLoginState = false;
+            },
+            register: function register() {
+                var _this = this;
+
+                api.showProgress({
+                    style: 'default',
+                    animationType: 'fade',
+                    title: '努力注册中...',
+                    text: '先歇会呗...',
+                    modal: false
+                });
+                axios.defaults.withCredentials = true;
+                axios({
+                    method: 'post',
+                    url: 'https://api.clicli.us/user/register',
+                    data: {
+                        name: this.Rname,
+                        pwd: this.Rpwd,
+                        qq: this.Rqq,
+                        level: 1,
+                        desc: '人懒，竟然没有签名~'
+                    }
+                }).then(function (response) {
+                    console.log(JSON.stringify(response));
+                    if (response.data.code === 200) {
+                        api.hideProgress();
+                        api.toast({
+                            msg: '注册成功',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                        _this.currentLoginState = true;
+                    } else {
+                        api.hideProgress();
+                        api.toast({
+                            msg: '服务器忙',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                }).catch(function (error) {
+                    console.log(JSON.stringify(error));
+                    api.hideProgress();
+                    api.toast({
+                        msg: '网络出问题了',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                });
+            },
+            goLogin: function goLogin() {
+                this.currentLoginState = true;
             }
         }
     });

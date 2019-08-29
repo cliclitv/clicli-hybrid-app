@@ -124,7 +124,31 @@
             top: 10px;
         }
 
-        .submit {
+        #qq {
+            display: block;
+            height: 44px;
+            width: 260px;
+            background-color: #FEFEFE;
+            margin-bottom: 10px;
+            padding: 4px 16px 4px 50px;
+            outline: none;
+            border-bottom: 1px solid #ddd;
+            color: #777;
+            font-size: 18px;
+        }
+        #qq:hover{
+            border-bottom: 1px solid #1296db;
+        }
+
+        #qq-icon {
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            left: 10px;
+            top: 10px;
+        }
+
+        .login {
             height: 50px;
             width: 330px;
             line-height: 50px;
@@ -135,7 +159,62 @@
             font-size: 18px;
             text-align: center;
         }
-        .submit:active{
+        .login:active{
+            opacity: 0.7;
+        }
+
+        .go-register {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #009688;
+            font-size: 18px;
+            text-align: center;
+        }
+        .go-register div{
+          display: flex;
+          align-items: center;
+        }
+        .go-register img{
+          height: 16px;
+          width: 16px;
+        }
+        .go-register:active{
+            opacity: 0.7;
+        }
+
+        .register {
+            height: 50px;
+            width: 330px;
+            line-height: 50px;
+            background: #1296DB;
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .register:active{
+            opacity: 0.7;
+        }
+
+        .go-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #009688;
+            font-size: 18px;
+            text-align: center;
+        }
+        .go-login div{
+          display: flex;
+          align-items: center;
+        }
+        .go-login img{
+          height: 16px;
+          width: 16px;
+        }
+        .go-login:active{
             opacity: 0.7;
         }
 
@@ -156,10 +235,11 @@
         <!-- 我是导航栏 -->
         <header id="header">
             <img class="close" src="../../image/back.png" @click="goBack">
-            <p class="title">登录</p>
+            <p class="title" v-show="currentLoginState">登录</p>
+            <p class="title" v-show="!currentLoginState">注册</p>
         </header>
 
-        <div class="content-container">
+        <div class="content-container" v-if="currentLoginState">
             <img id="logo" src="../../image/clicli-logo.png" alt="">
             <div style="position:relative;">
                 <img id="usernumber-icon" src="../../image/usernumber.png" alt="">
@@ -169,7 +249,34 @@
                 <img id="password-icon" src="../../image/password.png" alt="">
                 <input id="password" type="password" v-model="pwd" @input="listenChange" @porpertychange="listenChange" placeholder="密码">
             </div>
-            <div class="submit disabled" @click="login">登录</div>
+            <div class="login disabled" @click="login">登录</div>
+            <div class="go-register">
+              <div @click="goRegister">
+                <span>注册</span><img src="../../image/right.png" />
+              </div>
+            </div>
+        </div>
+
+        <div class="content-container" v-if="!currentLoginState">
+            <img id="logo" src="../../image/clicli-logo.png" alt="">
+            <div style="position:relative;">
+                <img id="usernumber-icon" src="../../image/usernumber.png" alt="">
+                <input id="usernumber" type="text" v-model="Rname" @input="RlistenChange" @porpertychange="RlistenChange" placeholder="用户名">
+            </div>
+            <div style="position:relative;">
+                <img id="password-icon" src="../../image/password.png" alt="">
+                <input id="password" type="text" v-model="Rpwd" @input="RlistenChange" @porpertychange="RlistenChange" placeholder="密码">
+            </div>
+            <div style="position:relative;">
+                <img id="qq-icon" src="../../image/search.png" alt="">
+                <input id="qq" type="text" v-model="Rqq" @input="RlistenChange" @porpertychange="RlistenChange" placeholder="QQ号">
+            </div>
+            <div class="register disabled" @click="register">注册</div>
+            <div class="go-login">
+              <div @click="goLogin">
+                <span>登录</span><img src="../../image/right.png" />
+              </div>
+            </div>
         </div>
 
     </div>
