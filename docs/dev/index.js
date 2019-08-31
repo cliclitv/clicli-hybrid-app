@@ -1,9 +1,9 @@
 import './style.css'
 import { h, render } from 'fre'
 
-const DOWN_URL = 'https://cdn.jsdelivr.net/npm/@clicli/app@latest'
+const DOWN_URL = 'https://cdn.jsdelivr.net/gh/cliclitv/clicli-hybrid-app@latest/bin/clicli.apk'
 const QCODE =
-  'https://0d077ef9e74d8.cdn.sohucs.com/roUjdPS_jpg'
+  'https://ae01.alicdn.com/kf/Had6fa2a0d8e54465820740a3317a8725t.png'
 
 function App () {
   return (
