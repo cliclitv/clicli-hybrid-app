@@ -6,7 +6,7 @@ const DOWN1 =
 const DOWN2 =
   'https://cdn.staticaly.com/gh/cliclitv/clicli-hybrid-app/master/bin/clicli.apk?env=dev'
 const QCODE =
-  'https://ae01.alicdn.com/kf/Had6fa2a0d8e54465820740a3317a8725t.png'
+  'https://s2.ax1x.com/2019/09/07/nl0FFs.png'
 
 function App () {
   return (
