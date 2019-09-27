@@ -670,10 +670,10 @@ esutils@^2.0.0, esutils@^2.0.2:
   resolved "http://registry.npm.taobao.org/esutils/download/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
   integrity sha1-Cr9PHKpbyx96nYrMbepPqqBLrJs=
 
-fre@^1.5.8:
-  version "1.5.8"
-  resolved "https://registry.npmjs.org/fre/-/fre-1.5.8.tgz#90811ae4596ecb1ca13eb615e9cb87bc1ebeea67"
-  integrity sha512-p2pqBqZFKfKDkA6gyxeV3BhOLkC34ajyrp0zTInaYKDljr3ej2c3zs1rtpBrky4s3J5muxwS2Mi/BTMeU/5QDw==
+fre@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.npm.taobao.org/fre/download/fre-1.6.2.tgz#af8d17036e0c6e1aa06717b0c3afcf615cc9000f"
+  integrity sha1-r40XA24MbhqgZxeww6/PYVzJAA8=
 
 function-bind@^1.1.1:
   version "1.1.1"
